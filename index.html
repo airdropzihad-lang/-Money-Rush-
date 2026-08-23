@@ -8,14 +8,16 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #080f1e;
-            --card-bg: #0f192e;
-            --card-border: #1a2a47;
-            --accent-cyan: #00f2fe;
-            --accent-blue: #4facfe;
+            --bg-color: #0b0712;
+            --card-bg: #160e26;
+            --card-border: #2d1c4a;
+            --accent-gold: #ffb703;
+            --accent-purple: #9d4edd;
+            --accent-neon: #e0aaff;
             --text-main: #ffffff;
-            --text-sub: #7b8fae;
-            --box-glow: 0 0 15px rgba(0, 242, 254, 0.25);
+            --text-sub: #a08ebb;
+            --gold-glow: 0 0 15px rgba(255, 183, 3, 0.3);
+            --purple-glow: 0 0 15px rgba(157, 78, 221, 0.4);
         }
 
         * {
@@ -62,10 +64,10 @@
             width: 50px;
             height: 50px;
             border: 4px solid var(--card-border);
-            border-top: 4px solid var(--accent-cyan);
+            border-top: 4px solid var(--accent-gold);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            box-shadow: 0 0 15px var(--accent-cyan);
+            box-shadow: var(--gold-glow);
         }
 
         @keyframes spin {
@@ -84,8 +86,8 @@
         .logo-title {
             font-size: 1.3rem;
             font-weight: 800;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
         }
 
         /* Profile Section */
@@ -102,14 +104,14 @@
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            border: 2px solid var(--accent-cyan);
+            border: 2px solid var(--accent-gold);
             overflow: hidden;
-            box-shadow: var(--box-glow);
+            box-shadow: var(--gold-glow);
         }
 
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Pages */
+        /* Navigation Pages */
         .page-section { display: none; padding: 15px; }
         .page-section.active { display: block; }
 
@@ -117,32 +119,43 @@
         .balance-card {
             padding: 25px 20px;
             border-radius: 20px;
-            background: linear-gradient(135deg, #00d2ff, #0072ff);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-            color: #000;
+            background: linear-gradient(135deg, #7b2cbf, #3c096c);
+            border: 1px solid var(--accent-purple);
+            box-shadow: var(--purple-glow);
+            color: #fff;
             text-align: left;
             margin-bottom: 15px;
         }
 
-        .balance-card span { font-weight: 600; font-size: 0.9rem; opacity: 0.8; }
-        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; }
+        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
+        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
 
-        /* Fake Live Withdraw Ticker */
-        .ticker-card {
+        /* Continuous Marquee Fake Payment Ticker */
+        .marquee-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 12px 15px;
+            padding: 10px 0;
             border-radius: 12px;
-            font-size: 0.85rem;
-            color: var(--text-sub);
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .ticker-card strong { color: var(--accent-cyan); }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .marquee-content strong { color: var(--accent-gold); }
 
         /* Grid Stats */
         .grid-container {
@@ -162,11 +175,11 @@
             gap: 6px;
         }
 
-        .action-card i { font-size: 1.4rem; color: var(--accent-cyan); }
+        .action-card i { font-size: 1.4rem; color: var(--accent-gold); }
         .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
         .action-card p { font-size: 1.2rem; font-weight: bold; }
 
-        /* Mystery Box & Daily Bonus Card UI */
+        /* Feature Section Cards on Home */
         .feature-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -177,7 +190,7 @@
         }
 
         .progress-bar-bg {
-            background: #152238;
+            background: #0b0712;
             height: 10px;
             border-radius: 10px;
             overflow: hidden;
@@ -186,7 +199,7 @@
         }
 
         .progress-fill {
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold));
             height: 100%;
             width: 0%;
             transition: width 0.3s;
@@ -201,7 +214,7 @@
         }
 
         .bonus-box {
-            background: #152238;
+            background: #0b0712;
             border: 1px solid var(--card-border);
             padding: 10px 5px;
             border-radius: 10px;
@@ -210,16 +223,16 @@
         }
 
         .bonus-box.active {
-            border-color: var(--accent-cyan);
-            box-shadow: var(--box-glow);
+            border-color: var(--accent-gold);
+            box-shadow: var(--gold-glow);
         }
 
-        .bonus-box span { display: block; color: var(--accent-cyan); font-weight: bold; margin-top: 4px; }
+        .bonus-box span { display: block; color: var(--accent-gold); font-weight: bold; margin-top: 4px; }
 
-        /* General Neon Buttons */
-        .btn-neon {
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            color: #fff;
+        /* Buttons */
+        .btn-gold {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
             border: none;
             padding: 12px 20px;
             border-radius: 30px;
@@ -227,11 +240,11 @@
             font-size: 0.95rem;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+            box-shadow: var(--gold-glow);
             transition: transform 0.2s;
         }
 
-        .btn-neon:active { transform: scale(0.98); }
+        .btn-gold:active { transform: scale(0.98); }
 
         /* Navigation Bar */
         .nav-bar {
@@ -257,7 +270,7 @@
             cursor: pointer;
         }
 
-        .nav-item.active { color: var(--accent-cyan); }
+        .nav-item.active { color: var(--accent-gold); }
         .nav-item i { font-size: 1.2rem; }
 
         .input-box {
@@ -266,17 +279,17 @@
             margin-bottom: 10px;
             border-radius: 8px;
             border: 1px solid var(--card-border);
-            background: #080f1e;
+            background: #0b0712;
             color: #fff;
         }
     </style>
 </head>
 <body>
 
-<!-- 1. LOADING SCREEN -->
+<!-- Loading Screen -->
 <div id="loading-screen">
     <div class="loader"></div>
-    <h3 style="margin-top: 15px; color: var(--accent-cyan);">Fly Cash লোড হচ্ছে...</h3>
+    <h3 style="margin-top: 15px; color: var(--accent-gold);">Fly Cash লোড হচ্ছে...</h3>
 </div>
 
 <div class="app-container">
@@ -290,7 +303,7 @@
     <!-- User Profile Bar -->
     <div class="user-card">
         <div class="avatar-box">
-            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=00f2fe&color=000" alt="Profile">
+            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=ffb703&color=000" alt="Profile">
         </div>
         <div>
             <h4 id="user-name" style="font-size: 0.95rem;">লোড হচ্ছে...</h4>
@@ -298,7 +311,7 @@
         </div>
     </div>
 
-    <!-- 1. HOME PAGE -->
+    <!-- 1. HOME PAGE (ALL FEATURES TOGETHER) -->
     <div id="home" class="page-section active">
         <!-- Main Balance Card -->
         <div class="balance-card">
@@ -306,10 +319,14 @@
             <h1 id="user-balance">TK 0.00</h1>
         </div>
 
-        <!-- Dynamic Fake Withdraw Ticker -->
-        <div class="ticker-card" id="fake-ticker">
-            <i class="fa-solid fa-bell" style="color: var(--accent-cyan);"></i>
-            <span id="ticker-text"><strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন</span>
+        <!-- Continuous Scrolling Fake Payment Proof Ticker -->
+        <div class="marquee-container">
+            <div class="marquee-content">
+                ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Tan***</strong> মাত্র <strong>TK 4500</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Rif***</strong> মাত্র <strong>TK 2200</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Sal***</strong> মাত্র <strong>TK 7800</strong> উইথড্র করেছেন
+            </div>
         </div>
 
         <!-- Dashboard Stats Grid -->
@@ -336,29 +353,12 @@
             </div>
         </div>
 
-        <!-- Leaderboard Feature Link Card -->
-        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="background: #152238; padding: 10px; border-radius: 10px; color: var(--accent-cyan);">
-                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
-                </div>
-            </div>
-            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
-        </div>
-    </div>
-
-    <!-- 2. TASK PAGE (Mystery Box & Daily Bonus) -->
-    <div id="task" class="page-section">
-        <!-- Mystery Box Section -->
+        <!-- FEATURE 1: Mystery Box Section -->
         <div class="feature-card">
             <h3 style="margin-bottom: 5px;">মিষ্টি বক্স 🎁</h3>
             <p style="font-size: 0.8rem; color: var(--text-sub);">বক্স খুলতে অ্যাড দেখুন</p>
             
-            <div style="font-size: 4rem; margin: 15px 0;">🎁</div>
+            <div style="font-size: 3.5rem; margin: 10px 0;">🎁</div>
 
             <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-sub);">
                 <span>অ্যাড প্রগ্রেস</span>
@@ -369,10 +369,24 @@
             </div>
             <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 15px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
 
-            <button class="btn-neon" onclick="watchAd()">অ্যাড দেখুন (১ম অ্যাড)</button>
+            <button class="btn-gold" onclick="watchAd()">অ্যাড দেখুন (১ম অ্যাড)</button>
         </div>
 
-        <!-- Daily Bonus Section -->
+        <!-- FEATURE 2: Leaderboard Banner Card -->
+        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
+                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
+        </div>
+
+        <!-- FEATURE 3: Daily Bonus Section -->
         <div class="feature-card">
             <h3>Daily Bonus 🎁 দৈনিক বোনাস</h3>
             <p style="font-size: 0.75rem; color: var(--text-sub);">প্রতিদিন বোনাস সংগ্রহ করুন ➡️ Claim your bonus every day</p>
@@ -384,7 +398,17 @@
                 <div class="bonus-box">৪র্থ দিন<span>TK 60.00</span></div>
             </div>
 
-            <button class="btn-neon" onclick="claimDailyBonus()">এখনই ক্লেইম করুন (দিন ১)</button>
+            <button class="btn-gold" onclick="claimDailyBonus()">এখনই ক্লেইম করুন (দিন ১)</button>
+        </div>
+    </div>
+
+    <!-- 2. OTHER TASKS PAGE -->
+    <div id="task" class="page-section">
+        <h3 style="margin-bottom: 15px;">অন্যান্য টাস্কসমূহ</h3>
+        <div class="action-card" style="margin-bottom: 10px;">
+            <h4>ইউটিউব ভিডিও দেখুন</h4>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">পুরস্কার: TK 5.00</p>
+            <button class="btn-gold" style="margin-top: 10px;" onclick="alert('টাস্ক সম্পন্ন হয়েছে!')">শুরু করুন</button>
         </div>
     </div>
 
@@ -403,7 +427,7 @@
         <div class="feature-card" style="text-align: left;">
             <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার ইউনিক রেফারেল লিংকটি কপি করে বন্ধুদের সাথে শেয়ার করুন।</p>
             <input type="text" class="input-box" id="refer-link" value="জেনারেট হচ্ছে..." readonly>
-            <button class="btn-neon" onclick="copyReferLink()">লিংক কপি করুন</button>
+            <button class="btn-gold" onclick="copyReferLink()">লিংক কপি করুন</button>
         </div>
     </div>
 
@@ -418,7 +442,7 @@
             </select>
             <input type="number" class="input-box" id="withdraw-amount" placeholder="টাকার পরিমাণ (নূন্যতম ৫০ টাকা)">
             <input type="text" class="input-box" id="account-number" placeholder="একাউন্ট নম্বর">
-            <button class="btn-neon" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+            <button class="btn-gold" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
         </div>
     </div>
 
@@ -445,7 +469,7 @@
         }, 1500);
     });
 
-    // Telegram User Data Load
+    // Telegram User Data Integration
     window.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram?.WebApp;
         if (tg) {
@@ -459,7 +483,7 @@
                 document.getElementById('user-handle').innerText = user.username ? `@${user.username}` : `ID: ${user.id}`;
                 if (user.photo_url) document.getElementById('user-photo').src = user.photo_url;
 
-                const botUsername = 'MoneyRushBDBot'; // আপনার সঠিক বট ইউজারনেম
+                const botUsername = 'MoneyRushBDBot';
                 document.getElementById('refer-link').value = `https://t.me/${botUsername}?start=ref_${user.id}`;
             } else {
                 setFallbackUser();
@@ -474,20 +498,6 @@
         document.getElementById('user-handle').innerText = '@EARNINGIINEWS';
         document.getElementById('refer-link').value = 'https://t.me/MoneyRushBDBot?start=ref_12345';
     }
-
-    // Fake Dynamic Withdraw Generator
-    const fakeNames = ['Bip***', 'Tan***', 'Rif***', 'Sal***', 'Aki***', 'Ror***'];
-    setInterval(() => {
-        const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
-        const randomAmount = Math.floor(Math.random() * (9000 - 500 + 1)) + 500;
-        const ticker = document.getElementById('ticker-text');
-        
-        document.getElementById('fake-ticker').style.opacity = '0';
-        setTimeout(() => {
-            ticker.innerHTML = `<strong>${randomName}</strong> মাত্র <strong>TK ${randomAmount}</strong> উইথড্র করেছেন`;
-            document.getElementById('fake-ticker').style.opacity = '1';
-        }, 300);
-    }, 4000);
 
     // Watch Ad Logic
     function watchAd() {
