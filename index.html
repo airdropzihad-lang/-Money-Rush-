@@ -450,6 +450,108 @@
             background: #0b0712;
             color: #fff;
         }
+
+        /* NEW CUSTOM SUPPORT SECTION STYLES */
+        .section-header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 15px 0 12px 0;
+        }
+
+        .tutorial-card {
+            background: linear-gradient(135deg, #7b2cbf, #5a189a);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: var(--purple-glow);
+            margin-bottom: 25px;
+        }
+
+        .tutorial-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .tutorial-card p {
+            font-size: 0.85rem;
+            color: #e0aaff;
+            line-height: 1.4;
+            margin-bottom: 18px;
+        }
+
+        .btn-watch-video {
+            background: #0b0712;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--gold-glow);
+        }
+
+        .support-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .tg-circle-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(157, 78, 221, 0.15);
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            color: var(--accent-neon);
+            font-size: 1.8rem;
+            box-shadow: var(--purple-glow);
+        }
+
+        .support-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .support-card p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .support-pill-btn {
+            display: inline-block;
+            background: rgba(11, 7, 18, 0.8);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-gold);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .support-pill-btn:hover {
+            border-color: var(--accent-gold);
+            box-shadow: var(--gold-glow);
+        }
     </style>
 </head>
 <body>
@@ -566,7 +668,7 @@
             <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
         </div>
 
-        <!-- LEADERBOARD SECTION (RESTORED) -->
+        <!-- LEADERBOARD SECTION -->
         <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
@@ -610,12 +712,27 @@
         </div>
     </div>
 
-    <!-- SUPPORT PAGE -->
+    <!-- SUPPORT PAGE (UPDATED ACCORDING TO SCREENSHOTS) -->
     <div id="support" class="page-section">
-        <h3 style="margin-bottom: 15px;">হেল্প ও সাপোর্ট</h3>
-        <div class="action-card" style="cursor: pointer;" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
-            <h4 style="color:#fff;"><i class="fa-brands fa-telegram"></i> অফিশিয়াল টেলিগ্রাম চ্যানেল</h4>
-            <p>সব আপডেট পেতে জয়েন থাকুন</p>
+        <div class="section-header-title">কাজের ভিডিও / টিউটোরিয়াল</div>
+        <div class="tutorial-card">
+            <h2>কিভাবে কাজ করবেন?</h2>
+            <p>কাজ শুরু করার আগে এই ভিডিওটি দেখে নিন। ভিডিওতে সম্পূর্ণভাবে দেখানো হয়েছে কিভাবে সঠিক নিয়মে কাজ করতে হয়।</p>
+            <button class="btn-watch-video" onclick="window.open('https://youtube.com', '_blank')">
+                <i class="fa-solid fa-tv"></i> ভিডিও দেখুন
+            </button>
+        </div>
+
+        <div class="section-header-title">সহায়তা প্রয়োজন?</div>
+        <div class="support-card">
+            <div class="tg-circle-icon">
+                <i class="fa-paper-plane"></i>
+            </div>
+            <h3>কাস্টমার সাপোর্ট</h3>
+            <p>যেকোনো সমস্যার সমাধানের জন্য আমাদের সাথে যোগাযোগ করুন</p>
+            <a href="https://t.me/FlyCashSupportBD" target="_blank" class="support-pill-btn">
+                @FlyCashSupportBD
+            </a>
         </div>
     </div>
 
@@ -795,7 +912,7 @@
 
         if (timePassed < cooldown) {
             bonusBtn.disabled = true;
-            statusBox.style.display = 'block'; // Show Status Cards
+            statusBox.style.display = 'block';
 
             const remaining = cooldown - timePassed;
             const hours = Math.floor(remaining / (1000 * 60 * 60));
@@ -803,7 +920,7 @@
             bonusBtn.innerText = `পরবর্তী বোনাস: ${hours} ঘণ্টা ${minutes} মিনিট পর`;
         } else {
             bonusBtn.disabled = false;
-            statusBox.style.display = 'none'; // Hide status when ready to claim
+            statusBox.style.display = 'none';
             bonusBtn.innerText = 'এখনই ক্লেইম করুন';
         }
     }
