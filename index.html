@@ -44,7 +44,7 @@
             position: relative;
         }
 
-        /* 1. INITIAL LOADING SCREEN FIX */
+        /* 1. INITIAL LOADING SCREEN */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -130,7 +130,7 @@
         .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
         .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
 
-        /* Slow & Smooth Continuous Marquee */
+        /* Marquee */
         .marquee-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -179,7 +179,7 @@
         .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
         .action-card p { font-size: 1.2rem; font-weight: bold; }
 
-        /* Feature Section Cards on Home */
+        /* Feature Section Cards */
         .feature-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -205,30 +205,6 @@
             transition: width 0.3s;
         }
 
-        /* Daily Bonus Grid */
-        .bonus-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 15px 0;
-        }
-
-        .bonus-box {
-            background: #0b0712;
-            border: 1px solid var(--card-border);
-            padding: 10px 5px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            text-align: center;
-        }
-
-        .bonus-box.active {
-            border-color: var(--accent-gold);
-            box-shadow: var(--gold-glow);
-        }
-
-        .bonus-box span { display: block; color: var(--accent-gold); font-weight: bold; margin-top: 4px; }
-
         /* Buttons */
         .btn-gold {
             background: linear-gradient(90deg, #ffb703, #fb8500);
@@ -252,6 +228,127 @@
         }
 
         .btn-gold:active:not(:disabled) { transform: scale(0.98); }
+
+        /* NEW TASK SECTION STYLES (Matching original Purple & Gold Theme) */
+        .task-main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .icon-circle-purple {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+            box-shadow: var(--purple-glow);
+            background: rgba(157, 78, 221, 0.1);
+        }
+
+        .icon-circle-purple i {
+            font-size: 2rem;
+            color: var(--accent-neon);
+        }
+
+        .task-title-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .task-sub-text {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+        }
+
+        .reward-pill-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 183, 3, 0.1);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            box-shadow: var(--gold-glow);
+        }
+
+        .telegram-row-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .tg-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tg-icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: #0b0712;
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tg-icon-box i {
+            font-size: 1.6rem;
+            color: var(--accent-gold);
+        }
+
+        .tg-info h4 {
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 3px;
+            line-height: 1.2;
+        }
+
+        .tg-info p {
+            font-size: 0.78rem;
+            color: var(--text-sub);
+        }
+
+        .tg-info span {
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .btn-tg-join {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: var(--gold-glow);
+        }
 
         /* Navigation Bar */
         .nav-bar {
@@ -326,7 +423,7 @@
             <h1 id="user-balance">TK 0.00</h1>
         </div>
 
-        <!-- Slow Continuous Fake Payment Ticker -->
+        <!-- Fake Payment Ticker -->
         <div class="marquee-container">
             <div class="marquee-content">
                 ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -360,11 +457,10 @@
             </div>
         </div>
 
-        <!-- FEATURE 1: Mystery Box Section -->
+        <!-- Mystery Box Section -->
         <div class="feature-card">
             <h3 style="margin-bottom: 5px;">মিষ্টি বক্স 🎁</h3>
             <p style="font-size: 0.8rem; color: var(--text-sub);">বক্স খুলতে অ্যাড দেখুন</p>
-            
             <div style="font-size: 3.5rem; margin: 10px 0;">🎁</div>
 
             <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-sub);">
@@ -378,44 +474,59 @@
 
             <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
         </div>
-
-        <!-- FEATURE 2: Daily Bonus Section (with 24h Timer) -->
-        <div class="feature-card">
-            <h3>Daily Bonus 🎁 দৈনিক বোনাস</h3>
-            <p style="font-size: 0.75rem; color: var(--text-sub);">প্রতি ২৪ ঘণ্টায় একবার বোনাস সংগ্রহ করুন</p>
-
-            <div class="bonus-grid">
-                <div class="bonus-box active">১ম দিন<span>TK 20.00</span></div>
-                <div class="bonus-box">২য় দিন<span>TK 35.00</span></div>
-                <div class="bonus-box">৩য় দিন<span>TK 45.00</span></div>
-                <div class="bonus-box">৪র্থ দিন<span>TK 60.00</span></div>
-            </div>
-
-            <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
-        </div>
-
-        <!-- FEATURE 3: Leaderboard (Moved to Bottom) -->
-        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
-                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
-                </div>
-            </div>
-            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
-        </div>
     </div>
 
-    <!-- 2. OTHER TASKS PAGE -->
+    <!-- 2. UPDATED TASK PAGE (Original Theme Maintained) -->
     <div id="task" class="page-section">
-        <h3 style="margin-bottom: 15px;">অন্যান্য টাস্কসমূহ</h3>
-        <div class="action-card" style="margin-bottom: 10px;">
-            <h4>ইউটিউব ভিডিও দেখুন</h4>
-            <p style="font-size: 0.8rem; color: var(--text-sub);">পুরস্কার: TK 5.00</p>
-            <button class="btn-gold" style="margin-top: 10px;" onclick="completeTask(5)">শুরু করুন</button>
+        <!-- Main Ad Task -->
+        <div class="task-main-card">
+            <div class="icon-circle-purple">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div class="task-title-text">অ্যাড দেখুন</div>
+            <div class="task-sub-text">প্রতিটি অ্যাড দেখলে TK 20.00 ইনকাম করুন</div>
+
+            <div class="reward-pill-gold">
+                💵 রিওয়ার্ড: TK 20.00
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #fff; font-weight: 600; margin-bottom: 6px;">
+                <span>আজকের কাজ সম্পন্ন</span>
+                <span id="task-ad-count">0 / 15</span>
+            </div>
+            <div class="progress-bar-bg" style="margin-bottom: 18px;">
+                <div class="progress-fill" id="task-progress-bar" style="width: 0%;"></div>
+            </div>
+
+            <button class="btn-gold" onclick="watchTaskAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <!-- Official Channel Task -->
+        <div class="telegram-row-card">
+            <div class="tg-left">
+                <div class="tg-icon-box">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="tg-info">
+                    <h4>অফিসিয়াল<br>চ্যানেল</h4>
+                    <p>রিওয়ার্ড: <span>TK 70.00</span></p>
+                </div>
+            </div>
+            <button class="btn-tg-join" onclick="joinTelegram('https://t.me/EARNINGIINEWS', 70)">এখনই জয়েন করুন</button>
+        </div>
+
+        <!-- Payment Channel Task -->
+        <div class="telegram-row-card">
+            <div class="tg-left">
+                <div class="tg-icon-box">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="tg-info">
+                    <h4>পেমেন্ট<br>চ্যানেল</h4>
+                    <p>রিওয়ার্ড: <span>TK 70.00</span></p>
+                </div>
+            </div>
+            <button class="btn-tg-join" onclick="joinTelegram('https://t.me/EARNINGIINEWS', 70)">এখনই জয়েন করুন</button>
         </div>
     </div>
 
@@ -424,7 +535,7 @@
         <h3 style="margin-bottom: 15px;">হেল্প ও সাপোর্ট</h3>
         <div class="action-card" style="cursor: pointer;" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
             <h4 style="color:#fff;"><i class="fa-brands fa-telegram"></i> অফিশিয়াল টেলিগ্রাম চ্যানেল</h4>
-            <p>সব আপডেট পেতে জয়েন থাকুন</p>
+            <p>সব আপডেট পেতে জয়েন থাকুন</p>
         </div>
     </div>
 
@@ -432,7 +543,7 @@
     <div id="refer" class="page-section">
         <h3 style="margin-bottom: 15px;">রেফার করে ইনকাম করুন</h3>
         <div class="feature-card" style="text-align: left;">
-            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার ইউনিক রেফারেল লিংকটি কপি করে বন্ধুদের সাথে শেয়ার করুন।</p>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার ইউনিক রেফারেল লিংকটি কপি করে বন্ধুদের সাথে শেয়ার করুন।</p>
             <input type="text" class="input-box" id="refer-link" value="জেনারেট হচ্ছে..." readonly>
             <button class="btn-gold" onclick="copyReferLink()">লিংক কপি করুন</button>
         </div>
@@ -464,19 +575,18 @@
 </div>
 
 <script>
-    // User Data Management
     let userData = {
         balance: 0.00,
         bonusBalance: 0.00,
         totalTasks: 0,
         totalAds: 0,
         adProgress: 0,
-        lastBonusTime: 0
+        taskAdsDone: 0
     };
 
     function loadUserData() {
         try {
-            const saved = localStorage.getItem('flycash_user_data');
+            const saved = localStorage.getItem('flycash_user_data_v3');
             if (saved) {
                 userData = { ...userData, ...JSON.parse(saved) };
             }
@@ -488,7 +598,7 @@
 
     function saveData() {
         try {
-            localStorage.setItem('flycash_user_data', JSON.stringify(userData));
+            localStorage.setItem('flycash_user_data_v3', JSON.stringify(userData));
         } catch (e) {
             console.error("Save error:", e);
         }
@@ -505,33 +615,10 @@
         document.getElementById('ads-done').innerText = userData.adProgress;
         document.getElementById('ad-progress').style.width = `${(userData.adProgress / 3) * 100}%`;
 
-        checkDailyBonusTimer();
+        // Task Section Progress
+        document.getElementById('task-ad-count').innerText = `${userData.taskAdsDone} / 15`;
+        document.getElementById('task-progress-bar').style.width = `${(userData.taskAdsDone / 15) * 100}%`;
     }
-
-    function checkDailyBonusTimer() {
-        const bonusBtn = document.getElementById('btn-daily-bonus');
-        if (!bonusBtn) return;
-        
-        const now = Date.now();
-        const cooldown = 24 * 60 * 60 * 1000;
-        const timePassed = now - userData.lastBonusTime;
-
-        if (timePassed < cooldown) {
-            bonusBtn.disabled = true;
-            const remaining = cooldown - timePassed;
-            
-            const hours = Math.floor(remaining / (1000 * 60 * 60));
-            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-
-            bonusBtn.innerText = `পরবর্তী বোনাস: ${hours}h ${minutes}m ${seconds}s`;
-        } else {
-            bonusBtn.disabled = false;
-            bonusBtn.innerText = 'এখনই ক্লেইম করুন';
-        }
-    }
-
-    setInterval(checkDailyBonusTimer, 1000);
 
     function watchAd() {
         if (userData.adProgress < 3) {
@@ -540,40 +627,38 @@
 
             if (userData.adProgress === 3) {
                 userData.balance += 10.00;
-                alert('অভিনন্দন! মিষ্টি বক্স থেকে ১০ টাকা রিওয়ার্ড পেয়েছেন!');
+                alert('অভিনন্দন! মিষ্টি বক্স থেকে ১০ টাকা রিওয়ার্ড পেয়েছেন!');
                 userData.adProgress = 0;
             } else {
-                alert(`অ্যাড ${userData.adProgress} সফলভাবে দেখা হয়েছে।`);
+                alert(`অ্যাড ${userData.adProgress} সফলভাবে দেখা হয়েছে।`);
             }
             saveData();
         }
     }
 
-    function claimDailyBonus() {
-        const now = Date.now();
-        const cooldown = 24 * 60 * 60 * 1000;
-
-        if (now - userData.lastBonusTime >= cooldown) {
+    function watchTaskAd() {
+        if (userData.taskAdsDone < 15) {
+            userData.taskAdsDone++;
+            userData.totalAds++;
             userData.balance += 20.00;
-            userData.bonusBalance += 20.00;
-            userData.lastBonusTime = now;
             saveData();
-            alert('১ম দিনের ২০ টাকা বোনাস ক্লেইম করা হয়েছে!');
+            alert('অ্যাড সফলভাবে সম্পন্ন হয়েছে! TK 20.00 যোগ করা হলো।');
+        } else {
+            alert('আজকের ১৫টি কাজ সম্পন্ন হয়ে গেছে!');
         }
     }
 
-    function completeTask(reward) {
+    function joinTelegram(url, reward) {
+        window.open(url, '_blank');
         userData.balance += reward;
         userData.totalTasks++;
         saveData();
-        alert(`টাস্ক সম্পন্ন হয়েছে! TK ${reward} যোগ করা হলো।`);
+        alert(`চ্যানেলে জয়েন করার জন্য TK ${reward.toFixed(2)} যোগ করা হয়েছে!`);
     }
 
-    // Direct Safe App Initialization & Loader Hide
     function initApp() {
         loadUserData();
 
-        // Load Telegram Data Safely
         try {
             const tg = window.Telegram?.WebApp;
             if (tg) {
@@ -583,8 +668,8 @@
 
                 if (user) {
                     const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
-                    document.getElementById('user-name').innerText = fullName || 'Telegram User';
-                    document.getElementById('user-handle').innerText = user.username ? `@${user.username}` : `ID: ${user.id}`;
+                    document.getElementById('user-name').innerText = fullName || 'ZIHAD 👑';
+                    document.getElementById('user-handle').innerText = user.username ? `@${user.username}` : `@EARNINGIINEWS`;
                     if (user.photo_url) document.getElementById('user-photo').src = user.photo_url;
 
                     const botUsername = 'MoneyRushBDBot';
@@ -599,19 +684,18 @@
             setFallbackUser();
         }
 
-        // Hide Loader Safely
         setTimeout(() => {
             const loader = document.getElementById('loading-screen');
             if (loader) {
                 loader.style.opacity = '0';
                 loader.style.visibility = 'hidden';
             }
-        }, 800);
+        }, 500);
     }
 
     function setFallbackUser() {
-        document.getElementById('user-name').innerText = 'FKFFG👑';
-        document.getElementById('user-handle').innerText = 'HGHKHGGG';
+        document.getElementById('user-name').innerText = 'ZIHAD 👑';
+        document.getElementById('user-handle').innerText = '@EARNINGIINEWS';
         document.getElementById('refer-link').value = 'https://t.me/MoneyRushBDBot?start=ref_12345';
     }
 
@@ -651,10 +735,9 @@
 
         userData.balance -= amount;
         saveData();
-        alert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!');
+        alert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!');
     }
 
-    // Trigger Initialization Immediately
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initApp);
     } else {
