@@ -130,6 +130,621 @@
         .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
         .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
 
+        /* Slow & Smooth Continuous Marquee */
+        .marquee-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 12px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 35s linear infinite; /* Slow speed */
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .marquee-content strong { color: var(--accent-gold); }
+
+        /* Grid Stats */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 15px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .action-card i { font-size: 1.4rem; color: var(--accent-gold); }
+        .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
+        .action-card p { font-size: 1.2rem; font-weight: bold; }
+
+        /* Feature Section Cards on Home */
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .progress-bar-bg {
+            background: #0b0712;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Daily Bonus Grid */
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .bonus-box {
+            background: #0b0712;
+            border: 1px solid var(--card-border);
+            padding: 10px 5px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .bonus-box.active {
+            border-color: var(--accent-gold);
+            box-shadow: var(--gold-glow);
+        }
+
+        .bonus-box span { display: block; color: var(--accent-gold); font-weight: bold; margin-top: 4px; }
+
+        /* Buttons */
+        .btn-gold {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: var(--gold-glow);
+            transition: transform 0.2s;
+        }
+
+        .btn-gold:disabled {
+            background: #4a3e20;
+            color: #888;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-gold:active:not(:disabled) { transform: scale(0.98); }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 450px;
+            height: 65px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .nav-item.active { color: var(--accent-gold); }
+        .nav-item i { font-size: 1.2rem; }
+
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: #0b0712;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen">
+    <div class="loader"></div>
+    <h3 style="margin-top: 15px; color: var(--accent-gold);">Fly Cash লোড হচ্ছে...</h3>
+</div>
+
+<div class="app-container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="logo-title">
+            Fly Cash 🚀 টাকা উড়াও 💸 <i class="fa-solid fa-circle-check" style="font-size:0.9rem;"></i>
+        </div>
+    </div>
+
+    <!-- User Profile Bar -->
+    <div class="user-card">
+        <div class="avatar-box">
+            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=ffb703&color=000" alt="Profile">
+        </div>
+        <div>
+            <h4 id="user-name" style="font-size: 0.95rem;">লোড হচ্ছে...</h4>
+            <p id="user-handle" style="font-size: 0.75rem; color: var(--text-sub);">@username</p>
+        </div>
+    </div>
+
+    <!-- 1. HOME PAGE -->
+    <div id="home" class="page-section active">
+        <!-- Main Balance Card -->
+        <div class="balance-card">
+            <span>মোট ব্যালেন্স</span>
+            <h1 id="user-balance">TK 0.00</h1>
+        </div>
+
+        <!-- Slow Continuous Fake Payment Ticker -->
+        <div class="marquee-container">
+            <div class="marquee-content">
+                ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Tan***</strong> মাত্র <strong>TK 4500</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Rif***</strong> মাত্র <strong>TK 2200</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Sal***</strong> মাত্র <strong>TK 7800</strong> উইথড্র করেছেন
+            </div>
+        </div>
+
+        <!-- Dashboard Stats Grid -->
+        <div class="grid-container">
+            <div class="action-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>মোট টাস্ক</h4>
+                <p id="total-tasks">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-users"></i>
+                <h4>মোট রেফার</h4>
+                <p id="total-refers">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-video"></i>
+                <h4>অ্যাড দেখা হয়েছে</h4>
+                <p id="total-ads">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-wallet"></i>
+                <h4>বোনাস ব্যালেন্স</h4>
+                <p id="bonus-balance">TK 0.00</p>
+            </div>
+        </div>
+
+        <!-- FEATURE 1: Mystery Box Section -->
+        <div class="feature-card">
+            <h3 style="margin-bottom: 5px;">মিষ্টি বক্স 🎁</h3>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">বক্স খুলতে অ্যাড দেখুন</p>
+            
+            <div style="font-size: 3.5rem; margin: 10px 0;">🎁</div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-sub);">
+                <span>অ্যাড প্রগ্রেস</span>
+                <span id="ad-count-text">0/3</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-fill" id="ad-progress" style="width: 0%;"></div>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 15px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
+
+            <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <!-- FEATURE 2: Daily Bonus Section (with 24h Timer) -->
+        <div class="feature-card">
+            <h3>Daily Bonus 🎁 দৈনিক বোনাস</h3>
+            <p style="font-size: 0.75rem; color: var(--text-sub);">প্রতি ২৪ ঘণ্টায় একবার বোনাস সংগ্রহ করুন</p>
+
+            <div class="bonus-grid">
+                <div class="bonus-box active">১ম দিন<span>TK 20.00</span></div>
+                <div class="bonus-box">২য় দিন<span>TK 35.00</span></div>
+                <div class="bonus-box">৩য় দিন<span>TK 45.00</span></div>
+                <div class="bonus-box">৪র্থ দিন<span>TK 60.00</span></div>
+            </div>
+
+            <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
+        </div>
+
+        <!-- FEATURE 3: Leaderboard (Moved to Bottom) -->
+        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
+                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
+        </div>
+    </div>
+
+    <!-- 2. OTHER TASKS PAGE -->
+    <div id="task" class="page-section">
+        <h3 style="margin-bottom: 15px;">অন্যান্য টাস্কসমূহ</h3>
+        <div class="action-card" style="margin-bottom: 10px;">
+            <h4>ইউটিউব ভিডিও দেখুন</h4>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">পুরস্কার: TK 5.00</p>
+            <button class="btn-gold" style="margin-top: 10px;" onclick="completeTask(5)">শুরু করুন</button>
+        </div>
+    </div>
+
+    <!-- 3. SUPPORT PAGE -->
+    <div id="support" class="page-section">
+        <h3 style="margin-bottom: 15px;">হেল্প ও সাপোর্ট</h3>
+        <div class="action-card" style="cursor: pointer;" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
+            <h4 style="color:#fff;"><i class="fa-brands fa-telegram"></i> অফিশিয়াল টেলিগ্রাম চ্যানেল</h4>
+            <p>সব আপডেট পেতে জয়েন থাকুন</p>
+        </div>
+    </div>
+
+    <!-- 4. REFER PAGE -->
+    <div id="refer" class="page-section">
+        <h3 style="margin-bottom: 15px;">রেফার করে ইনকাম করুন</h3>
+        <div class="feature-card" style="text-align: left;">
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার ইউনিক রেফারেল লিংকটি কপি করে বন্ধুদের সাথে শেয়ার করুন।</p>
+            <input type="text" class="input-box" id="refer-link" value="জেনারেট হচ্ছে..." readonly>
+            <button class="btn-gold" onclick="copyReferLink()">লিংক কপি করুন</button>
+        </div>
+    </div>
+
+    <!-- 5. WALLET PAGE -->
+    <div id="wallet" class="page-section">
+        <h3 style="margin-bottom: 15px;">টাকা তুলুন (Withdraw)</h3>
+        <div class="feature-card" style="text-align: left;">
+            <select class="input-box" id="payment-method">
+                <option value="bkash">বিকাশ (bKash)</option>
+                <option value="nagad">নগদ (Nagad)</option>
+                <option value="recharge">মোবাইল রিচার্জ</option>
+            </select>
+            <input type="number" class="input-box" id="withdraw-amount" placeholder="টাকার পরিমাণ (নূন্যতম ৫০ টাকা)">
+            <input type="text" class="input-box" id="account-number" placeholder="একাউন্ট নম্বর">
+            <button class="btn-gold" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <div class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i><span>হোম</span></div>
+        <div class="nav-item" onclick="switchTab('task', this)"><i class="fa-solid fa-list-check"></i><span>টাস্ক</span></div>
+        <div class="nav-item" onclick="switchTab('support', this)"><i class="fa-solid fa-headset"></i><span>সাপোর্ট</span></div>
+        <div class="nav-item" onclick="switchTab('refer', this)"><i class="fa-solid fa-user-plus"></i><span>রেফার</span></div>
+        <div class="nav-item" onclick="switchTab('wallet', this)"><i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span></div>
+    </div>
+</div>
+
+<script>
+    // App State Management (LocalStorage Integration)
+    let userData = {
+        balance: 0.00,
+        bonusBalance: 0.00,
+        totalTasks: 0,
+        totalAds: 0,
+        adProgress: 0,
+        lastBonusTime: 0
+    };
+
+    // Load Saved Data
+    function loadUserData() {
+        const saved = localStorage.getItem('flycash_user_data');
+        if (saved) {
+            userData = { ...userData, ...JSON.parse(saved) };
+        }
+        updateUI();
+    }
+
+    // Save Data
+    function saveData() {
+        localStorage.setItem('flycash_user_data', JSON.stringify(userData));
+        updateUI();
+    }
+
+    // Update Interface State
+    function updateUI() {
+        document.getElementById('user-balance').innerText = `TK ${userData.balance.toFixed(2)}`;
+        document.getElementById('bonus-balance').innerText = `TK ${userData.bonusBalance.toFixed(2)}`;
+        document.getElementById('total-tasks').innerText = userData.totalTasks;
+        document.getElementById('total-ads').innerText = userData.totalAds;
+        
+        document.getElementById('ad-count-text').innerText = `${userData.adProgress}/3`;
+        document.getElementById('ads-done').innerText = userData.adProgress;
+        document.getElementById('ad-progress').style.width = `${(userData.adProgress / 3) * 100}%`;
+
+        checkDailyBonusTimer();
+    }
+
+    // Daily Bonus 24 Hour Timer Handler
+    function checkDailyBonusTimer() {
+        const bonusBtn = document.getElementById('btn-daily-bonus');
+        const now = Date.now();
+        const cooldown = 24 * 60 * 60 * 1000; // 24 hours
+        const timePassed = now - userData.lastBonusTime;
+
+        if (timePassed < cooldown) {
+            bonusBtn.disabled = true;
+            const remaining = cooldown - timePassed;
+            
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+            bonusBtn.innerText = `পরবর্তী বোনাস: ${hours}h ${minutes}m ${seconds}s`;
+        } else {
+            bonusBtn.disabled = false;
+            bonusBtn.innerText = 'এখনই ক্লেইম করুন';
+        }
+    }
+
+    // Run Timer Update Every Second
+    setInterval(checkDailyBonusTimer, 1000);
+
+    // Watch Ad Logic
+    function watchAd() {
+        if (userData.adProgress < 3) {
+            userData.adProgress++;
+            userData.totalAds++;
+
+            if (userData.adProgress === 3) {
+                userData.balance += 10.00;
+                alert('অভিনন্দন! মিষ্টি বক্স থেকে ১০ টাকা রিওয়ার্ড পেয়েছেন!');
+                userData.adProgress = 0; // Reset after complete
+            } else {
+                alert(`অ্যাড ${userData.adProgress} সফলভাবে দেখা হয়েছে।`);
+            }
+            saveData();
+        }
+    }
+
+    // Claim Daily Bonus
+    function claimDailyBonus() {
+        const now = Date.now();
+        const cooldown = 24 * 60 * 60 * 1000;
+
+        if (now - userData.lastBonusTime >= cooldown) {
+            userData.balance += 20.00;
+            userData.bonusBalance += 20.00;
+            userData.lastBonusTime = now;
+            saveData();
+            alert('১ম দিনের ২০ টাকা বোনাস ক্লেইম করা হয়েছে!');
+        }
+    }
+
+    // Task Completion
+    function completeTask(reward) {
+        userData.balance += reward;
+        userData.totalTasks++;
+        saveData();
+        alert(`টাস্ক সম্পন্ন হয়েছে! TK ${reward} যোগ করা হলো।`);
+    }
+
+    // Initial Loading Handler
+    window.addEventListener('load', () => {
+        loadUserData();
+        setTimeout(() => {
+            const loader = document.getElementById('loading-screen');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+        }, 1500);
+    });
+
+    // Telegram Profile Integration
+    window.addEventListener('DOMContentLoaded', () => {
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            const user = tg.initDataUnsafe?.user;
+
+            if (user) {
+                const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+                document.getElementById('user-name').innerText = fullName || 'Telegram User';
+                document.getElementById('user-handle').innerText = user.username ? `@${user.username}` : `ID: ${user.id}`;
+                if (user.photo_url) document.getElementById('user-photo').src = user.photo_url;
+
+                const botUsername = 'MoneyRushBDBot';
+                document.getElementById('refer-link').value = `https://t.me/${botUsername}?start=ref_${user.id}`;
+            } else {
+                setFallbackUser();
+            }
+        } else {
+            setFallbackUser();
+        }
+    });
+
+    function setFallbackUser() {
+        document.getElementById('user-name').innerText = 'ZIHAD 👑';
+        document.getElementById('user-handle').innerText = '@EARNINGIINEWS';
+        document.getElementById('refer-link').value = 'https://t.me/MoneyRushBDBot?start=ref_12345';
+    }
+
+    // Navigation Switcher
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        element.classList.add('active');
+    }
+
+    function copyReferLink() {
+        const copyText = document.getElementById("refer-link");
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value);
+        alert("রেফার লিংক কপি করা হয়েছে!");
+    }
+
+    function requestWithdraw() {
+        const amount = parseFloat(document.getElementById('withdraw-amount').value);
+        const number = document.getElementById('account-number').value;
+
+        if (!amount || amount < 50) {
+            alert('নূন্যতম ৫০ টাকা উইথড্র করতে হবে।');
+            return;
+        }
+
+        if (amount > userData.balance) {
+            alert('আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই।');
+            return;
+        }
+
+        if (!number) {
+            alert('সঠিক একাউন্ট নম্বর দিন।');
+            return;
+        }
+
+        userData.balance -= amount;
+        saveData();
+        alert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!');
+    }
+</script>
+
+</body>
+</html>        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--bg-color);
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        /* 1. INITIAL LOADING SCREEN */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--card-border);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: var(--gold-glow);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Top Bar Header */
+        .top-bar {
+            padding: 15px;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+        }
+
+        /* Profile Section */
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .avatar-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            overflow: hidden;
+            box-shadow: var(--gold-glow);
+        }
+
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Navigation Pages */
+        .page-section { display: none; padding: 15px; }
+        .page-section.active { display: block; }
+
+        /* Main Balance Card */
+        .balance-card {
+            padding: 25px 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #7b2cbf, #3c096c);
+            border: 1px solid var(--accent-purple);
+            box-shadow: var(--purple-glow);
+            color: #fff;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
+        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
+
         /* Continuous Marquee Fake Payment Ticker */
         .marquee-container {
             background: var(--card-bg);
