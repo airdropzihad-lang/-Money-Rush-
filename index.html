@@ -13,7 +13,7 @@
             --card-border: #2d1c4a;
             --accent-gold: #ffb703;
             --accent-purple: #9d4edd;
-            --accent-neon: #e0aaff;
+            --accent-neon: #00f5d4;
             --text-main: #ffffff;
             --text-sub: #a08ebb;
             --gold-glow: 0 0 15px rgba(255, 183, 3, 0.3);
@@ -35,6 +35,813 @@
             justify-content: center;
             min-height: 100vh;
         }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--bg-color);
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--card-border);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: var(--gold-glow);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .top-bar {
+            padding: 15px;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .avatar-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            overflow: hidden;
+            box-shadow: var(--gold-glow);
+        }
+
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .page-section { display: none; padding: 15px; }
+        .page-section.active { display: block; }
+
+        .balance-card {
+            padding: 25px 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #7b2cbf, #3c096c);
+            border: 1px solid var(--accent-purple);
+            box-shadow: var(--purple-glow);
+            color: #fff;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
+        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
+
+        .marquee-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 12px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 35s linear infinite;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .marquee-content strong { color: var(--accent-gold); }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 15px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .action-card i { font-size: 1.4rem; color: var(--accent-gold); }
+        .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
+        .action-card p { font-size: 1.2rem; font-weight: bold; }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .progress-bar-bg {
+            background: #0b0712;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* NEW ANIMATED GIFT BOX */
+        .gift-box-icon {
+            font-size: 4rem;
+            margin: 10px 0;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box-icon.shake-ready {
+            animation: boxShake 0.6s infinite alternate ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes boxShake {
+            0% { transform: rotate(-8deg) scale(1.05); }
+            50% { transform: rotate(8deg) scale(1.1); }
+            100% { transform: rotate(-8deg) scale(1.05); }
+        }
+
+        /* NEW DAILY BONUS GRID STYLES (MATCHING IMAGE) */
+        .bonus-grid-7 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .bonus-box-7 {
+            background: rgba(22, 14, 38, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 10px 4px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .bonus-box-7.active-day {
+            background: #00f5d4;
+            color: #000;
+            border-color: #00f5d4;
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.5);
+            font-weight: bold;
+        }
+
+        .bonus-box-7.active-day span { color: #000 !important; }
+
+        .bonus-box-7.claimed::after {
+            content: "✓";
+            position: absolute;
+            top: -6px;
+            right: -4px;
+            background: #fff;
+            color: #000;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bonus-box-7 span {
+            display: block;
+            color: var(--text-sub);
+            font-size: 0.7rem;
+            margin-top: 4px;
+        }
+
+        /* POPUP MODAL STYLES (MATCHING SCREENSHOTS) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 10, 19, 0.92);
+            backdrop-filter: blur(8px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .popup-gift-img {
+            width: 130px;
+            animation: floatAnim 1.8s infinite ease-in-out;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 15px;
+        }
+
+        .popup-reward-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent-neon);
+            margin: 10px 0 20px 0;
+            text-shadow: 0 0 12px rgba(0, 245, 212, 0.6);
+        }
+
+        .btn-popup-close {
+            background: #ffffff;
+            color: #000;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+        }
+
+        .btn-gold {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: var(--gold-glow);
+            transition: transform 0.2s;
+        }
+
+        .btn-gold:disabled {
+            background: #4a3e20;
+            color: #888;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-gold:active:not(:disabled) { transform: scale(0.98); }
+
+        /* Task & Nav Bar Styles */
+        .task-main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .icon-circle-purple {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+            box-shadow: var(--purple-glow);
+            background: rgba(157, 78, 221, 0.1);
+        }
+
+        .icon-circle-purple i { font-size: 2rem; color: #e0aaff; }
+
+        .reward-pill-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 183, 3, 0.1);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .telegram-row-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-tg-join {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 450px;
+            height: 65px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .nav-item.active { color: var(--accent-gold); }
+        .nav-item i { font-size: 1.2rem; }
+
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: #0b0712;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading-screen">
+    <div class="loader"></div>
+    <h3 style="margin-top: 15px; color: var(--accent-gold);">Fly Cash লোড হচ্ছে...</h3>
+</div>
+
+<div class="app-container">
+    <div class="top-bar">
+        <div class="logo-title">
+            Fly Cash 🚀 টাকা উড়াও 💸 <i class="fa-solid fa-circle-check" style="font-size:0.9rem;"></i>
+        </div>
+    </div>
+
+    <div class="user-card">
+        <div class="avatar-box">
+            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=ffb703&color=000" alt="Profile">
+        </div>
+        <div>
+            <h4 id="user-name" style="font-size: 0.95rem;">লোড হচ্ছে...</h4>
+            <p id="user-handle" style="font-size: 0.75rem; color: var(--text-sub);">@username</p>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page-section active">
+        <div class="balance-card">
+            <span>মোট ব্যালেন্স</span>
+            <h1 id="user-balance">TK 0.00</h1>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee-content">
+                ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Tan***</strong> মাত্র <strong>TK 4500</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Rif***</strong> মাত্র <strong>TK 2200</strong> উইথড্র করেছেন
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="action-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>মোট টাস্ক</h4>
+                <p id="total-tasks">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-users"></i>
+                <h4>মোট রেফার</h4>
+                <p id="total-refers">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-video"></i>
+                <h4>অ্যাড দেখা হয়েছে</h4>
+                <p id="total-ads">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-wallet"></i>
+                <h4>বোনাস ব্যালেন্স</h4>
+                <p id="bonus-balance">TK 0.00</p>
+            </div>
+        </div>
+
+        <!-- MYSTERY BOX SECTION WITH ANIMATION -->
+        <div class="feature-card">
+            <h3 style="margin-bottom: 5px;">মিষ্টি বক্স 🎁</h3>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">৩টি অ্যাড দেখে বক্স খুলুন ও ২০০-৫০০ টাকা জিতুন</p>
+            
+            <div id="box-icon" class="gift-box-icon" onclick="openBoxModal()">🎁</div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-sub);">
+                <span>অ্যাড প্রগ্রেস</span>
+                <span id="ad-count-text">0/3</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-fill" id="ad-progress" style="width: 0%;"></div>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 15px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
+
+            <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <!-- DAILY BONUS SECTION WITH IMAGE STYLE GRID -->
+        <div class="feature-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3><i class="fa-solid fa-calendar-days" style="color:var(--accent-gold);"></i> Progress</h3>
+                <span style="background: rgba(0,245,212,0.1); color: var(--accent-neon); border: 1px solid var(--accent-neon); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;" id="bonus-day-count">1/7 দিন</span>
+            </div>
+
+            <div class="bonus-grid-7">
+                <div class="bonus-box-7 active-day" id="d1">১ম দিন<span>TK 20.00</span></div>
+                <div class="bonus-box-7" id="d2">২য় দিন<span>TK 35.00</span></div>
+                <div class="bonus-box-7" id="d3">৩য় দিন<span>TK 45.00</span></div>
+                <div class="bonus-box-7" id="d4">৪র্থ দিন<span>TK 60.00</span></div>
+                <div class="bonus-box-7" id="d5">৫ম দিন<span>TK 75.00</span></div>
+                <div class="bonus-box-7" id="d6">৬ষ্ঠ দিন<span>TK 85.00</span></div>
+                <div class="bonus-box-7" id="d7">৭ম দিন<span>TK 100.00</span></div>
+            </div>
+
+            <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
+        </div>
+
+        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
+                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
+        </div>
+    </div>
+
+    <!-- TASK PAGE -->
+    <div id="task" class="page-section">
+        <div class="task-main-card">
+            <div class="icon-circle-purple">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #fff;">অ্যাড দেখুন</div>
+            <div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">প্রতিটি অ্যাড দেখলে TK 20.00 ইনকাম করুন</div>
+
+            <div class="reward-pill-gold">💵 রিওয়ার্ড: TK 20.00</div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #fff; font-weight: 600; margin-bottom: 6px;">
+                <span>আজকের কাজ সম্পন্ন</span>
+                <span id="task-ad-count">0 / 15</span>
+            </div>
+            <div class="progress-bar-bg" style="margin-bottom: 18px;">
+                <div class="progress-fill" id="task-progress-bar" style="width: 0%;"></div>
+            </div>
+
+            <button class="btn-gold" onclick="watchTaskAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <div class="telegram-row-card">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fa-brands fa-telegram" style="font-size: 2rem; color: var(--accent-gold);"></i>
+                <div>
+                    <h4 style="color:#fff;">অফিসিয়াল চ্যানেল</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-sub);">রিওয়ার্ড: <span style="color:var(--accent-gold);">TK 70.00</span></p>
+                </div>
+            </div>
+            <button class="btn-tg-join" onclick="joinTelegram('https://t.me/EARNINGIINEWS', 70)">জয়েন করুন</button>
+        </div>
+    </div>
+
+    <!-- SUPPORT PAGE -->
+    <div id="support" class="page-section">
+        <h3 style="margin-bottom: 15px;">হেল্প ও সাপোর্ট</h3>
+        <div class="action-card" style="cursor: pointer;" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
+            <h4 style="color:#fff;"><i class="fa-brands fa-telegram"></i> অফিশিয়াল টেলিগ্রাম চ্যানেল</h4>
+            <p>সব আপডেট পেতে জয়েন থাকুন</p>
+        </div>
+    </div>
+
+    <!-- REFER PAGE -->
+    <div id="refer" class="page-section">
+        <h3 style="margin-bottom: 15px;">রেফার করে ইনকাম করুন</h3>
+        <div class="feature-card" style="text-align: left;">
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার ইউনিক রেফারেল লিংকটি কপি করুন:</p>
+            <input type="text" class="input-box" id="refer-link" value="জেনারেট হচ্ছে..." readonly>
+            <button class="btn-gold" onclick="copyReferLink()">লিংক কপি করুন</button>
+        </div>
+    </div>
+
+    <!-- WALLET PAGE -->
+    <div id="wallet" class="page-section">
+        <h3 style="margin-bottom: 15px;">টাকা তুলুন (Withdraw)</h3>
+        <div class="feature-card" style="text-align: left;">
+            <select class="input-box" id="payment-method">
+                <option value="bkash">বিকাশ (bKash)</option>
+                <option value="nagad">নগদ (Nagad)</option>
+            </select>
+            <input type="number" class="input-box" id="withdraw-amount" placeholder="টাকার পরিমাণ">
+            <input type="text" class="input-box" id="account-number" placeholder="একাউন্ট নম্বর">
+            <button class="btn-gold" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+        </div>
+    </div>
+
+    <!-- NAV BAR -->
+    <div class="nav-bar">
+        <div class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i><span>হোম</span></div>
+        <div class="nav-item" onclick="switchTab('task', this)"><i class="fa-solid fa-list-check"></i><span>টাস্ক</span></div>
+        <div class="nav-item" onclick="switchTab('support', this)"><i class="fa-solid fa-headset"></i><span>সাপোর্ট</span></div>
+        <div class="nav-item" onclick="switchTab('refer', this)"><i class="fa-solid fa-user-plus"></i><span>রেফার</span></div>
+        <div class="nav-item" onclick="switchTab('wallet', this)"><i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span></div>
+    </div>
+</div>
+
+<!-- ANIMATED POPUP OVERLAY FOR MYSTERY BOX -->
+<div class="modal-overlay" id="box-popup">
+    <div id="popup-step-1">
+        <div class="popup-gift-img" style="font-size: 5rem;">🎁</div>
+        <div class="popup-title">মিষ্টি বক্স খোলা হচ্ছে...</div>
+    </div>
+    <div id="popup-step-2" style="display: none;">
+        <div class="popup-gift-img" style="font-size: 5rem;">💰</div>
+        <div class="popup-title" style="color: var(--accent-neon);">অভিনন্দন!</div>
+        <div style="color: #fff; margin-top: 5px;">আপনি পেয়েছেন</div>
+        <div class="popup-reward-text" id="random-reward-val">TK 0.00</div>
+        <button class="btn-popup-close" onclick="closeBoxModal()">দারুণ!</button>
+    </div>
+</div>
+
+<script>
+    let userData = {
+        balance: 0.00,
+        bonusBalance: 0.00,
+        totalTasks: 0,
+        totalAds: 0,
+        adProgress: 0,
+        taskAdsDone: 0,
+        lastBonusTime: 0
+    };
+
+    function loadUserData() {
+        try {
+            const saved = localStorage.getItem('flycash_user_data_v5');
+            if (saved) userData = { ...userData, ...JSON.parse(saved) };
+        } catch (e) {}
+        updateUI();
+    }
+
+    function saveData() {
+        try {
+            localStorage.setItem('flycash_user_data_v5', JSON.stringify(userData));
+        } catch (e) {}
+        updateUI();
+    }
+
+    function updateUI() {
+        document.getElementById('user-balance').innerText = `TK ${userData.balance.toFixed(2)}`;
+        document.getElementById('bonus-balance').innerText = `TK ${userData.bonusBalance.toFixed(2)}`;
+        document.getElementById('total-tasks').innerText = userData.totalTasks;
+        document.getElementById('total-ads').innerText = userData.totalAds;
+        
+        document.getElementById('ad-count-text').innerText = `${userData.adProgress}/3`;
+        document.getElementById('ads-done').innerText = userData.adProgress;
+        document.getElementById('ad-progress').style.width = `${(userData.adProgress / 3) * 100}%`;
+
+        const boxIcon = document.getElementById('box-icon');
+        const watchBtn = document.getElementById('btn-watch-ad');
+
+        if (userData.adProgress >= 3) {
+            boxIcon.classList.add('shake-ready');
+            watchBtn.innerText = 'বক্স খুলুন 🎁';
+        } else {
+            boxIcon.classList.remove('shake-ready');
+            watchBtn.innerText = 'অ্যাড দেখুন';
+        }
+
+        document.getElementById('task-ad-count').innerText = `${userData.taskAdsDone} / 15`;
+        document.getElementById('task-progress-bar').style.width = `${(userData.taskAdsDone / 15) * 100}%`;
+
+        checkDailyBonusTimer();
+    }
+
+    function watchAd() {
+        if (userData.adProgress < 3) {
+            userData.adProgress++;
+            userData.totalAds++;
+            saveData();
+            if (userData.adProgress === 3) {
+                alert('৩টি অ্যাড দেখা সম্পন্ন! এখন বক্স খুলে বোনাস নিন!');
+            }
+        } else {
+            openBoxModal();
+        }
+    }
+
+    // ANIMATED MYSTERY BOX POPUP LOGIC
+    function openBoxModal() {
+        if (userData.adProgress < 3) {
+            alert('আগে ৩টি অ্যাড সম্পন্ন করুন!');
+            return;
+        }
+
+        const modal = document.getElementById('box-popup');
+        const step1 = document.getElementById('popup-step-1');
+        const step2 = document.getElementById('popup-step-2');
+
+        step1.style.display = 'block';
+        step2.style.display = 'none';
+        modal.classList.add('show');
+
+        // 2 Seconds Opening Animation
+        setTimeout(() => {
+            // Random Amount between 200 and 500 TK
+            const randomReward = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
+            
+            userData.balance += randomReward;
+            userData.adProgress = 0; // Reset Progress
+            saveData();
+
+            document.getElementById('random-reward-val').innerText = `TK ${randomReward}.00`;
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+        }, 2000);
+    }
+
+    function closeBoxModal() {
+        document.getElementById('box-popup').classList.remove('show');
+    }
+
+    function checkDailyBonusTimer() {
+        const bonusBtn = document.getElementById('btn-daily-bonus');
+        if (!bonusBtn) return;
+        
+        const now = Date.now();
+        const cooldown = 24 * 60 * 60 * 1000;
+        const timePassed = now - userData.lastBonusTime;
+
+        if (timePassed < cooldown) {
+            bonusBtn.disabled = true;
+            const remaining = cooldown - timePassed;
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            bonusBtn.innerText = `পরবর্তী বোনাস: ${hours}h ${minutes}m পর`;
+        } else {
+            bonusBtn.disabled = false;
+            bonusBtn.innerText = 'এখনই ক্লেইম করুন';
+        }
+    }
+
+    setInterval(checkDailyBonusTimer, 1000);
+
+    function claimDailyBonus() {
+        const now = Date.now();
+        const cooldown = 24 * 60 * 60 * 1000;
+
+        if (now - userData.lastBonusTime >= cooldown) {
+            userData.balance += 20.00;
+            userData.bonusBalance += 20.00;
+            userData.lastBonusTime = now;
+            saveData();
+            alert('দৈনিক বোনাস TK 20.00 সফলভাবে যোগ হয়েছে!');
+        }
+    }
+
+    function watchTaskAd() {
+        if (userData.taskAdsDone < 15) {
+            userData.taskAdsDone++;
+            userData.totalAds++;
+            userData.balance += 20.00;
+            saveData();
+            alert('অ্যাড সম্পন্ন হয়েছে! TK 20.00 যোগ করা হলো।');
+        }
+    }
+
+    function joinTelegram(url, reward) {
+        window.open(url, '_blank');
+        userData.balance += reward;
+        userData.totalTasks++;
+        saveData();
+    }
+
+    function initApp() {
+        loadUserData();
+        setTimeout(() => {
+            const loader = document.getElementById('loading-screen');
+            if (loader) {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }
+        }, 800);
+    }
+
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        element.classList.add('active');
+    }
+
+    function copyReferLink() {
+        const copyText = document.getElementById("refer-link");
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value);
+        alert("রেফার লিংক কপি করা হয়েছে!");
+    }
+
+    function requestWithdraw() {
+        alert('উইথড্র রিকোয়েস্ট প্রসেস হচ্ছে!');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
+</script>
+</body>
+</html>        }
 
         .app-container {
             width: 100%;
