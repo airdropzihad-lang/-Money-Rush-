@@ -44,7 +44,7 @@
             position: relative;
         }
 
-        /* 1. INITIAL LOADING SCREEN */
+        /* Loading Screen */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -157,6 +157,19 @@
 
         .marquee-content strong { color: var(--accent-gold); }
 
+        /* Daily Bonus Card */
+        .daily-bonus-card {
+            background: linear-gradient(135deg, #2d1c4a, #160e26);
+            border: 1px solid var(--accent-gold);
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--gold-glow);
+        }
+
         /* Grid Stats */
         .grid-container {
             display: grid;
@@ -205,6 +218,20 @@
             transition: width 0.3s;
         }
 
+        /* Leaderboard Item */
+        .leader-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0b0712;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border: 1px solid var(--card-border);
+        }
+
+        .leader-item span { font-weight: bold; color: var(--accent-gold); }
+
         /* Buttons */
         .btn-gold {
             background: linear-gradient(90deg, #ffb703, #fb8500);
@@ -229,7 +256,7 @@
 
         .btn-gold:active:not(:disabled) { transform: scale(0.98); }
 
-        /* NEW TASK SECTION STYLES (Matching original Purple & Gold Theme) */
+        /* TASK SECTION STYLES */
         .task-main-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -415,7 +442,7 @@
         </div>
     </div>
 
-    <!-- 1. HOME PAGE -->
+    <!-- 1. HOME PAGE (Restored Daily Bonus & Leaderboard) -->
     <div id="home" class="page-section active">
         <!-- Main Balance Card -->
         <div class="balance-card">
@@ -423,7 +450,7 @@
             <h1 id="user-balance">TK 0.00</h1>
         </div>
 
-        <!-- Fake Payment Ticker -->
+        <!-- Marquee Ticker -->
         <div class="marquee-container">
             <div class="marquee-content">
                 ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -431,6 +458,15 @@
                 ⚡ <strong>Rif***</strong> মাত্র <strong>TK 2200</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 ⚡ <strong>Sal***</strong> মাত্র <strong>TK 7800</strong> উইথড্র করেছেন
             </div>
+        </div>
+
+        <!-- Daily Bonus Section (RESERVED) -->
+        <div class="daily-bonus-card">
+            <div>
+                <h3 style="color: var(--accent-gold); font-size: 1rem;"><i class="fa-solid fa-calendar-check"></i> ডেইলি বোনাস</h3>
+                <p style="font-size: 0.75rem; color: var(--text-sub);">প্রতিদিন ফ্রিতে পান TK 5.00</p>
+            </div>
+            <button class="btn-gold" id="btn-daily-bonus" style="width: auto; padding: 8px 15px; font-size: 0.8rem;" onclick="claimDailyBonus()">ক্লেম করুন</button>
         </div>
 
         <!-- Dashboard Stats Grid -->
@@ -474,9 +510,28 @@
 
             <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
         </div>
+
+        <!-- Leaderboard Section (RESERVED) -->
+        <div class="feature-card" style="text-align: left;">
+            <h3 style="margin-bottom: 12px; color: var(--accent-gold); font-size: 1.05rem;">
+                <i class="fa-solid fa-trophy"></i> সেরা আর্নার লিডারবোর্ড
+            </h3>
+            <div class="leader-item">
+                <div>🥇 1. Tanzid Bhai</div>
+                <span>TK 12,450.00</span>
+            </div>
+            <div class="leader-item">
+                <div>🥈 2. Zihad VIP</div>
+                <span>TK 9,800.00</span>
+            </div>
+            <div class="leader-item">
+                <div>🥉 3. Earning News BD</div>
+                <span>TK 8,250.00</span>
+            </div>
+        </div>
     </div>
 
-    <!-- 2. UPDATED TASK PAGE (Original Theme Maintained) -->
+    <!-- 2. TASK PAGE -->
     <div id="task" class="page-section">
         <!-- Main Ad Task -->
         <div class="task-main-card">
@@ -581,7 +636,8 @@
         totalTasks: 0,
         totalAds: 0,
         adProgress: 0,
-        taskAdsDone: 0
+        taskAdsDone: 0,
+        lastDailyBonus: null
     };
 
     function loadUserData() {
@@ -618,6 +674,28 @@
         // Task Section Progress
         document.getElementById('task-ad-count').innerText = `${userData.taskAdsDone} / 15`;
         document.getElementById('task-progress-bar').style.width = `${(userData.taskAdsDone / 15) * 100}%`;
+
+        // Daily Bonus Check
+        const today = new Date().toDateString();
+        const bonusBtn = document.getElementById('btn-daily-bonus');
+        if (userData.lastDailyBonus === today) {
+            bonusBtn.innerText = "আজকে নেওয়া হয়েছে";
+            bonusBtn.disabled = true;
+        } else {
+            bonusBtn.innerText = "ক্লেম করুন";
+            bonusBtn.disabled = false;
+        }
+    }
+
+    function claimDailyBonus() {
+        const today = new Date().toDateString();
+        if (userData.lastDailyBonus !== today) {
+            userData.balance += 5.00;
+            userData.bonusBalance += 5.00;
+            userData.lastDailyBonus = today;
+            saveData();
+            alert('অভিনন্দন! আপনি আজকে TK 5.00 ডেইলি বোনাস পেয়েছেন!');
+        }
     }
 
     function watchAd() {
