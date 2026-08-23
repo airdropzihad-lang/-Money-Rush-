@@ -251,6 +251,32 @@
             margin-top: 4px;
         }
 
+        /* BANGLA STATUS CARDS FOR DAILY BONUS */
+        .status-box {
+            background: rgba(11, 7, 18, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .status-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .status-desc {
+            font-size: 0.8rem;
+            color: var(--accent-neon);
+            margin-left: 22px;
+        }
+
         /* POPUP MODAL STYLES */
         .modal-overlay {
             position: fixed;
@@ -318,11 +344,12 @@
             cursor: pointer;
             width: 100%;
             box-shadow: var(--gold-glow);
+            margin-top: 12px;
         }
 
         .btn-gold:disabled {
             background: #4a3e20;
-            color: #888;
+            color: #aaa;
             box-shadow: none;
             cursor: not-allowed;
         }
@@ -502,7 +529,7 @@
             <div class="progress-bar-bg">
                 <div class="progress-fill" id="ad-progress" style="width: 0%;"></div>
             </div>
-            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 15px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 5px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
 
             <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
         </div>
@@ -510,8 +537,8 @@
         <!-- DAILY BONUS SECTION -->
         <div class="feature-card">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3><i class="fa-solid fa-calendar-days" style="color:var(--accent-gold);"></i> Progress</h3>
-                <span style="background: rgba(0,245,212,0.1); color: var(--accent-neon); border: 1px solid var(--accent-neon); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;" id="bonus-day-count">1/7 দিন</span>
+                <h3><i class="fa-solid fa-calendar-days" style="color:var(--accent-gold);"></i> দৈনিক প্রগ্রেস</h3>
+                <span style="background: rgba(0,245,212,0.1); color: var(--accent-neon); border: 1px solid var(--accent-neon); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;" id="bonus-day-count">১/৭ দিন</span>
             </div>
 
             <div class="bonus-grid-7">
@@ -524,7 +551,33 @@
                 <div class="bonus-box-7" id="d7">৭ম দিন<span>TK 100.00</span></div>
             </div>
 
+            <div id="status-container" style="display: none;">
+                <div class="status-box">
+                    <div class="status-title"><i class="fa-solid fa-square-check" style="color: #00f5d4;"></i> অবস্থা (Status)</div>
+                    <div class="status-desc" style="color: #00f5d4;">আজকের বোনাস সংগ্রহ করা হয়েছে</div>
+                </div>
+
+                <div class="status-box">
+                    <div class="status-title"><i class="fa-solid fa-hourglass-half" style="color: var(--accent-gold);"></i> পরবর্তী রিওয়ার্ড (Next Reward)</div>
+                    <div class="status-desc" style="color: var(--accent-gold);">পরবর্তী বোনাস আগামীকাল পাওয়া যাবে</div>
+                </div>
+            </div>
+
             <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
+        </div>
+
+        <!-- LEADERBOARD SECTION (RESTORED) -->
+        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
+                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
         </div>
     </div>
 
@@ -616,7 +669,6 @@
 </div>
 
 <script>
-    // FORCE REMOVE LOADING SCREEN (Fixes Stuck Loader)
     function hideLoader() {
         const loader = document.getElementById('loading-screen');
         if (loader) {
@@ -626,7 +678,6 @@
         }
     }
 
-    // Auto Hide Loader in max 1 second
     setTimeout(hideLoader, 1000);
 
     let userData = {
@@ -641,11 +692,10 @@
 
     function loadUserData() {
         try {
-            const saved = localStorage.getItem('flycash_v6_data');
+            const saved = localStorage.getItem('flycash_v7_data');
             if (saved) userData = { ...userData, ...JSON.parse(saved) };
         } catch (e) {}
         
-        // Try Telegram User Info
         if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
             const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
             if (tgUser) {
@@ -659,7 +709,7 @@
 
     function saveData() {
         try {
-            localStorage.setItem('flycash_v6_data', JSON.stringify(userData));
+            localStorage.setItem('flycash_v7_data', JSON.stringify(userData));
         } catch (e) {}
         updateUI();
     }
@@ -736,6 +786,7 @@
 
     function checkDailyBonusTimer() {
         const bonusBtn = document.getElementById('btn-daily-bonus');
+        const statusBox = document.getElementById('status-container');
         if (!bonusBtn) return;
         
         const now = Date.now();
@@ -744,12 +795,15 @@
 
         if (timePassed < cooldown) {
             bonusBtn.disabled = true;
+            statusBox.style.display = 'block'; // Show Status Cards
+
             const remaining = cooldown - timePassed;
             const hours = Math.floor(remaining / (1000 * 60 * 60));
             const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-            bonusBtn.innerText = `পরবর্তী বোনাস: ${hours}h ${minutes}m পর`;
+            bonusBtn.innerText = `পরবর্তী বোনাস: ${hours} ঘণ্টা ${minutes} মিনিট পর`;
         } else {
             bonusBtn.disabled = false;
+            statusBox.style.display = 'none'; // Hide status when ready to claim
             bonusBtn.innerText = 'এখনই ক্লেইম করুন';
         }
     }
@@ -765,7 +819,7 @@
             userData.bonusBalance += 20.00;
             userData.lastBonusTime = now;
             saveData();
-            alert('দৈনিক বোনাস TK 20.00 যুক্ত হয়েছে!');
+            alert('দৈনিক বোনাস TK 20.00 সফলভাবে যোগ হয়েছে!');
         }
     }
 
