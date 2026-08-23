@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fly Cash - টাকা উড়াও</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -156,7 +154,7 @@
         .action-card i { font-size: 1.5rem; color: var(--accent-orange); }
         .action-card h4 { font-size: 0.85rem; color: var(--text-sub); }
 
-        /* List Items (Tasks, Support, etc.) */
+        /* List Items */
         .list-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -231,7 +229,7 @@
         <div class="logo-title">
             <i class="fa-solid fa-rocket"></i> Fly Cash
         </div>
-        <i class="fa-solid fa-bell" style="color: var(--text-sub);" onclick="alert('কোনো নতুন নোটিফিকেশন নেই!')"></i>
+        <i class="fa-solid fa-bell" style="color: var(--text-sub); cursor: pointer;" onclick="alert('কোনো নতুন নোটিফিকেশন নেই!')"></i>
     </div>
 
     <div class="user-card">
@@ -297,14 +295,14 @@
     <!-- 3. SUPPORT PAGE -->
     <div id="support" class="page-section">
         <h3 style="margin-bottom: 15px;">হেল্প ও সাপোর্ট</h3>
-        <div class="list-card" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
+        <div class="list-card" style="cursor: pointer;" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
             <div>
                 <h4>অফিসিয়াল টেলিগ্রাম চ্যানেল</h4>
                 <p style="font-size: 0.8rem; color: var(--text-sub);">সব আপডেট পেতে জয়েন থাকুন</p>
             </div>
             <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
         </div>
-        <div class="list-card" onclick="alert('সাপোর্ট ইমেইল: support@flycash.com')">
+        <div class="list-card" style="cursor: pointer;" onclick="alert('সাপোর্ট ইমেইল: support@flycash.com')">
             <div>
                 <h4>ইমেইল সাপোর্ট</h4>
                 <p style="font-size: 0.8rem; color: var(--text-sub);">২৪/৭ যেকোনো সমস্যায় মেইল করুন</p>
@@ -347,12 +345,6 @@
 </div>
 
 <script>
-    // Supabase Credentials
-    const SUPABASE_URL = 'https://qrabynkngtgchclpqxbr.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_D3BB6PdUxSIHwoPtNgctHw_yCDZT...'; // আপনার পুরো Key দিন
-
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
     let currentBalance = 0.00;
     let completedTasks = 0;
 
@@ -360,7 +352,7 @@
         document.getElementById('welcomeModal').style.display = 'none';
     }
 
-    // Navigation Switcher
+    // Navigation Tab Switching
     function switchTab(tabId, element) {
         document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -369,7 +361,7 @@
         element.classList.add('active');
     }
 
-    // Task Completion logic
+    // Complete Task logic
     function completeTask(reward) {
         currentBalance += reward;
         completedTasks += 1;
@@ -384,7 +376,7 @@
     function copyReferLink() {
         const copyText = document.getElementById("refer-link");
         copyText.select();
-        document.execCommand("copy");
+        navigator.clipboard.writeText(copyText.value);
         alert("রেফার লিংক কপি করা হয়েছে!");
     }
 
