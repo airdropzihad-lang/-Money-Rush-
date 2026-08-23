@@ -8,15 +8,14 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #080e18;
-            --card-bg: #101929;
-            --card-border: #1e2d42;
-            --accent-cyan: #00d2ff;
+            --bg-color: #060b13;
+            --card-bg: #0d1626;
+            --card-border: #1a2a40;
+            --neon-cyan: #00e5ff;
+            --neon-glow: 0 0 20px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.2);
             --accent-gold: #ffb703;
             --text-main: #ffffff;
-            --text-sub: #8a99ad;
-            --cyan-glow: 0 0 15px rgba(0, 210, 255, 0.4);
-            --gold-glow: 0 0 15px rgba(255, 183, 3, 0.3);
+            --text-sub: #8295ab;
         }
 
         * {
@@ -63,10 +62,10 @@
             width: 50px;
             height: 50px;
             border: 4px solid var(--card-border);
-            border-top: 4px solid var(--accent-cyan);
+            border-top: 4px solid var(--neon-cyan);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            box-shadow: var(--cyan-glow);
+            box-shadow: var(--neon-glow);
         }
 
         @keyframes spin {
@@ -74,21 +73,26 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Top Bar */
+        /* Top Bar Header */
         .top-bar {
-            padding: 15px;
+            padding: 18px 15px;
             background: var(--bg-color);
             border-bottom: 1px solid var(--card-border);
             text-align: center;
         }
 
         .logo-title {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 800;
-            color: var(--accent-gold);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        /* User Card */
+        /* User Profile Bar */
         .user-card {
             display: flex;
             align-items: center;
@@ -102,9 +106,9 @@
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            border: 2px solid var(--accent-cyan);
+            border: 2px solid var(--neon-cyan);
             overflow: hidden;
-            box-shadow: var(--cyan-glow);
+            box-shadow: var(--neon-glow);
         }
 
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -113,161 +117,214 @@
         .page-section { display: none; padding: 15px; }
         .page-section.active { display: block; }
 
-        /* Balance Card */
+        /* Main Balance Card */
         .balance-card {
-            padding: 20px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #101929, #1a273d);
-            border: 1px solid var(--accent-cyan);
-            box-shadow: var(--cyan-glow);
+            padding: 22px;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--neon-cyan);
+            box-shadow: var(--neon-glow);
             margin-bottom: 15px;
         }
 
         .balance-card span { font-size: 0.9rem; color: var(--text-sub); }
-        .balance-card h1 { font-size: 2.2rem; font-weight: 800; margin-top: 5px; color: var(--accent-gold); }
+        .balance-card h1 { font-size: 2.3rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
 
-        /* Section Cards */
-        .card-box {
+        /* Task Card Outer Wrapper (Exact Replica of Screenshots) */
+        .task-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-        }
-
-        /* Header Layout in Card */
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .card-header-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .badge-pill {
-            background: rgba(0, 210, 255, 0.15);
-            color: var(--accent-cyan);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            border: 1px solid rgba(0, 210, 255, 0.3);
-        }
-
-        /* 7-Day Grid Layout */
-        .bonus-grid-7 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .day-box {
-            background: #09111e;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 12px 5px;
+            border-radius: 24px;
+            padding: 25px 20px;
+            margin-bottom: 18px;
             text-align: center;
             position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: border-color 0.3s ease;
         }
 
-        .day-box .day-title {
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            margin-bottom: 4px;
+        .task-box:hover {
+            border-color: rgba(0, 229, 255, 0.4);
         }
 
-        .day-box .day-reward {
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: var(--text-main);
-        }
-
-        /* Active / Claimed Box */
-        .day-box.active {
-            background: var(--accent-cyan);
-            border-color: var(--accent-cyan);
-            box-shadow: var(--cyan-glow);
-        }
-
-        .day-box.active .day-title,
-        .day-box.active .day-reward {
-            color: #000;
-        }
-
-        .check-badge {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: #fff;
-            color: #000;
-            width: 18px;
-            height: 18px;
+        /* Megaphone Circle Icon */
+        .icon-circle {
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
+            border: 2px solid var(--neon-cyan);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.65rem;
+            margin: 0 auto 15px auto;
+            box-shadow: var(--neon-glow);
+            background: rgba(0, 229, 255, 0.05);
         }
 
-        /* Info Sub-Boxes */
-        .info-panel {
-            background: #09111e;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin-top: 10px;
+        .icon-circle i {
+            font-size: 2.2rem;
+            color: var(--neon-cyan);
         }
 
-        .info-panel-title {
-            display: flex;
+        .task-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .task-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-sub);
+            margin-bottom: 15px;
+        }
+
+        /* Reward Pill Badge */
+        .reward-pill {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 20px;
+            border-radius: 30px;
             font-size: 0.95rem;
-            font-weight: bold;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+        }
+
+        /* Progress Info & Bar */
+        .task-progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .info-panel-desc {
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .text-green { color: #2ec4b6; }
-        .text-orange { color: #ff9f1c; }
-
-        /* Buttons */
-        .btn-gold {
-            background: linear-gradient(90deg, #ffb703, #fb8500);
-            color: #000;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
+        .progress-track {
             width: 100%;
-            box-shadow: var(--gold-glow);
-            margin-top: 10px;
+            height: 8px;
+            background: #060b13;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 22px;
+            border: 1px solid var(--card-border);
         }
 
-        .btn-gold:disabled {
-            background: #2a2d32;
-            color: #666;
+        .progress-fill {
+            height: 100%;
+            background: var(--neon-cyan);
+            box-shadow: var(--neon-glow);
+            transition: width 0.3s ease;
+        }
+
+        /* Glowing Neon Cyan Button */
+        .btn-cyan {
+            width: 100%;
+            background: var(--neon-cyan);
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--neon-glow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-cyan:active {
+            transform: scale(0.98);
+        }
+
+        .btn-cyan:disabled {
+            background: #1a2a40;
+            color: #526880;
             box-shadow: none;
             cursor: not-allowed;
         }
 
-        /* Navigation Bar */
+        /* Telegram Task Row Card (Screenshot 2 Match) */
+        .telegram-task-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .telegram-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .telegram-icon-box {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            background: #081220;
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .telegram-icon-box i {
+            font-size: 1.8rem;
+            color: var(--neon-cyan);
+        }
+
+        .telegram-info h4 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .telegram-info p {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        .telegram-info span {
+            color: var(--neon-cyan);
+            font-weight: bold;
+        }
+
+        .btn-join {
+            background: var(--neon-cyan);
+            color: #000;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: var(--neon-glow);
+        }
+
+        /* Input Controls for Wallet & Refer */
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: #060b13;
+            color: #fff;
+        }
+
+        /* Bottom Navigation Bar */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -279,6 +336,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            z-index: 100;
         }
 
         .nav-item {
@@ -291,18 +349,12 @@
             cursor: pointer;
         }
 
-        .nav-item.active { color: var(--accent-cyan); }
-        .nav-item i { font-size: 1.2rem; }
-
-        .input-box {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--card-border);
-            background: #09111e;
-            color: #fff;
+        .nav-item.active {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
         }
+
+        .nav-item i { font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -310,142 +362,142 @@
 <!-- Loading Screen -->
 <div id="loading-screen">
     <div class="loader"></div>
-    <h3 style="margin-top: 15px; color: var(--accent-cyan);">ফ্লাই ক্যাশ লোড হচ্ছে...</h3>
+    <h3 style="margin-top: 15px; color: var(--neon-cyan);">Fly Cash লোড হচ্ছে...</h3>
 </div>
 
 <div class="app-container">
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="logo-title">
-            Fly Cash 🚀 টাকা উড়াও 💸
+            Fly Cash 🚀 টাকা উড়াও 💸 <i class="fa-solid fa-circle-check" style="font-size: 1rem;"></i>
         </div>
     </div>
 
-    <!-- Profile Header -->
+    <!-- User Profile Bar -->
     <div class="user-card">
         <div class="avatar-box">
-            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=00d2ff&color=000" alt="Profile">
+            <img id="user-photo" src="https://ui-avatars.com/api/?name=ZIHAD&background=00e5ff&color=000" alt="Profile">
         </div>
         <div>
-            <h4 id="user-name" style="font-size: 0.95rem;">লোড হচ্ছে...</h4>
-            <p id="user-handle" style="font-size: 0.75rem; color: var(--text-sub);">@username</p>
+            <h4 id="user-name" style="font-size: 0.95rem;">ZIHAD 👑</h4>
+            <p id="user-handle" style="font-size: 0.75rem; color: var(--text-sub);">@EARNINGIINEWS</p>
         </div>
     </div>
 
-    <!-- HOME PAGE -->
+    <!-- 1. HOME PAGE -->
     <div id="home" class="page-section active">
-        <!-- Balance Card -->
         <div class="balance-card">
             <span>মোট ব্যালেন্স</span>
             <h1 id="user-balance">TK 0.00</h1>
         </div>
 
-        <!-- 7-DAY DAILY BONUS CARD (Exact Match with Image) -->
-        <div class="card-box">
-            <div class="card-header">
-                <div class="card-header-title">
-                    📅 দৈনিক অগ্রগতি
-                </div>
-                <div class="badge-pill" id="progress-text">১/৭ দিন</div>
+        <div class="task-box">
+            <div class="icon-circle">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div class="task-title">অ্যাড দেখুন</div>
+            <div class="task-subtitle">প্রতিটি অ্যাড দেখলে TK 20.00 ইনকাম করুন</div>
+
+            <div class="reward-pill">
+                💵 রিওয়ার্ড: TK 20.00
             </div>
 
-            <!-- 7 Days Grid -->
-            <div class="bonus-grid-7">
-                <!-- Day 1 -->
-                <div class="day-box active" id="day-box-1">
-                    <div class="check-badge"><i class="fa-solid fa-check"></i></div>
-                    <div class="day-title">১ম দিন</div>
-                    <div class="day-reward">TK 20.00</div>
-                </div>
-                <!-- Day 2 -->
-                <div class="day-box" id="day-box-2">
-                    <div class="day-title">২য় দিন</div>
-                    <div class="day-reward">TK 35.00</div>
-                </div>
-                <!-- Day 3 -->
-                <div class="day-box" id="day-box-3">
-                    <div class="day-title">৩য় দিন</div>
-                    <div class="day-reward">TK 45.00</div>
-                </div>
-                <!-- Day 4 -->
-                <div class="day-box" id="day-box-4">
-                    <div class="day-title">৪র্থ দিন</div>
-                    <div class="day-reward">TK 60.00</div>
-                </div>
-                <!-- Day 5 -->
-                <div class="day-box" id="day-box-5">
-                    <div class="day-title">৫ম দিন</div>
-                    <div class="day-reward">TK 75.00</div>
-                </div>
-                <!-- Day 6 -->
-                <div class="day-box" id="day-box-6">
-                    <div class="day-title">৬ষ্ঠ দিন</div>
-                    <div class="day-reward">TK 85.00</div>
-                </div>
-                <!-- Day 7 -->
-                <div class="day-box" id="day-box-7">
-                    <div class="day-title">৭ম দিন</div>
-                    <div class="day-reward">TK 100.00</div>
-                </div>
+            <div class="task-progress-info">
+                <span>আজকের কাজ সম্পন্ন</span>
+                <span id="home-ad-count">0 / 15</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="home-progress-bar" style="width: 0%;"></div>
             </div>
 
-            <!-- Status Section -->
-            <div class="info-panel">
-                <div class="info-panel-title">
-                    ✅ বর্তমান স্ট্যাটাস
-                </div>
-                <div class="info-panel-desc text-green" id="status-msg">
-                    <i class="fa-solid fa-check"></i> আজকের বোনাস সংগ্রহ করা হয়েছে
-                </div>
-            </div>
-
-            <!-- Next Reward Section -->
-            <div class="info-panel">
-                <div class="info-panel-title">
-                    ⏳ পরবর্তী রিওয়ার্ড
-                </div>
-                <div class="info-panel-desc text-orange" id="timer-msg">
-                    <i class="fa-regular fa-clock"></i> পরবর্তী বোনাস আগামীকাল পাওয়া যাবে
-                </div>
-            </div>
-
-            <button class="btn-gold" id="btn-claim-bonus" onclick="claimDailyBonus()">আজকের বোনাস ক্লেইম করুন</button>
+            <button class="btn-cyan" onclick="watchAd()">অ্যাড দেখুন</button>
         </div>
     </div>
 
-    <!-- TASKS PAGE -->
+    <!-- 2. TASK PAGE (Screen Matches Explicitly) -->
     <div id="task" class="page-section">
-        <h3 style="margin-bottom: 15px;">অন্যান্য টাস্কসমূহ</h3>
-        <div class="card-box">
-            <h4>ইউটিউব ভিডিও দেখুন</h4>
-            <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 5px;">পুরস্কার: TK 5.00</p>
-            <button class="btn-gold" onclick="completeTask(5)">শুরু করুন</button>
+        <!-- Main Ad Task -->
+        <div class="task-box">
+            <div class="icon-circle">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div class="task-title">অ্যাড দেখুন</div>
+            <div class="task-subtitle">প্রতিটি অ্যাড দেখলে TK 20.00 ইনকাম করুন</div>
+
+            <div class="reward-pill">
+                💵 রিওয়ার্ড: TK 20.00
+            </div>
+
+            <div class="task-progress-info">
+                <span>আজকের কাজ সম্পন্ন</span>
+                <span id="task-ad-count">0 / 15</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="task-progress-bar" style="width: 0%;"></div>
+            </div>
+
+            <button class="btn-cyan" onclick="watchAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <!-- Official Channel Task -->
+        <div class="telegram-task-card">
+            <div class="telegram-left">
+                <div class="telegram-icon-box">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="telegram-info">
+                    <h4>অফিসিয়াল<br>চ্যানেল</h4>
+                    <p>রিওয়ার্ড: <span>TK 70.00</span></p>
+                </div>
+            </div>
+            <button class="btn-join" onclick="joinTelegram('https://t.me/EARNINGIINEWS', 70)">এখনই জয়েন করুন</button>
+        </div>
+
+        <!-- Payment Channel Task -->
+        <div class="telegram-task-card">
+            <div class="telegram-left">
+                <div class="telegram-icon-box">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="telegram-info">
+                    <h4>পেমেন্ট<br>চ্যানেল</h4>
+                    <p>রিওয়ার্ড: <span>TK 70.00</span></p>
+                </div>
+            </div>
+            <button class="btn-join" onclick="joinTelegram('https://t.me/EARNINGIINEWS', 70)">এখনই জয়েন করুন</button>
         </div>
     </div>
 
-    <!-- SUPPORT PAGE -->
+    <!-- 3. SUPPORT PAGE -->
     <div id="support" class="page-section">
         <h3 style="margin-bottom: 15px;">হেল্প ও সাপোর্ট</h3>
-        <div class="card-box" style="cursor: pointer;" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
-            <h4 style="color:#fff;"><i class="fa-brands fa-telegram"></i> অফিশিয়াল টেলিগ্রাম চ্যানেল</h4>
-            <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 5px;">সব আপডেট পেতে জয়েন থাকুন</p>
+        <div class="telegram-task-card" onclick="window.open('https://t.me/EARNINGIINEWS', '_blank')">
+            <div class="telegram-left">
+                <div class="telegram-icon-box">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="telegram-info">
+                    <h4>অফিশিয়াল টেলিগ্রাম সাপোর্ট</h4>
+                    <p>যেকোনো সমস্যার জন্য মেসেজ দিন</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- REFER PAGE -->
+    <!-- 4. REFER PAGE -->
     <div id="refer" class="page-section">
         <h3 style="margin-bottom: 15px;">রেফার করে ইনকাম করুন</h3>
-        <div class="card-box">
-            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার লিংক শেয়ার করুন:</p>
-            <input type="text" class="input-box" id="refer-link" value="জেনারেট হচ্ছে..." readonly>
-            <button class="btn-gold" onclick="copyReferLink()">লিংক কপি করুন</button>
+        <div class="task-box" style="text-align: left;">
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">আপনার রেফারেল লিংক:</p>
+            <input type="text" class="input-box" id="refer-link" value="https://t.me/MoneyRushBDBot?start=ref_12345" readonly>
+            <button class="btn-cyan" onclick="copyReferLink()">লিংক কপি করুন</button>
         </div>
     </div>
 
-    <!-- WALLET PAGE -->
+    <!-- 5. WALLET PAGE -->
     <div id="wallet" class="page-section">
         <h3 style="margin-bottom: 15px;">টাকা তুলুন (Withdraw)</h3>
-        <div class="card-box">
+        <div class="task-box" style="text-align: left;">
             <select class="input-box" id="payment-method">
                 <option value="bkash">বিকাশ (bKash)</option>
                 <option value="nagad">নগদ (Nagad)</option>
@@ -453,138 +505,76 @@
             </select>
             <input type="number" class="input-box" id="withdraw-amount" placeholder="টাকার পরিমাণ (নূন্যতম ৫০ টাকা)">
             <input type="text" class="input-box" id="account-number" placeholder="একাউন্ট নম্বর">
-            <button class="btn-gold" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+            <button class="btn-cyan" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
         <div class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i><span>হোম</span></div>
-        <div class="nav-item" onclick="switchTab('task', this)"><i class="fa-solid fa-list-check"></i><span>টাস্ক</span></div>
+        <div class="nav-item" onclick="switchTab('task', this)"><i class="fa-solid fa-clipboard-list"></i><span>টাস্ক</span></div>
         <div class="nav-item" onclick="switchTab('support', this)"><i class="fa-solid fa-headset"></i><span>সাপোর্ট</span></div>
-        <div class="nav-item" onclick="switchTab('refer', this)"><i class="fa-solid fa-user-plus"></i><span>রেফার</span></div>
+        <div class="nav-item" onclick="switchTab('refer', this)"><i class="fa-solid fa-user-group"></i><span>রেফার</span></div>
         <div class="nav-item" onclick="switchTab('wallet', this)"><i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span></div>
     </div>
 </div>
 
 <script>
-    const dayRewards = [20.00, 35.00, 45.00, 60.00, 75.00, 85.00, 100.00];
-
     let userData = {
         balance: 0.00,
-        currentDay: 1, // 1 to 7
-        lastClaimTime: 0
+        adsDone: 0
     };
 
     function loadUserData() {
         try {
-            const saved = localStorage.getItem('flycash_user_data_bn');
+            const saved = localStorage.getItem('flycash_task_v2');
             if (saved) {
                 userData = { ...userData, ...JSON.parse(saved) };
             }
         } catch (e) {
-            console.error("Storage error:", e);
+            console.error("Storage Error:", e);
         }
         updateUI();
     }
 
     function saveData() {
         try {
-            localStorage.setItem('flycash_user_data_bn', JSON.stringify(userData));
+            localStorage.setItem('flycash_task_v2', JSON.stringify(userData));
         } catch (e) {
-            console.error("Save error:", e);
+            console.error("Save Error:", e);
         }
         updateUI();
     }
 
     function updateUI() {
         document.getElementById('user-balance').innerText = `TK ${userData.balance.toFixed(2)}`;
-        document.getElementById('progress-text').innerText = `${userData.currentDay}/৭ দিন`;
+        
+        const countText = `${userData.adsDone} / 15`;
+        const percentage = (userData.adsDone / 15) * 100;
 
-        // Update Day Grid UI
-        for (let i = 1; i <= 7; i++) {
-            const box = document.getElementById(`day-box-${i}`);
-            if (box) {
-                if (i <= userData.currentDay) {
-                    box.classList.add('active');
-                    if (!box.querySelector('.check-badge')) {
-                        const check = document.createElement('div');
-                        check.className = 'check-badge';
-                        check.innerHTML = '<i class="fa-solid fa-check"></i>';
-                        box.appendChild(check);
-                    }
-                } else {
-                    box.classList.remove('active');
-                    const check = box.querySelector('.check-badge');
-                    if (check) check.remove();
-                }
-            }
-        }
+        document.getElementById('home-ad-count').innerText = countText;
+        document.getElementById('task-ad-count').innerText = countText;
 
-        checkBonusTimer();
+        document.getElementById('home-progress-bar').style.width = `${percentage}%`;
+        document.getElementById('task-progress-bar').style.width = `${percentage}%`;
     }
 
-    function checkBonusTimer() {
-        const claimBtn = document.getElementById('btn-claim-bonus');
-        const statusMsg = document.getElementById('status-msg');
-        const timerMsg = document.getElementById('timer-msg');
-
-        const now = Date.now();
-        const cooldown = 24 * 60 * 60 * 1000;
-        const timePassed = now - userData.lastClaimTime;
-
-        if (timePassed < cooldown) {
-            claimBtn.disabled = true;
-            statusMsg.className = "info-panel-desc text-green";
-            statusMsg.innerHTML = `<i class="fa-solid fa-check"></i> আজকের বোনাস সংগ্রহ করা হয়েছে`;
-
-            const remaining = cooldown - timePassed;
-            const hours = Math.floor(remaining / (1000 * 60 * 60));
-            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-
-            timerMsg.className = "info-panel-desc text-orange";
-            timerMsg.innerHTML = `<i class="fa-regular fa-clock"></i> পরবর্তী বোনাস: ${hours}ঘণ্টা ${minutes}মিঃ ${seconds}সেঃ পর পাওয়া যাবে`;
-            claimBtn.innerText = 'অপেক্ষা করুন...';
-        } else {
-            claimBtn.disabled = false;
-            statusMsg.className = "info-panel-desc text-orange";
-            statusMsg.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> আজকের বোনাস সংগ্রহ করা হয়নি`;
-
-            timerMsg.className = "info-panel-desc text-green";
-            timerMsg.innerHTML = `<i class="fa-solid fa-bolt"></i> বোনাস ক্লেইম করার জন্য প্রস্তুত!`;
-            claimBtn.innerText = 'আজকের বোনাস ক্লেইম করুন';
-        }
-    }
-
-    setInterval(checkBonusTimer, 1000);
-
-    function claimDailyBonus() {
-        const now = Date.now();
-        const cooldown = 24 * 60 * 60 * 1000;
-
-        if (now - userData.lastClaimTime >= cooldown) {
-            const rewardIndex = (userData.currentDay - 1) % 7;
-            const rewardAmount = dayRewards[rewardIndex];
-
-            userData.balance += rewardAmount;
-            userData.lastClaimTime = now;
-
-            if (userData.currentDay < 7) {
-                userData.currentDay++;
-            } else {
-                userData.currentDay = 1; // Reset after 7 days cycle
-            }
-
+    function watchAd() {
+        if (userData.adsDone < 15) {
+            userData.adsDone++;
+            userData.balance += 20.00;
             saveData();
-            alert(`অভিনন্দন! আপনি TK ${rewardAmount.toFixed(2)} বোনাস পেয়েছেন!`);
+            alert('সফলভাবে অ্যাড দেখা হয়েছে! TK 20.00 ব্যালেন্সে যোগ করা হয়েছে।');
+        } else {
+            alert('আজকের ১৫টি অ্যাডের কাজ সম্পন্ন হয়েছে!');
         }
     }
 
-    function completeTask(reward) {
+    function joinTelegram(url, reward) {
+        window.open(url, '_blank');
         userData.balance += reward;
         saveData();
-        alert(`টাস্ক সম্পন্ন হয়েছে! TK ${reward} যোগ করা হলো।`);
+        alert(`চ্যানেলে জয়েন করার জন্য TK ${reward.toFixed(2)} যোগ করা হয়েছে!`);
     }
 
     function initApp() {
@@ -599,20 +589,13 @@
 
                 if (user) {
                     const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
-                    document.getElementById('user-name').innerText = fullName || 'টেলিগ্রাম ইউজার';
-                    document.getElementById('user-handle').innerText = user.username ? `@${user.username}` : `আইডি: ${user.id}`;
+                    document.getElementById('user-name').innerText = fullName || 'ZIHAD 👑';
+                    document.getElementById('user-handle').innerText = user.username ? `@${user.username}` : `@EARNINGIINEWS`;
                     if (user.photo_url) document.getElementById('user-photo').src = user.photo_url;
-
-                    const botUsername = 'MoneyRushBDBot';
-                    document.getElementById('refer-link').value = `https://t.me/${botUsername}?start=ref_${user.id}`;
-                } else {
-                    setFallbackUser();
                 }
-            } else {
-                setFallbackUser();
             }
         } catch (err) {
-            setFallbackUser();
+            console.log("Telegram WebApp Error:", err);
         }
 
         setTimeout(() => {
@@ -622,12 +605,6 @@
                 loader.style.visibility = 'hidden';
             }
         }, 500);
-    }
-
-    function setFallbackUser() {
-        document.getElementById('user-name').innerText = 'ZIHAD 👑';
-        document.getElementById('user-handle').innerText = '@EARNINGIINEWS';
-        document.getElementById('refer-link').value = 'https://t.me/MoneyRushBDBot?start=ref_12345';
     }
 
     function switchTab(tabId, element) {
