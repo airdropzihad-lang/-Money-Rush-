@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fly Cash - টাকা উড়াও</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-green: #10b981;
+            --text-main: #ffffff;
+            --text-sub: #9ca3af;
+            --border-color: #232d42;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--bg-color);
+            padding-bottom: 70px;
+            position: relative;
+        }
+
+        /* Welcome Modal Alert */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-pink);
+            padding: 20px;
+            border-radius: 16px;
+            width: 85%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .modal-content h3 {
+            color: var(--accent-pink);
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 15px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Top Header */
+        .top-bar {
+            padding: 15px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* User Profile */
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: linear-gradient(135deg, #151c2c, #222b3e);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .avatar-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-pink);
+            overflow: hidden;
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-info h3 { font-size: 1rem; }
+        .user-info p { font-size: 0.8rem; color: var(--accent-orange); }
+
+        /* Balance Card */
+        .balance-card {
+            margin: 15px;
+            padding: 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent-pink), #be185d);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .balance-card h1 { font-size: 2.2rem; margin-top: 5px; }
+
+        /* Grid Section */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 15px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-card i { font-size: 1.5rem; color: var(--accent-orange); }
+        .action-card h4 { font-size: 0.85rem; color: var(--text-sub); }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 450px;
+            height: 60px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item.active { color: var(--accent-pink); }
+    </style>
+</head>
+<body>
+
+<!-- Startup Notification Alert Modal -->
+<div class="modal-overlay" id="welcomeModal">
+    <div class="modal-content">
+        <h3><i class="fa-solid fa-bullhorn"></i> স্বাগতম Fly Cash-এ!</h3>
+        <p>প্রতিদিন টাস্ক সম্পন্ন করুন এবং বন্ধুদের রেফার করে ইনকাম বৃদ্ধি করুন। নতুন অফারগুলো মিস করবেন না!</p>
+        <button class="modal-btn" onclick="closeModal()">ঠিক আছে</button>
+    </div>
+</div>
+
+<div class="app-container">
+    <div class="top-bar">
+        <div class="logo-title">
+            <i class="fa-solid fa-rocket"></i> Fly Cash
+        </div>
+        <i class="fa-solid fa-bell" style="color: var(--text-sub);"></i>
+    </div>
+
+    <div class="user-card">
+        <div class="avatar-box">
+            <img src="https://via.placeholder.com/100" alt="Profile">
+        </div>
+        <div class="user-info">
+            <h3>— ZIHAD 👑 $ ||</h3>
+            <p>@EARNINGIINEWS <i class="fa-solid fa-circle-check"></i></p>
+        </div>
+    </div>
+
+    <div class="balance-card">
+        <span>মোট ব্যালেন্স</span>
+        <h1>TK 0.00</h1>
+    </div>
+
+    <div class="grid-container">
+        <div class="action-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h4>মোট টাস্ক</h4>
+            <p>0</p>
+        </div>
+        <div class="action-card">
+            <i class="fa-solid fa-users"></i>
+            <h4>মোট রেফার</h4>
+            <p>0</p>
+        </div>
+        <div class="action-card">
+            <i class="fa-solid fa-video"></i>
+            <h4>অ্যাড দেখা হয়েছে</h4>
+            <p>0</p>
+        </div>
+        <div class="action-card">
+            <i class="fa-solid fa-wallet"></i>
+            <h4>বোনাস ব্যালেন্স</h4>
+            <p>TK 0.00</p>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <div class="nav-item active"><i class="fa-solid fa-house"></i><span>হোম</span></div>
+        <div class="nav-item"><i class="fa-solid fa-list-check"></i><span>টাস্ক</span></div>
+        <div class="nav-item"><i class="fa-solid fa-headset"></i><span>সাপোর্ট</span></div>
+        <div class="nav-item"><i class="fa-solid fa-user-plus"></i><span>রেফার</span></div>
+        <div class="nav-item"><i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span></div>
+    </div>
+</div>
+
+<script>
+    function closeModal() {
+        document.getElementById('welcomeModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
