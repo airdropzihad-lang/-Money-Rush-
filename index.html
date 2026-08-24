@@ -20,505 +20,21 @@
             --purple-glow: 0 0 15px rgba(157, 78, 221, 0.4);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
-        body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; }
-        .app-container { width: 100%; max-width: 450px; background: var(--bg-color); padding-bottom: 80px; position: relative; }
-
-        #loading-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 99999;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
 
-        .loader {
-            width: 50px; height: 50px; border: 4px solid var(--card-border);
-            border-top: 4px solid var(--accent-gold); border-radius: 50%;
-            animation: spin 1s linear infinite; box-shadow: var(--gold-glow);
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .top-bar { padding: 15px; background: var(--bg-color); border-bottom: 1px solid var(--card-border); text-align: center; }
-        .logo-title { font-size: 1.3rem; font-weight: 800; color: var(--accent-gold); text-shadow: 0 0 10px rgba(255, 183, 3, 0.4); }
-
-        .user-card { display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: var(--card-bg); border-bottom: 1px solid var(--card-border); }
-        .avatar-box { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent-gold); overflow: hidden; box-shadow: var(--gold-glow); }
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .page-section { display: none; padding: 15px; }
-        .page-section.active { display: block; }
-
-        .balance-card { padding: 25px 20px; border-radius: 20px; background: linear-gradient(135deg, #7b2cbf, #3c096c); border: 1px solid var(--accent-purple); box-shadow: var(--purple-glow); color: #fff; text-align: left; margin-bottom: 15px; }
-        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
-        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
-
-        .marquee-container { background: var(--card-bg); border: 1px solid var(--card-border); padding: 12px 0; border-radius: 12px; overflow: hidden; white-space: nowrap; margin-bottom: 15px; display: flex; align-items: center; }
-        .marquee-content { display: inline-block; animation: marquee 35s linear infinite; font-size: 0.85rem; color: var(--text-sub); }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .marquee-content strong { color: var(--accent-gold); }
-
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        .action-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 15px; border-radius: 14px; display: flex; flex-direction: column; gap: 6px; }
-        .action-card i { font-size: 1.4rem; color: var(--accent-gold); }
-        .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
-        .action-card p { font-size: 1.2rem; font-weight: bold; }
-
-        .feature-card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; margin-bottom: 15px; text-align: center; }
-        .progress-bar-bg { background: #0b0712; height: 10px; border-radius: 10px; overflow: hidden; margin: 10px 0; border: 1px solid var(--card-border); }
-        .progress-fill { background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold)); height: 100%; width: 0%; transition: width 0.3s; }
-
-        .gift-box-icon { font-size: 4rem; margin: 10px 0; display: inline-block; transition: transform 0.3s ease; }
-        .gift-box-icon.shake-ready { animation: boxShake 0.6s infinite alternate ease-in-out; cursor: pointer; }
-        @keyframes boxShake { 0% { transform: rotate(-8deg) scale(1.05); } 50% { transform: rotate(8deg) scale(1.1); } 100% { transform: rotate(-8deg) scale(1.05); } }
-
-        .bonus-grid-7 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 15px 0; }
-        .bonus-box-7 { background: rgba(22, 14, 38, 0.6); border: 1px solid var(--card-border); padding: 10px 4px; border-radius: 12px; font-size: 0.75rem; text-align: center; }
-        .bonus-box-7.active-day { background: #00f5d4; color: #000; border-color: #00f5d4; box-shadow: 0 0 15px rgba(0, 245, 212, 0.5); font-weight: bold; }
-        .bonus-box-7 span { display: block; color: var(--text-sub); font-size: 0.7rem; margin-top: 4px; }
-
-        .btn-gold { background: linear-gradient(90deg, #ffb703, #fb8500); color: #000; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; font-size: 0.95rem; cursor: pointer; width: 100%; box-shadow: var(--gold-glow); margin-top: 12px; }
-        .btn-gold:disabled { background: #4a3e20; color: #aaa; box-shadow: none; cursor: not-allowed; }
-
-        /* LEADERBOARD STYLES */
-        .lb-tab-container { display: flex; background: #0b0712; border-radius: 12px; padding: 4px; margin: 15px 0; border: 1px solid var(--card-border); }
-        .lb-tab { flex: 1; padding: 10px; text-align: center; border-radius: 8px; font-size: 0.85rem; font-weight: bold; cursor: pointer; color: var(--text-sub); }
-        .lb-tab.active { background: var(--accent-neon); color: #000; }
-
-        .podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 10px; margin: 25px 0 15px 0; height: 180px; }
-        .podium-card { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px 12px 0 0; display: flex; flex-direction: column; align-items: center; position: relative; padding-top: 35px; }
-        .podium-card.rank-1 { height: 160px; border-color: var(--accent-gold); }
-        .podium-card.rank-2 { height: 130px; }
-        .podium-card.rank-3 { height: 110px; }
-
-        .podium-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff; position: absolute; top: -25px; background: #333; overflow: hidden; }
-        .podium-card.rank-1 .podium-avatar { border-color: var(--accent-gold); width: 60px; height: 60px; top: -30px; }
-        .crown-icon { position: absolute; top: -50px; color: var(--accent-gold); font-size: 1.3rem; }
-        
-        .podium-num { font-size: 1.5rem; font-weight: 900; margin-bottom: 5px; }
-        .podium-name { font-size: 0.75rem; font-weight: bold; width: 90%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .podium-score { font-size: 0.7rem; color: var(--accent-neon); }
-
-        .user-rank-card { background: var(--accent-neon); color: #000; padding: 12px 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; }
-        .user-rank-left { display: flex; align-items: center; gap: 10px; }
-        .user-rank-badge { background: #000; color: #fff; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; }
-
-        .prize-pool-card { background: linear-gradient(135deg, #2a0845, #6441a5); border-radius: 14px; padding: 12px; text-align: center; margin-bottom: 15px; border: 1px solid var(--accent-purple); }
-        .prize-pool-card h4 { color: var(--accent-gold); font-size: 0.9rem; }
-        .prize-pool-card p { font-size: 0.75rem; color: #e0aaff; margin-top: 3px; }
-
-        .lb-list-item { background: var(--card-bg); border: 1px solid var(--card-border); padding: 10px 15px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-
-        .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 450px; height: 65px; background: var(--card-bg); border-top: 1px solid var(--card-border); display: flex; justify-content: space-around; align-items: center; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-sub); font-size: 0.75rem; gap: 5px; cursor: pointer; }
-        .nav-item.active { color: var(--accent-gold); }
-        .nav-item i { font-size: 1.2rem; }
-
-        .input-box { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--card-border); background: #0b0712; color: #fff; outline: none; }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7, 10, 19, 0.92); backdrop-filter: blur(8px); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; padding: 20px; text-align: center; }
-        .modal-overlay.show { display: flex; }
-    </style>
-</head>
-<body>
-
-<div id="loading-screen">
-    <div class="loader"></div>
-    <h3 style="margin-top: 15px; color: var(--accent-gold);">Fly Cash লোড হচ্ছে...</h3>
-</div>
-
-<div class="app-container">
-    <div class="top-bar">
-        <div class="logo-title">Fly Cash 🚀 টাকা উড়াও 💸 <i class="fa-solid fa-circle-check" style="font-size:0.9rem;"></i></div>
-    </div>
-
-    <div class="user-card">
-        <div class="avatar-box">
-            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=ffb703&color=000" alt="Profile">
-        </div>
-        <div>
-            <h4 id="user-name" style="font-size: 0.95rem;">ব্যবহারকারী</h4>
-            <p id="user-handle" style="font-size: 0.75rem; color: var(--text-sub);">@user</p>
-        </div>
-    </div>
-
-    <!-- HOME PAGE -->
-    <div id="home" class="page-section active">
-        <div class="balance-card">
-            <span>মোট ব্যালেন্স</span>
-            <h1 id="user-balance">TK 0.00</h1>
-        </div>
-
-        <div class="marquee-container">
-            <div class="marquee-content">
-                ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                ⚡ <strong>Tan***</strong> মাত্র <strong>TK 4500</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                ⚡ <strong>Rif***</strong> মাত্র <strong>TK 2200</strong> উইথড্র করেছেন
-            </div>
-        </div>
-
-        <div class="grid-container">
-            <div class="action-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h4>মোট টাস্ক</h4>
-                <p id="total-tasks">0</p>
-            </div>
-            <div class="action-card">
-                <i class="fa-solid fa-users"></i>
-                <h4>মোট রেফার</h4>
-                <p id="total-refers">0</p>
-            </div>
-            <div class="action-card">
-                <i class="fa-solid fa-video"></i>
-                <h4>অ্যাড দেখা হয়েছে</h4>
-                <p id="total-ads">0</p>
-            </div>
-            <div class="action-card">
-                <i class="fa-solid fa-wallet"></i>
-                <h4>বোনাস ব্যালেন্স</h4>
-                <p id="bonus-balance">TK 0.00</p>
-            </div>
-        </div>
-
-        <div class="feature-card">
-            <h3 style="margin-bottom: 5px;">মিষ্টি বক্স 🎁</h3>
-            <p style="font-size: 0.8rem; color: var(--text-sub);">৩টি অ্যাড দেখে বক্স খুলুন ও ২০০-৫০০ টাকা জিতুন</p>
-            <div id="box-icon" class="gift-box-icon" onclick="openBoxModal()">🎁</div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-sub);">
-                <span>অ্যাড প্রগ্রেস</span>
-                <span id="ad-count-text">0/3</span>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-fill" id="ad-progress" style="width: 0%;"></div>
-            </div>
-            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 5px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
-            <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
-        </div>
-
-        <div class="feature-card">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3><i class="fa-solid fa-calendar-days" style="color:var(--accent-gold);"></i> দৈনিক প্রগ্রেস</h3>
-                <span style="background: rgba(0,245,212,0.1); color: var(--accent-neon); border: 1px solid var(--accent-neon); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;" id="bonus-day-count">১/৭ দিন</span>
-            </div>
-            <div class="bonus-grid-7">
-                <div class="bonus-box-7 active-day">১ম দিন<span>TK 20.00</span></div>
-                <div class="bonus-box-7">২য় দিন<span>TK 35.00</span></div>
-                <div class="bonus-box-7">৩য় দিন<span>TK 45.00</span></div>
-                <div class="bonus-box-7">৪র্থ দিন<span>TK 60.00</span></div>
-                <div class="bonus-box-7">৫ম দিন<span>TK 75.00</span></div>
-                <div class="bonus-box-7">৬ষ্ঠ দিন<span>TK 85.00</span></div>
-                <div class="bonus-box-7">৭ম দিন<span>TK 100.00</span></div>
-            </div>
-            <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
-        </div>
-
-        <!-- LEADERBOARD CLICK TRIGGER -->
-        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="openLeaderboardFlow()">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
-                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
-                </div>
-            </div>
-            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
-        </div>
-    </div>
-
-    <!-- LEADERBOARD PROFILE FORM PAGE -->
-    <div id="lb-profile" class="page-section">
-        <div style="text-align: center; margin-bottom: 25px; margin-top: 10px;">
-            <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--accent-neon); margin-bottom: 10px;"></i>
-            <h2 style="font-size: 1.4rem; color: #fff;">লিডারবোর্ড প্রোফাইল</h2>
-            <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 5px;">লিডারবোর্ডে অংশগ্রহণের জন্য আপনার তথ্য প্রদান করুন</p>
-        </div>
-
-        <div class="feature-card" style="text-align: left;">
-            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">আপনার নাম</label>
-            <input type="text" class="input-box" id="lb-input-name" placeholder="আপনার পুরো নাম লিখুন">
-
-            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">আপনার বয়স</label>
-            <input type="number" class="input-box" id="lb-input-age" placeholder="আপনার বয়স লিখুন">
-
-            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">বিকাশ / নগদ নম্বর (গোপন থাকবে)</label>
-            <input type="text" class="input-box" id="lb-input-phone" placeholder="01XXXXXXXXX">
-
-            <button class="btn-gold" onclick="submitLbProfile()">সাবমিট করুন ও লিডারবোর্ড দেখুন</button>
-        </div>
-    </div>
-
-    <!-- LEADERBOARD DISPLAY PAGE -->
-    <div id="leaderboard" class="page-section">
-        <div style="text-align: center; margin-top: 5px;">
-            <h2 style="font-size: 1.4rem; color: #fff;">সাপ্তাহিক লিডারবোর্ড</h2>
-            <p style="font-size: 0.8rem; color: var(--text-sub);">সাপ্তাহিক সেরা পারফর্মারদের তালিকা</p>
-        </div>
-
-        <div style="background: rgba(0, 245, 212, 0.05); border: 1px solid var(--accent-neon); padding: 8px; border-radius: 10px; text-align: center; margin-top: 10px; font-size: 0.8rem; color: var(--accent-neon);">
-            <i class="fa-regular fa-clock"></i> রিসেট হবে: <strong>6d 7h 51m পর</strong>
-        </div>
-
-        <div class="prize-pool-card" style="margin-top: 12px;">
-            <h4>🏆 ১০,০০০ টাকার সর্বমোট প্রাইজ পুল 🏆</h4>
-            <p>টপ পারফর্মারদের মাঝে প্রাইজ পুলের টাকা ভাগ করে দেওয়া হবে!</p>
-        </div>
-
-        <div class="lb-tab-container">
-            <div class="lb-tab active" id="tab-ads-btn" onclick="switchLbTab('ads')">অ্যাড দেখা</div>
-            <div class="lb-tab" id="tab-ref-btn" onclick="switchLbTab('ref')">রেফারেল</div>
-        </div>
-
-        <!-- PODIUM TOP 3 -->
-        <div class="podium-container">
-            <!-- Rank 2 -->
-            <div class="podium-card rank-2">
-                <div class="podium-avatar"><img src="https://ui-avatars.com/api/?name=Naem+Toha&background=0D8ABC&color=fff" style="width:100%;height:100%;"></div>
-                <div class="podium-num" style="color: #c0c0c0;">2</div>
-                <div class="podium-name">Naem toha</div>
-                <div class="podium-score" id="p2-score">10 Ads</div>
-            </div>
-            <!-- Rank 1 -->
-            <div class="podium-card rank-1">
-                <i class="fa-solid fa-crown crown-icon"></i>
-                <div class="podium-avatar"><img src="https://ui-avatars.com/api/?name=Winner&background=ffb703&color=000" style="width:100%;height:100%;"></div>
-                <div class="podium-num" style="color: var(--accent-gold);">1</div>
-                <div class="podium-name" id="p1-name">None</div>
-                <div class="podium-score" id="p1-score">10 Ads</div>
-            </div>
-            <!-- Rank 3 -->
-            <div class="podium-card rank-3">
-                <div class="podium-avatar"><img src="https://ui-avatars.com/api/?name=Tanvir&background=cd7f32&color=fff" style="width:100%;height:100%;"></div>
-                <div class="podium-num" style="color: #cd7f32;">3</div>
-                <div class="podium-name">Tanvir</div>
-                <div class="podium-score" id="p3-score">10 Ads</div>
-            </div>
-        </div>
-
-        <!-- USER RANK CARD -->
-        <div class="user-rank-card">
-            <div class="user-rank-left">
-                <span class="user-rank-badge">#N/A</span>
-                <div>
-                    <div style="font-size: 0.75rem; opacity: 0.8;" id="my-rank-type-label">আপনার র‍্যাংক (অ্যাড)</div>
-                    <div style="font-size: 0.95rem; font-weight: 900;" id="my-lb-name">USER</div>
-                </div>
-            </div>
-            <div style="font-size: 0.9rem;" id="my-lb-score">0 টি অ্যাড</div>
-        </div>
-
-        <!-- RANK LIST -->
-        <div id="lb-list-container">
-            <!-- Dynamic List Items -->
-        </div>
-    </div>
-
-    <!-- TASK PAGE -->
-    <div id="task" class="page-section">
-        <div class="feature-card" style="text-align:center;">
-            <h3>অ্যাড দেখুন</h3>
-            <p style="font-size:0.85rem; color:var(--text-sub);">প্রতিটি অ্যাড দেখলে TK 20.00 ইনকাম করুন</p>
-            <button class="btn-gold" onclick="watchTaskAd()">অ্যাড দেখুন</button>
-        </div>
-    </div>
-
-    <!-- SUPPORT PAGE -->
-    <div id="support" class="page-section">
-        <div class="feature-card">
-            <h3>কাস্টমার সাপোর্ট</h3>
-            <p>সহায়তার জন্য টেলিগ্রামে যোগাযোগ করুন</p>
-        </div>
-    </div>
-
-    <!-- REFER PAGE -->
-    <div id="refer" class="page-section">
-        <div class="feature-card">
-            <h3>বন্ধুদের রেফার করুন</h3>
-            <p>রেফার করে বাড়তি আয় করুন</p>
-        </div>
-    </div>
-
-    <!-- WALLET PAGE -->
-    <div id="wallet" class="page-section">
-        <div class="feature-card">
-            <h3>টাকা তুলুন</h3>
-            <input type="number" class="input-box" placeholder="টাকার পরিমাণ">
-            <button class="btn-gold">উইথড্র</button>
-        </div>
-    </div>
-
-    <!-- NAV BAR -->
-    <div class="nav-bar">
-        <div class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i><span>হোম</span></div>
-        <div class="nav-item" onclick="switchTab('task', this)"><i class="fa-solid fa-list-check"></i><span>টাস্ক</span></div>
-        <div class="nav-item" onclick="switchTab('support', this)"><i class="fa-solid fa-headset"></i><span>সাপোর্ট</span></div>
-        <div class="nav-item" onclick="switchTab('refer', this)"><i class="fa-solid fa-user-plus"></i><span>রেফার</span></div>
-        <div class="nav-item" onclick="switchTab('wallet', this)"><i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span></div>
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var loader = document.getElementById('loading-screen');
-        if (loader) loader.style.display = 'none';
-    });
-
-    var userData = {
-        balance: 0.00,
-        bonusBalance: 0.00,
-        totalTasks: 0,
-        totalAds: 0,
-        totalRefers: 0,
-        adProgress: 0,
-        taskAdsDone: 0,
-        lastBonusTime: 0,
-        lbProfileSaved: false,
-        lbName: '',
-        lbAge: '',
-        lbPhone: ''
-    };
-
-    var currentLbTab = 'ads';
-
-    function loadUserData() {
-        try {
-            var saved = localStorage.getItem('flycash_v7_data');
-            if (saved) {
-                var parsed = JSON.parse(saved);
-                for (var key in parsed) { userData[key] = parsed[key]; }
-            }
-        } catch (e) {}
-        updateUI();
-    }
-
-    function saveData() {
-        try {
-            localStorage.setItem('flycash_v7_data', JSON.stringify(userData));
-        } catch (e) {}
-        updateUI();
-    }
-
-    function updateUI() {
-        document.getElementById('user-balance').innerText = 'TK ' + userData.balance.toFixed(2);
-        document.getElementById('bonus-balance').innerText = 'TK ' + userData.bonusBalance.toFixed(2);
-        document.getElementById('total-tasks').innerText = userData.totalTasks;
-        document.getElementById('total-refers').innerText = userData.totalRefers;
-        document.getElementById('total-ads').innerText = userData.totalAds;
-        document.getElementById('ad-count-text').innerText = userData.adProgress + '/3';
-        document.getElementById('ads-done').innerText = userData.adProgress;
-        document.getElementById('ad-progress').style.width = ((userData.adProgress / 3) * 100) + '%';
-    }
-
-    function openLeaderboardFlow() {
-        if (userData.lbProfileSaved) {
-            showLeaderboardView();
-        } else {
-            switchSection('lb-profile');
-        }
-    }
-
-    function submitLbProfile() {
-        var name = document.getElementById('lb-input-name').value.trim();
-        var age = document.getElementById('lb-input-age').value.trim();
-        var phone = document.getElementById('lb-input-phone').value.trim();
-
-        if (!name || !age || !phone) {
-            alert('অনুগহ করে সব তথ্য পূরণ করুন!');
-            return;
-        }
-
-        userData.lbName = name;
-        userData.lbAge = age;
-        userData.lbPhone = phone;
-        userData.lbProfileSaved = true;
-        saveData();
-
-        showLeaderboardView();
-    }
-
-    function showLeaderboardView() {
-        switchSection('leaderboard');
-        renderLeaderboard();
-    }
-
-    function switchLbTab(tab) {
-        currentLbTab = tab;
-        document.getElementById('tab-ads-btn').classList.toggle('active', tab === 'ads');
-        document.getElementById('tab-ref-btn').classList.toggle('active', tab === 'ref');
-        renderLeaderboard();
-    }
-
-    function renderLeaderboard() {
-        var isAds = (currentLbTab === 'ads');
-        document.getElementById('my-rank-type-label').innerText = isAds ? 'আপনার র‍্যাংক (অ্যাড)' : 'আপনার র‍্যাংক (রেফার)';
-        document.getElementById('my-lb-name').innerText = userData.lbName || 'USER';
-        document.getElementById('my-lb-score').innerText = isAds ? userData.totalAds + ' টি অ্যাড' : userData.totalRefers + ' টি রেফার';
-
-        document.getElementById('p1-score').innerText = isAds ? '120 Ads' : '45 Refers';
-        document.getElementById('p2-score').innerText = isAds ? '95 Ads' : '32 Refers';
-        document.getElementById('p3-score').innerText = isAds ? '80 Ads' : '25 Refers';
-        
-        document.getElementById('p1-name').innerText = "Siam Hossain";
-
-        var listContainer = document.getElementById('lb-list-container');
-        listContainer.innerHTML = '';
-
-        var dummyUsers = isAds ? [
-            { rank: 4, name: 'Siam Hossain', val: '65 Ads' },
-            { rank: 5, name: 'Arif Khan', val: '50 Ads' },
-            { rank: 6, name: 'Mehedi Hasan', val: '42 Ads' }
-        ] : [
-            { rank: 4, name: 'Siam Hossain', val: '18 Refers' },
-            { rank: 5, name: 'Arif Khan', val: '14 Refers' },
-            { rank: 6, name: 'Mehedi Hasan', val: '10 Refers' }
-        ];
-
-        dummyUsers.forEach(function(u) {
-            var item = document.createElement('div');
-            item.className = 'lb-list-item';
-            item.innerHTML = '<div style="display:flex; align-items:center; gap:10px;"><span style="font-weight:bold; color:var(--text-sub);">#' + u.rank + '</span><span style="font-weight:bold;">' + u.name + '</span></div><span style="color:var(--accent-neon); font-size:0.85rem;">' + u.val + '</span>';
-            listContainer.appendChild(item);
-        });
-    }
-
-    function switchSection(id) {
-        var sections = document.querySelectorAll('.page-section');
-        sections.forEach(function(s) { s.classList.remove('active'); });
-        document.getElementById(id).classList.add('active');
-    }
-
-    function switchTab(tabId, element) {
-        var navs = document.querySelectorAll('.nav-item');
-        navs.forEach(function(n) { n.classList.remove('active'); });
-        element.classList.add('active');
-        switchSection(tabId);
-    }
-
-    function watchAd() {
-        if (userData.adProgress < 3) {
-            userData.adProgress++;
-            userData.totalAds++;
-            saveData();
-        }
-    }
-
-    function watchTaskAd() {
-        userData.taskAdsDone++;
-        userData.totalAds++;
-        userData.balance += 20.00;
-        saveData();
-        alert('অ্যাড সম্পন্ন! TK 20.00 যোগ হয়েছে।');
-    }
-
-    function claimDailyBonus() {
-        userData.balance += 20.00;
-        saveData();
-        alert('দৈনিক বোনাস ক্লেইম করা হয়েছে!');
-    }
-
-    loadUserData();
-</script>
-</body>
-</html>        }
 
         .app-container {
             width: 100%;
@@ -925,6 +441,7 @@
             border: 1px solid var(--card-border);
             background: #0b0712;
             color: #fff;
+            outline: none;
         }
 
         .section-header-title {
@@ -1202,6 +719,148 @@
             font-size: 0.8rem;
             color: rgba(160, 142, 187, 0.6);
         }
+
+        /* NEW LEADERBOARD UI STYLES */
+        .lb-tab-container {
+            display: flex;
+            background: #0b0712;
+            border-radius: 12px;
+            padding: 4px;
+            margin: 15px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .lb-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-sub);
+        }
+
+        .lb-tab.active {
+            background: var(--accent-neon);
+            color: #000;
+        }
+
+        .podium-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 10px;
+            margin: 25px 0 15px 0;
+            height: 180px;
+        }
+
+        .podium-card {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding-top: 35px;
+        }
+
+        .podium-card.rank-1 { height: 160px; border-color: var(--accent-gold); }
+        .podium-card.rank-2 { height: 130px; }
+        .podium-card.rank-3 { height: 110px; }
+
+        .podium-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            position: absolute;
+            top: -25px;
+            background: #333;
+            overflow: hidden;
+        }
+
+        .podium-card.rank-1 .podium-avatar {
+            border-color: var(--accent-gold);
+            width: 60px;
+            height: 60px;
+            top: -30px;
+        }
+
+        .crown-icon {
+            position: absolute;
+            top: -50px;
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+        }
+
+        .podium-num {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .podium-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: 90%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .podium-score {
+            font-size: 0.7rem;
+            color: var(--accent-neon);
+        }
+
+        .user-rank-card {
+            background: var(--accent-neon);
+            color: #000;
+            padding: 12px 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .user-rank-left { display: flex; align-items: center; gap: 10px; }
+
+        .user-rank-badge {
+            background: #000;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+        }
+
+        .prize-pool-card {
+            background: linear-gradient(135deg, #2a0845, #6441a5);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid var(--accent-purple);
+        }
+
+        .prize-pool-card h4 { color: var(--accent-gold); font-size: 0.9rem; }
+        .prize-pool-card p { font-size: 0.75rem; color: #e0aaff; margin-top: 3px; }
+
+        .lb-list-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
@@ -1316,7 +975,8 @@
             <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
         </div>
 
-        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="alert('লিডারবোর্ড শিঘ্রই আসছে!')">
+        <!-- LEADERBOARD CLICK EVENT TRIGGER -->
+        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="openLeaderboardFlow()">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
                     <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
@@ -1327,6 +987,89 @@
                 </div>
             </div>
             <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD PROFILE INPUT PAGE -->
+    <div id="lb-profile" class="page-section">
+        <div style="text-align: center; margin-bottom: 25px; margin-top: 10px;">
+            <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--accent-neon); margin-bottom: 10px;"></i>
+            <h2 style="font-size: 1.4rem; color: #fff;">লিডারবোর্ড প্রোফাইল</h2>
+            <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 5px;">লিডারবোর্ডে অংশগ্রহণের জন্য আপনার তথ্য প্রদান করুন</p>
+        </div>
+
+        <div class="feature-card" style="text-align: left;">
+            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">আপনার নাম</label>
+            <input type="text" class="input-box" id="lb-input-name" placeholder="আপনার পুরো নাম লিখুন">
+
+            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">আপনার বয়স</label>
+            <input type="number" class="input-box" id="lb-input-age" placeholder="আপনার বয়স লিখুন">
+
+            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">বিকাশ / নগদ নম্বর (গোপন থাকবে)</label>
+            <input type="text" class="input-box" id="lb-input-phone" placeholder="01XXXXXXXXX">
+
+            <button class="btn-gold" onclick="submitLbProfile()">সাবমিট করুন ও লিডারবোর্ড দেখুন</button>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD DISPLAY PAGE -->
+    <div id="leaderboard" class="page-section">
+        <div style="text-align: center; margin-top: 5px;">
+            <h2 style="font-size: 1.4rem; color: #fff;">সাপ্তাহিক লিডারবোর্ড</h2>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">সাপ্তাহিক সেরা পারফর্মারদের তালিকা</p>
+        </div>
+
+        <div style="background: rgba(0, 245, 212, 0.05); border: 1px solid var(--accent-neon); padding: 8px; border-radius: 10px; text-align: center; margin-top: 10px; font-size: 0.8rem; color: var(--accent-neon);">
+            <i class="fa-regular fa-clock"></i> রিসেট হবে: <strong>6d 7h 51m পর</strong>
+        </div>
+
+        <div class="prize-pool-card" style="margin-top: 12px;">
+            <h4>🏆 ১০,০০০ টাকার সর্বমোট প্রাইজ পুল 🏆</h4>
+            <p>টপ পারফর্মারদের মাঝে প্রাইজ পুলের টাকা ভাগ করে দেওয়া হবে!</p>
+        </div>
+
+        <div class="lb-tab-container">
+            <div class="lb-tab active" id="tab-ads-btn" onclick="switchLbTab('ads')">অ্যাড দেখা</div>
+            <div class="lb-tab" id="tab-ref-btn" onclick="switchLbTab('ref')">রেফারেল</div>
+        </div>
+
+        <!-- PODIUM TOP 3 -->
+        <div class="podium-container">
+            <div class="podium-card rank-2">
+                <div class="podium-avatar"><img src="https://ui-avatars.com/api/?name=Naem+Toha&background=0D8ABC&color=fff" style="width:100%;height:100%;"></div>
+                <div class="podium-num" style="color: #c0c0c0;">2</div>
+                <div class="podium-name">Naem toha</div>
+                <div class="podium-score" id="p2-score">10 Ads</div>
+            </div>
+            <div class="podium-card rank-1">
+                <i class="fa-solid fa-crown crown-icon"></i>
+                <div class="podium-avatar"><img src="https://ui-avatars.com/api/?name=Winner&background=ffb703&color=000" style="width:100%;height:100%;"></div>
+                <div class="podium-num" style="color: var(--accent-gold);">1</div>
+                <div class="podium-name" id="p1-name">None</div>
+                <div class="podium-score" id="p1-score">10 Ads</div>
+            </div>
+            <div class="podium-card rank-3">
+                <div class="podium-avatar"><img src="https://ui-avatars.com/api/?name=Tanvir&background=cd7f32&color=fff" style="width:100%;height:100%;"></div>
+                <div class="podium-num" style="color: #cd7f32;">3</div>
+                <div class="podium-name">Tanvir</div>
+                <div class="podium-score" id="p3-score">10 Ads</div>
+            </div>
+        </div>
+
+        <!-- USER RANK CARD -->
+        <div class="user-rank-card">
+            <div class="user-rank-left">
+                <span class="user-rank-badge">#N/A</span>
+                <div>
+                    <div style="font-size: 0.75rem; opacity: 0.8;" id="my-rank-type-label">আপনার র‍্যাংক (অ্যাড)</div>
+                    <div style="font-size: 0.95rem; font-weight: 900;" id="my-lb-name">USER</div>
+                </div>
+            </div>
+            <div style="font-size: 0.9rem;" id="my-lb-score">0 টি অ্যাড</div>
+        </div>
+
+        <div id="lb-list-container">
+            <!-- Dynamic Users -->
         </div>
     </div>
 
@@ -1469,12 +1212,9 @@
 </div>
 
 <script>
-    // Force remove loader immediately when DOM is ready
     document.addEventListener("DOMContentLoaded", function() {
         var loader = document.getElementById('loading-screen');
-        if (loader) {
-            loader.style.display = 'none';
-        }
+        if (loader) loader.style.display = 'none';
     });
 
     var userData = {
@@ -1485,17 +1225,21 @@
         totalRefers: 0,
         adProgress: 0,
         taskAdsDone: 0,
-        lastBonusTime: 0
+        lastBonusTime: 0,
+        lbProfileSaved: false,
+        lbName: '',
+        lbAge: '',
+        lbPhone: ''
     };
+
+    var currentLbTab = 'ads';
 
     function loadUserData() {
         try {
             var saved = localStorage.getItem('flycash_v7_data');
             if (saved) {
                 var parsed = JSON.parse(saved);
-                for (var key in parsed) {
-                    userData[key] = parsed[key];
-                }
+                for (var key in parsed) { userData[key] = parsed[key]; }
             }
         } catch (e) {}
 
@@ -1571,6 +1315,78 @@
         if (elTaskBar) elTaskBar.style.width = ((userData.taskAdsDone / 15) * 100) + '%';
 
         checkDailyBonusTimer();
+    }
+
+    function openLeaderboardFlow() {
+        if (userData.lbProfileSaved) {
+            showLeaderboardView();
+        } else {
+            switchSection('lb-profile');
+        }
+    }
+
+    function submitLbProfile() {
+        var name = document.getElementById('lb-input-name').value.trim();
+        var age = document.getElementById('lb-input-age').value.trim();
+        var phone = document.getElementById('lb-input-phone').value.trim();
+
+        if (!name || !age || !phone) {
+            alert('অনুগহ করে নাম, বয়স ও বিকাশ/নগদ নম্বর সঠিকভাবে প্রদান করুন!');
+            return;
+        }
+
+        userData.lbName = name;
+        userData.lbAge = age;
+        userData.lbPhone = phone;
+        userData.lbProfileSaved = true;
+        saveData();
+
+        showLeaderboardView();
+    }
+
+    function showLeaderboardView() {
+        switchSection('leaderboard');
+        renderLeaderboard();
+    }
+
+    function switchLbTab(tab) {
+        currentLbTab = tab;
+        document.getElementById('tab-ads-btn').classList.toggle('active', tab === 'ads');
+        document.getElementById('tab-ref-btn').classList.toggle('active', tab === 'ref');
+        renderLeaderboard();
+    }
+
+    function renderLeaderboard() {
+        var isAds = (currentLbTab === 'ads');
+        document.getElementById('my-rank-type-label').innerText = isAds ? 'আপনার র‍্যাংক (অ্যাড)' : 'আপনার র‍্যাংক (রেফার)';
+        document.getElementById('my-lb-name').innerText = userData.lbName || 'USER';
+        document.getElementById('my-lb-score').innerText = isAds ? userData.totalAds + ' টি অ্যাড' : userData.totalRefers + ' টি রেফার';
+
+        document.getElementById('p1-score').innerText = isAds ? '120 Ads' : '45 Refers';
+        document.getElementById('p2-score').innerText = isAds ? '95 Ads' : '32 Refers';
+        document.getElementById('p3-score').innerText = isAds ? '80 Ads' : '25 Refers';
+        
+        document.getElementById('p1-name').innerText = "Siam Hossain";
+
+        var listContainer = document.getElementById('lb-list-container');
+        listContainer.innerHTML = '';
+
+        var dummyUsers = isAds ? [
+            { rank: 4, name: 'Siam Hossain', val: '65 Ads' },
+            { rank: 5, name: 'Arif Khan', val: '50 Ads' },
+            { rank: 6, name: 'Mehedi Hasan', val: '42 Ads' }
+        ] : [
+            { rank: 4, name: 'Siam Hossain', val: '18 Refers' },
+            { rank: 5, name: 'Arif Khan', val: '14 Refers' },
+            { rank: 6, name: 'Mehedi Hasan', val: '10 Refers' }
+        ];
+
+        dummyUsers.forEach(function(u) {
+            var item = document.createElement('div');
+            item.className = 'lb-list-item';
+            item.innerHTML = '<div style="display:flex; align-items:center; gap:10px;"><span style="font-weight:bold; color:var(--text-sub);">#' + u.rank + '</span><span style="font-weight:bold;">' + u.name + '</span></div><span style="color:var(--accent-neon); font-size:0.85rem;">' + u.val + '</span>';
+            listContainer.appendChild(item);
+        });
     }
 
     function watchAd() {
@@ -1672,17 +1488,21 @@
         saveData();
     }
 
-    function switchTab(tabId, element) {
+    function switchSection(id) {
         var sections = document.querySelectorAll('.page-section');
         for (var i = 0; i < sections.length; i++) {
             sections[i].classList.remove('active');
         }
+        document.getElementById(id).classList.add('active');
+    }
+
+    function switchTab(tabId, element) {
         var navs = document.querySelectorAll('.nav-item');
         for (var j = 0; j < navs.length; j++) {
             navs[j].classList.remove('active');
         }
-        document.getElementById(tabId).classList.add('active');
         element.classList.add('active');
+        switchSection(tabId);
     }
 
     function copyReferLink() {
@@ -1711,7 +1531,6 @@
 
     loadUserData();
     
-    // Backup loader hide
     setTimeout(function() {
         var loader = document.getElementById('loading-screen');
         if (loader) loader.style.display = 'none';
