@@ -16,8 +16,9 @@
             --accent-neon: #00f5d4;
             --text-main: #ffffff;
             --text-sub: #a08ebb;
-            --gold-glow: 0 0 15px rgba(255, 183, 3, 0.3);
-            --purple-glow: 0 0 15px rgba(157, 78, 221, 0.4);
+            --gold-glow: 0 0 20px rgba(255, 183, 3, 0.5);
+            --purple-glow: 0 0 20px rgba(157, 78, 221, 0.5);
+            --neon-glow: 0 0 25px rgba(0, 245, 212, 0.4);
         }
 
         * {
@@ -45,7 +46,7 @@
             position: relative;
         }
 
-        /*--- FIXED LOADING SCREEN ---*/
+        /*--- LOADING SCREEN ---*/
         #loading-screen {
             position: fixed;
             top: 0;
@@ -60,7 +61,6 @@
             z-index: 99999;
             transition: opacity 0.5s ease, visibility 0.5s;
         }
-
         .loader {
             width: 50px;
             height: 50px;
@@ -70,7 +70,6 @@
             animation: spin 1s linear infinite;
             box-shadow: var(--gold-glow);
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -83,12 +82,11 @@
             border-bottom: 1px solid var(--card-border);
             text-align: center;
         }
-
         .logo-title {
             font-size: 1.3rem;
             font-weight: 800;
             color: var(--accent-gold);
-            text-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+            text-shadow: var(--gold-glow);
         }
 
         .user-card {
@@ -99,7 +97,6 @@
             background: var(--card-bg);
             border-bottom: 1px solid var(--card-border);
         }
-
         .avatar-box {
             width: 45px;
             height: 45px;
@@ -108,27 +105,83 @@
             overflow: hidden;
             box-shadow: var(--gold-glow);
         }
-
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .page-section { display: none; padding: 15px; animation: fadeIn 0.4s ease; }
         .page-section.active { display: block; }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /*--- BALANCE CARD (HIGHLIGHTED) ---*/
         .balance-card {
             padding: 25px 20px;
             border-radius: 20px;
             background: linear-gradient(135deg, #7b2cbf, #3c096c);
-            border: 1px solid var(--accent-purple);
-            box-shadow: var(--purple-glow);
+            border: 2px solid var(--accent-gold);
+            box-shadow: var(--gold-glow), var(--purple-glow);
             color: #fff;
             text-align: left;
             margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
         }
+        .balance-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,183,3,0.1) 0%, transparent 70%);
+            animation: shimmer 4s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); position: relative; z-index: 1; }
+        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); position: relative; z-index: 1; text-shadow: 0 0 30px rgba(255,183,3,0.3); }
 
-        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
-        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
+        /*--- HIGHLIGHTED WITHDRAW BUTTON ---*/
+        .btn-withdraw-highlight {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(255, 183, 3, 0.6), 0 0 60px rgba(255, 183, 3, 0.2);
+            margin-top: 0;
+            transition: transform 0.15s, box-shadow 0.3s;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .btn-withdraw-highlight:active { transform: scale(0.97); }
+        .btn-withdraw-highlight i { margin-right: 10px; }
+
+        .btn-gold {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: var(--gold-glow);
+            margin-top: 12px;
+            transition: transform 0.1s;
+        }
+        .btn-gold:active { transform: scale(0.97); }
+        .btn-gold:disabled {
+            background: #4a3e20;
+            color: #aaa;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
 
         .marquee-container {
             background: var(--card-bg);
@@ -141,19 +194,16 @@
             display: flex;
             align-items: center;
         }
-
         .marquee-content {
             display: inline-block;
             animation: marquee 35s linear infinite;
             font-size: 0.85rem;
             color: var(--text-sub);
         }
-
         @keyframes marquee {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-
         .marquee-content strong { color: var(--accent-gold); }
 
         .grid-container {
@@ -162,7 +212,6 @@
             gap: 12px;
             margin-bottom: 15px;
         }
-
         .action-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -172,7 +221,6 @@
             flex-direction: column;
             gap: 6px;
         }
-
         .action-card i { font-size: 1.4rem; color: var(--accent-gold); }
         .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
         .action-card p { font-size: 1.2rem; font-weight: bold; }
@@ -194,7 +242,6 @@
             margin: 10px 0;
             border: 1px solid var(--card-border);
         }
-
         .progress-fill {
             background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold));
             height: 100%;
@@ -208,12 +255,10 @@
             display: inline-block;
             transition: transform 0.3s ease;
         }
-
         .gift-box-icon.shake-ready {
             animation: boxShake 0.6s infinite alternate ease-in-out;
             cursor: pointer;
         }
-
         @keyframes boxShake {
             0% { transform: rotate(-8deg) scale(1.05); }
             50% { transform: rotate(8deg) scale(1.1); }
@@ -226,7 +271,6 @@
             gap: 8px;
             margin: 15px 0;
         }
-
         .bonus-box-7 {
             background: rgba(22, 14, 38, 0.6);
             border: 1px solid var(--card-border);
@@ -235,7 +279,6 @@
             font-size: 0.75rem;
             text-align: center;
         }
-
         .bonus-box-7.active-day {
             background: #00f5d4;
             color: #000;
@@ -243,7 +286,6 @@
             box-shadow: 0 0 15px rgba(0, 245, 212, 0.5);
             font-weight: bold;
         }
-
         .bonus-box-7 span {
             display: block;
             color: var(--text-sub);
@@ -259,22 +301,8 @@
             margin-top: 10px;
             text-align: left;
         }
-
-        .status-title {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .status-desc {
-            font-size: 0.8rem;
-            color: var(--accent-neon);
-            margin-left: 22px;
-        }
+        .status-title { font-size: 0.85rem; font-weight: bold; color: #fff; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .status-desc { font-size: 0.8rem; color: var(--accent-neon); margin-left: 22px; }
 
         .modal-overlay {
             position: fixed;
@@ -292,68 +320,15 @@
             padding: 20px;
             text-align: center;
         }
-
         .modal-overlay.show { display: flex; }
-
-        .popup-gift-img {
-            width: 130px;
-            animation: floatAnim 1.8s infinite ease-in-out;
-        }
-
+        .popup-gift-img { width: 130px; animation: floatAnim 1.8s infinite ease-in-out; }
         @keyframes floatAnim {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-10px) scale(1.05); }
         }
-
-        .popup-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-top: 15px;
-        }
-
-        .popup-reward-text {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent-neon);
-            margin: 10px 0 20px 0;
-            text-shadow: 0 0 12px rgba(0, 245, 212, 0.6);
-        }
-
-        .btn-popup-close {
-            background: #ffffff;
-            color: #000;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .btn-gold {
-            background: linear-gradient(90deg, #ffb703, #fb8500);
-            color: #000;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: var(--gold-glow);
-            margin-top: 12px;
-            transition: transform 0.1s;
-        }
-        
-        .btn-gold:active { transform: scale(0.97); }
-
-        .btn-gold:disabled {
-            background: #4a3e20;
-            color: #aaa;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
+        .popup-title { font-size: 1.5rem; font-weight: 800; color: #ffffff; margin-top: 15px; }
+        .popup-reward-text { font-size: 1.8rem; font-weight: 900; color: var(--accent-neon); margin: 10px 0 20px 0; text-shadow: 0 0 12px rgba(0, 245, 212, 0.6); }
+        .btn-popup-close { background: #ffffff; color: #000; border: none; padding: 10px 30px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; }
 
         /*--- TASK PAGE ---*/
         .task-main-card {
@@ -364,7 +339,6 @@
             margin-bottom: 15px;
             text-align: center;
         }
-
         .icon-circle-purple {
             width: 70px;
             height: 70px;
@@ -377,9 +351,7 @@
             box-shadow: var(--purple-glow);
             background: rgba(157, 78, 221, 0.1);
         }
-
         .icon-circle-purple i { font-size: 2rem; color: #e0aaff; }
-
         .reward-pill-gold {
             display: inline-flex;
             align-items: center;
@@ -393,7 +365,6 @@
             font-weight: 700;
             margin-bottom: 18px;
         }
-
         .telegram-row-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -404,7 +375,6 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .btn-tg-join {
             background: linear-gradient(90deg, #ffb703, #fb8500);
             color: #000;
@@ -430,7 +400,6 @@
             align-items: center;
             z-index: 1000;
         }
-
         .nav-item {
             display: flex;
             flex-direction: column;
@@ -443,11 +412,9 @@
             flex: 1;
             padding: 10px 0;
         }
-
         .nav-item.active { color: var(--accent-gold); }
         .nav-item i { font-size: 1.2rem; }
 
-        /*--- OTHER PAGES ---*/
         .input-box {
             width: 100%;
             padding: 12px;
@@ -459,12 +426,7 @@
             outline: none;
         }
 
-        .section-header-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin: 15px 0 12px 0;
-        }
+        .section-header-title { font-size: 1.2rem; font-weight: 800; color: #ffffff; margin: 15px 0 12px 0; }
 
         .tutorial-card {
             background: linear-gradient(135deg, #7b2cbf, #5a189a);
@@ -475,21 +437,8 @@
             box-shadow: var(--purple-glow);
             margin-bottom: 25px;
         }
-
-        .tutorial-card h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .tutorial-card p {
-            font-size: 0.85rem;
-            color: #e0aaff;
-            line-height: 1.4;
-            margin-bottom: 18px;
-        }
-
+        .tutorial-card h2 { font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
+        .tutorial-card p { font-size: 0.85rem; color: #e0aaff; line-height: 1.4; margin-bottom: 18px; }
         .btn-watch-video {
             background: #0b0712;
             color: var(--accent-gold);
@@ -513,7 +462,6 @@
             text-align: center;
             margin-bottom: 15px;
         }
-
         .tg-circle-icon {
             width: 65px;
             height: 65px;
@@ -528,20 +476,8 @@
             font-size: 1.8rem;
             box-shadow: var(--purple-glow);
         }
-
-        .support-card h3 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-
-        .support-card p {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-bottom: 20px;
-        }
-
+        .support-card h3 { font-size: 1.3rem; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .support-card p { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 20px; }
         .support-pill-btn {
             display: inline-block;
             background: rgba(11, 7, 18, 0.8);
@@ -561,38 +497,11 @@
             padding: 22px 18px;
             margin-bottom: 20px;
         }
-
-        .refer-title-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .refer-title-box i {
-            font-size: 1.4rem;
-            color: var(--accent-gold);
-            margin-top: 3px;
-        }
-
-        .refer-title-box h3 {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.3;
-        }
-
-        .refer-desc-text {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            line-height: 1.5;
-            margin-bottom: 18px;
-        }
-
-        .refer-desc-text strong {
-            color: var(--accent-gold);
-        }
-
+        .refer-title-box { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+        .refer-title-box i { font-size: 1.4rem; color: var(--accent-gold); margin-top: 3px; }
+        .refer-title-box h3 { font-size: 1.2rem; font-weight: 800; color: #ffffff; line-height: 1.3; }
+        .refer-desc-text { font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 18px; }
+        .refer-desc-text strong { color: var(--accent-gold); }
         .refer-badge-pill {
             display: inline-flex;
             align-items: center;
@@ -606,7 +515,6 @@
             font-weight: 700;
             margin-bottom: 18px;
         }
-
         .refer-input-wrapper {
             background: #0b0712;
             border: 1px solid var(--card-border);
@@ -617,17 +525,7 @@
             justify-content: space-between;
             margin-bottom: 15px;
         }
-
-        .refer-input-field {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #ffffff;
-            font-size: 0.85rem;
-            width: 100%;
-            padding-right: 8px;
-        }
-
+        .refer-input-field { background: transparent; border: none; outline: none; color: #ffffff; font-size: 0.85rem; width: 100%; padding-right: 8px; }
         .refer-copy-icon-btn {
             background: var(--accent-gold);
             color: #000;
@@ -642,13 +540,7 @@
             box-shadow: var(--gold-glow);
             flex-shrink: 0;
         }
-
-        .refer-action-btns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
+        .refer-action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-refer-copy {
             background: linear-gradient(90deg, #ffb703, #fb8500);
             color: #000;
@@ -664,7 +556,6 @@
             gap: 8px;
             box-shadow: var(--gold-glow);
         }
-
         .btn-refer-share {
             background: #1f1435;
             color: #ffffff;
@@ -679,20 +570,8 @@
             justify-content: center;
             gap: 8px;
         }
-
-        .refer-list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .refer-list-header h3 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
+        .refer-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .refer-list-header h3 { font-size: 1.1rem; font-weight: 800; color: #ffffff; }
         .refer-count-badge {
             background: rgba(255, 183, 3, 0.15);
             color: var(--accent-gold);
@@ -702,7 +581,6 @@
             font-size: 0.8rem;
             font-weight: 700;
         }
-
         .empty-refer-card {
             background: var(--card-bg);
             border: 1px dashed var(--card-border);
@@ -710,7 +588,6 @@
             padding: 40px 20px;
             text-align: center;
         }
-
         .empty-refer-icon {
             width: 60px;
             height: 60px;
@@ -723,18 +600,9 @@
             color: var(--text-sub);
             font-size: 1.5rem;
         }
+        .empty-refer-card h4 { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 5px; }
+        .empty-refer-card p { font-size: 0.8rem; color: rgba(160, 142, 187, 0.6); }
 
-        .empty-refer-card h4 {
-            font-size: 0.95rem;
-            color: var(--text-sub);
-            margin-bottom: 5px;
-        }
-
-        .empty-refer-card p {
-            font-size: 0.8rem;
-            color: rgba(160, 142, 187, 0.6);
-        }
-        
         /*--- LEADERBOARD ---*/
         .lb-tab-container {
             display: flex;
@@ -744,7 +612,6 @@
             margin: 15px 0;
             border: 1px solid var(--card-border);
         }
-
         .lb-tab {
             flex: 1;
             padding: 10px;
@@ -755,12 +622,7 @@
             cursor: pointer;
             color: var(--text-sub);
         }
-
-        .lb-tab.active {
-            background: var(--accent-neon);
-            color: #000;
-        }
-
+        .lb-tab.active { background: var(--accent-neon); color: #000; }
         .prize-pool-card {
             background: linear-gradient(135deg, #2a0845, #6441a5);
             border-radius: 14px;
@@ -769,7 +631,6 @@
             margin-bottom: 15px;
             border: 1px solid var(--accent-purple);
         }
-
         .prize-pool-card h4 { color: var(--accent-gold); font-size: 0.9rem; }
         .prize-pool-card p { font-size: 0.75rem; color: #e0aaff; margin-top: 3px; }
 
@@ -783,7 +644,6 @@
             justify-content: space-between;
             margin-bottom: 8px;
         }
-        
         #fixed-user-rank {
             position: fixed;
             bottom: 65px;
@@ -802,22 +662,34 @@
             z-index: 100;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
         }
-        
         .user-rank-left { display: flex; align-items: center; gap: 10px; }
         .user-rank-badge { background: #000; color: #fff; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; }
-        
-        /*------ WALLET STYLES (from screenshots) ------*/
-        .wallet-header-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 8px;
+
+        /*--- WALLET STYLES ---*/
+        .wallet-menu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 6px 0;
+            margin-bottom: 15px;
         }
-        .wallet-sub-desc {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-bottom: 20px;
+        .wallet-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--card-border);
+            cursor: pointer;
+            transition: background 0.1s;
         }
+        .wallet-menu-item:last-child { border-bottom: none; }
+        .wallet-menu-item .menu-left { display: flex; align-items: center; gap: 12px; }
+        .wallet-menu-item .menu-left i { font-size: 1.1rem; color: var(--accent-gold); width: 22px; text-align: center; }
+        .wallet-menu-item .menu-left span { font-size: 0.92rem; color: #fff; font-weight: 500; }
+        .wallet-menu-item .menu-right i { color: var(--text-sub); font-size: 0.8rem; }
+        .logout-btn { color: #ff6b6b !important; }
+        .logout-btn .menu-left i { color: #ff6b6b !important; }
+
         .withdraw-condition-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -826,20 +698,10 @@
             margin-bottom: 20px;
             text-align: left;
         }
-        .withdraw-condition-box p {
-            font-size: 0.95rem;
-            color: #fff;
-            line-height: 1.6;
-        }
-        .withdraw-condition-box .highlight-num {
-            color: var(--accent-gold);
-            font-weight: 800;
-        }
-        .withdraw-progress-text {
-            margin-top: 6px;
-            font-size: 0.9rem;
-            color: var(--accent-neon);
-        }
+        .withdraw-condition-box p { font-size: 0.95rem; color: #fff; line-height: 1.6; }
+        .withdraw-condition-box .highlight-num { color: var(--accent-gold); font-weight: 800; }
+        .withdraw-progress-text { margin-top: 6px; font-size: 0.9rem; color: var(--accent-neon); }
+
         .payment-method-select {
             width: 100%;
             padding: 12px 14px;
@@ -855,19 +717,9 @@
             background-repeat: no-repeat;
             background-position: right 14px center;
         }
-        .payment-method-select option {
-            background: #160e26;
-            color: #fff;
-        }
-        .wallet-input-group {
-            margin-bottom: 12px;
-        }
-        .wallet-input-group label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            margin-bottom: 5px;
-        }
+        .payment-method-select option { background: #160e26; color: #fff; }
+        .wallet-input-group { margin-bottom: 12px; }
+        .wallet-input-group label { display: block; font-size: 0.8rem; color: var(--text-sub); margin-bottom: 5px; }
         .wallet-input-group input {
             width: 100%;
             padding: 12px 14px;
@@ -878,21 +730,9 @@
             font-size: 0.95rem;
             outline: none;
         }
-        .wallet-input-group input::placeholder {
-            color: #3d2f5a;
-        }
-        .wallet-min-amount-hint {
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            text-align: right;
-            margin-top: -6px;
-            margin-bottom: 18px;
-        }
-        .wallet-action-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-        }
+        .wallet-input-group input::placeholder { color: #3d2f5a; }
+        .wallet-min-amount-hint { font-size: 0.75rem; color: var(--text-sub); text-align: right; margin-top: -6px; margin-bottom: 18px; }
+        .wallet-action-row { display: flex; gap: 12px; margin-top: 8px; }
         .wallet-action-row .btn-cancel {
             flex: 1;
             background: transparent;
@@ -915,53 +755,6 @@
             font-size: 0.95rem;
             cursor: pointer;
             box-shadow: var(--gold-glow);
-        }
-
-        /* ----- WALLET MENU (as per screenshot) ----- */
-        .wallet-menu-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 6px 0;
-            margin-bottom: 15px;
-        }
-        .wallet-menu-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--card-border);
-            cursor: pointer;
-            transition: background 0.1s;
-        }
-        .wallet-menu-item:last-child {
-            border-bottom: none;
-        }
-        .wallet-menu-item .menu-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .wallet-menu-item .menu-left i {
-            font-size: 1.1rem;
-            color: var(--accent-gold);
-            width: 22px;
-            text-align: center;
-        }
-        .wallet-menu-item .menu-left span {
-            font-size: 0.92rem;
-            color: #fff;
-            font-weight: 500;
-        }
-        .wallet-menu-item .menu-right i {
-            color: var(--text-sub);
-            font-size: 0.8rem;
-        }
-        .logout-btn {
-            color: #ff6b6b !important;
-        }
-        .logout-btn .menu-left i {
-            color: #ff6b6b !important;
         }
     </style>
 </head>
@@ -992,10 +785,18 @@
 
     <!-- HOME PAGE -->
     <div id="home" class="page-section active">
+        <!-- BALANCE CARD WITH HIGHLIGHT -->
         <div class="balance-card">
             <span>মোট ব্যালেন্স</span>
             <h1 id="user-balance">TK 0.00</h1>
         </div>
+
+        <!-- HIGHLIGHTED WITHDRAW BUTTON -->
+        <button class="btn-withdraw-highlight" onclick="switchTab('wallet', document.querySelector('.nav-item:last-child'))">
+            <i class="fa-solid fa-hand-holding-dollar"></i> এখনই উত্তোলন করুন
+        </button>
+
+        <div style="height:15px;"></div>
 
         <div class="marquee-container">
             <div class="marquee-content">
@@ -1067,7 +868,6 @@
                     <div class="status-title"><i class="fa-solid fa-square-check" style="color: #00f5d4;"></i> অবস্থা (Status)</div>
                     <div class="status-desc">আজকের বোনাস সংগ্রহ করা হয়েছে</div>
                 </div>
-
                 <div class="status-box">
                     <div class="status-title"><i class="fa-solid fa-hourglass-half" style="color: var(--accent-gold);"></i> পরবর্তী রিওয়ার্ড</div>
                     <div class="status-desc" style="color: var(--accent-gold);">পরবর্তী বোনাস আগামীকাল পাওয়া যাবে</div>
@@ -1134,10 +934,8 @@
             <div class="lb-tab" id="tab-ref-btn" onclick="switchLbTab('ref')">রেফারেল</div>
         </div>
 
-        <!-- RANK LIST CONTAINER (Top 50) -->
         <div id="lb-list-container" style="margin-top: 10px;"></div>
 
-        <!-- FIXED USER RANK CARD AT BOTTOM -->
         <div id="fixed-user-rank" style="display: none;">
             <div class="user-rank-left">
                 <span class="user-rank-badge" id="fixed-my-rank-num">#N/A</span>
@@ -1249,16 +1047,14 @@
         </div>
     </div>
 
-    <!-- WALLET PAGE (as per screenshot) -->
+    <!-- WALLET PAGE -->
     <div id="wallet" class="page-section">
-        <!-- Top: "এখনই উত্তোলন করুন" button -->
         <div style="margin-bottom: 20px;">
-            <button class="btn-gold" onclick="showWithdrawForm()" style="margin-top:0; font-size:1.1rem; padding:14px;">
+            <button class="btn-withdraw-highlight" onclick="showWithdrawForm()" style="font-size:1.1rem; padding:14px;">
                 <i class="fa-solid fa-hand-holding-dollar"></i> এখনই উত্তোলন করুন
             </button>
         </div>
 
-        <!-- Wallet Menu (as per screenshot) -->
         <div class="wallet-menu-card">
             <div class="wallet-menu-item" onclick="alert('ট্রানজেকশন হিস্ট্রি খোলা হয়েছে')">
                 <div class="menu-left">
@@ -1298,7 +1094,7 @@
         </div>
     </div>
 
-    <!-- WITHDRAW FORM (hidden by default, shown when "এখনই উত্তোলন করুন" is clicked) -->
+    <!-- WITHDRAW FORM -->
     <div id="withdraw-form-container" class="page-section" style="padding-top:5px;">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
             <i class="fa-solid fa-arrow-left" style="color:var(--accent-gold); font-size:1.3rem; cursor:pointer;" onclick="hideWithdrawForm()"></i>
@@ -1369,7 +1165,7 @@
 </div>
 
 <script>
-    // --- FIXED LOADING SCREEN DISMISSAL (1.5 SECONDS DELAY - FASTER) ---
+    // --- LOADING SCREEN DISMISSAL (1.5 SECONDS) ---
     function hideLoader() {
         var loader = document.getElementById('loading-screen');
         if (loader) {
@@ -1385,7 +1181,6 @@
     window.addEventListener('load', function() {
         setTimeout(hideLoader, 1500);
     });
-    // Fallback: if load event already fired, hide after 1.5s anyway
     setTimeout(hideLoader, 2000);
 
     // --- APP LOGIC ---
@@ -1753,7 +1548,7 @@
         updateWalletUI();
     }
 
-    // --- LOGOUT: reload the page (re-simulate opening) ---
+    // --- LOGOUT: reload the page ---
     function logoutAndReload() {
         if (confirm('আপনি কি লগআউট করতে চান?')) {
             location.reload();
