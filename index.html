@@ -806,6 +806,116 @@
         .user-rank-left { display: flex; align-items: center; gap: 10px; }
         .user-rank-badge { background: #000; color: #fff; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; }
         
+        /*------ NEW WALLET STYLES (from screenshots) ------*/
+        .wallet-header-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .wallet-sub-desc {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+        .withdraw-condition-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px 16px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .withdraw-condition-box p {
+            font-size: 0.95rem;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .withdraw-condition-box .highlight-num {
+            color: var(--accent-gold);
+            font-weight: 800;
+        }
+        .withdraw-progress-text {
+            margin-top: 6px;
+            font-size: 0.9rem;
+            color: var(--accent-neon);
+        }
+        .payment-method-select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: #0b0712;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 12px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23a08ebb' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+        .payment-method-select option {
+            background: #160e26;
+            color: #fff;
+        }
+        .wallet-input-group {
+            margin-bottom: 12px;
+        }
+        .wallet-input-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+        }
+        .wallet-input-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: #0b0712;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .wallet-input-group input::placeholder {
+            color: #3d2f5a;
+        }
+        .wallet-min-amount-hint {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            text-align: right;
+            margin-top: -6px;
+            margin-bottom: 18px;
+        }
+        .wallet-action-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .wallet-action-row .btn-cancel {
+            flex: 1;
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .wallet-action-row .btn-send {
+            flex: 2;
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: var(--gold-glow);
+        }
     </style>
 </head>
 <body>
@@ -1092,19 +1202,53 @@
         </div>
     </div>
 
-    <!-- WALLET PAGE -->
+    <!-- ======= UPDATED WALLET PAGE (as per screenshot) ======= -->
     <div id="wallet" class="page-section">
-        <h3 style="margin-bottom: 15px;">টাকা তুলুন (Withdraw)</h3>
-        <div class="feature-card" style="text-align: left;">
-            <select class="input-box" id="payment-method">
-                <option value="bkash">বিকাশ (bKash)</option>
+        <div class="wallet-header-title">এখনই উইথড্র করুন</div>
+        
+        <!-- Condition: Ad watch requirement -->
+        <div class="withdraw-condition-box">
+            <p>
+                <i class="fa-solid fa-circle-info" style="color: var(--accent-gold); margin-right: 8px;"></i>
+                উইথড্র করার জন্য আপনার ২০টি অ্যাড দেখতে হবে। 
+                বর্তমানে আপনার দেখেছেন: <span class="highlight-num" id="withdraw-ad-seen">0</span>/20। 
+                বাকি আছে: <span class="highlight-num" id="withdraw-ad-remaining">20</span>টি।
+            </p>
+            <div class="progress-bar-bg" style="margin: 10px 0 4px 0;">
+                <div class="progress-fill" id="withdraw-ad-progress" style="width: 0%;"></div>
+            </div>
+            <div class="withdraw-progress-text" id="withdraw-progress-text">আপনি দেখেছেন: 0/20!</div>
+        </div>
+        
+        <!-- Payment method -->
+        <div class="wallet-input-group">
+            <label>পেমেন্ট মেধ্য</label>
+            <select class="payment-method-select" id="payment-method">
+                <option value="bkash">বিকাশ (Bkash)</option>
                 <option value="nagad">নগদ (Nagad)</option>
             </select>
-            <input type="number" class="input-box" id="withdraw-amount" placeholder="টাকার পরিমাণ">
-            <input type="text" class="input-box" id="account-number" placeholder="একাউন্ট নম্বর">
-            <button class="btn-gold" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+        </div>
+        
+        <!-- Withdraw number / account -->
+        <div class="wallet-input-group">
+            <label>উইথড্র নম্বর/বাইনের অটেট</label>
+            <input type="text" id="withdraw-account" placeholder="আপনার ফোন নম্বর বা অ্যাকাউন্ট টি">
+        </div>
+        
+        <!-- Amount -->
+        <div class="wallet-input-group">
+            <label>পরিমাণ (Tk)</label>
+            <input type="number" id="withdraw-amount" placeholder="পরিমাণ (Tk)" step="1">
+        </div>
+        <div class="wallet-min-amount-hint">নূন্যতম TK 1300</div>
+        
+        <!-- Action buttons: Cancel & Send -->
+        <div class="wallet-action-row">
+            <button class="btn-cancel" onclick="cancelWithdraw()">বাতিল</button>
+            <button class="btn-send" onclick="requestWithdraw()">রিকোয়েড়ে পাঠান</button>
         </div>
     </div>
+    <!-- ======= END UPDATED WALLET ======= -->
 
     <!-- NAV BAR -->
     <div class="nav-bar">
@@ -1137,46 +1281,38 @@
         var loader = document.getElementById('loading-screen');
         if (loader) {
             loader.style.opacity = '0';
-            // Wait for transition to finish before hiding completely
             setTimeout(function() {
                 loader.style.visibility = 'hidden';
                 loader.style.display = 'none';
-                document.body.style.overflowY = 'auto'; // Re-enable scrolling
+                document.body.style.overflowY = 'auto';
             }, 500);
         }
     }
-
-    // Prevent scrolling while loading
     document.body.style.overflowY = 'hidden';
-
-    // Force loader to hide after 2 seconds (2000ms)
     window.addEventListener('load', function() {
         setTimeout(hideLoader, 2000);
     });
-    
-    // Backup: directly call setTimeout in case load event takes too long
     setTimeout(hideLoader, 2500);
-
 
     // --- APP LOGIC ---
     var userData = {
         balance: 0.00,
         bonusBalance: 0.00,
         totalTasks: 0,
-        totalAds: 10,
+        totalAds: 0,        // total ads watched (for leaderboard)
         totalRefers: 2,
-        adProgress: 0,
-        taskAdsDone: 0,
+        adProgress: 0,      // for mystery box (0-3)
+        taskAdsDone: 0,     // for task page (0-15)
         lastBonusTime: 0,
         lbProfileSaved: false,
         lbName: '',
         lbAge: '',
         lbPhone: '',
         myFakeAdRank: 110,
-        myFakeRefRank: 85
+        myFakeRefRank: 85,
+        // NEW: for wallet withdraw condition
+        withdrawAdsWatched: 0   // 0-20, resets after withdraw
     };
-
-    var currentLbTab = 'ads';
 
     function loadUserData() {
         try {
@@ -1202,6 +1338,7 @@
         } catch (e) {}
 
         updateUI();
+        updateWalletUI(); // wallet specific
     }
 
     function saveData() {
@@ -1209,6 +1346,7 @@
             localStorage.setItem('flycash_v7_data', JSON.stringify(userData));
         } catch (e) {}
         updateUI();
+        updateWalletUI();
     }
 
     function updateUI() {
@@ -1243,17 +1381,34 @@
 
         checkDailyBonusTimer();
     }
-    
+
+    // NEW: Wallet UI updater (withdraw condition)
+    function updateWalletUI() {
+        var seen = userData.withdrawAdsWatched || 0;
+        var total = 20;
+        var remaining = Math.max(0, total - seen);
+        var pct = Math.min(100, (seen / total) * 100);
+        
+        safeUpdate('withdraw-ad-seen', seen);
+        safeUpdate('withdraw-ad-remaining', remaining);
+        safeUpdate('withdraw-progress-text', 'আপনি দেখেছেন: ' + seen + '/' + total + '!');
+        
+        var progFill = document.getElementById('withdraw-ad-progress');
+        if (progFill) progFill.style.width = pct + '%';
+    }
+
     function safeUpdate(id, value) {
         var el = document.getElementById(id);
         if (el) el.innerText = value;
     }
 
-    // MYSTERY BOX
+    // --- MYSTERY BOX ---
     function watchAd() {
         if (userData.adProgress < 3) {
             userData.adProgress++;
             userData.totalAds++;
+            // Also count for withdraw condition
+            userData.withdrawAdsWatched = (userData.withdrawAdsWatched || 0) + 1;
             saveData();
             if (userData.adProgress === 3) {
                 alert('৩টি অ্যাড সম্পন্ন! এখন বক্সটি ক্লিক করে বোনাস নিন!');
@@ -1289,7 +1444,7 @@
         document.getElementById('box-popup').classList.remove('show');
     }
 
-    // DAILY BONUS
+    // --- DAILY BONUS ---
     function checkDailyBonusTimer() {
         var bonusBtn = document.getElementById('btn-daily-bonus');
         var statusBox = document.getElementById('status-container');
@@ -1310,7 +1465,7 @@
             bonusBtn.innerText = 'এখনই ক্লেইম করুন';
         }
     }
-    setInterval(checkDailyBonusTimer, 60000); // Check every minute
+    setInterval(checkDailyBonusTimer, 60000);
 
     function claimDailyBonus() {
         var now = Date.now();
@@ -1324,12 +1479,14 @@
         }
     }
 
-    // TASKS
+    // --- TASKS ---
     function watchTaskAd() {
         if (userData.taskAdsDone < 15) {
             userData.taskAdsDone++;
             userData.totalAds++;
             userData.balance += 20.00;
+            // Also count for withdraw
+            userData.withdrawAdsWatched = (userData.withdrawAdsWatched || 0) + 1;
             saveData();
             alert('অ্যাড সম্পন্ন হয়েছে! TK 20.00 যোগ করা হলো।');
         } else {
@@ -1344,7 +1501,7 @@
         saveData();
     }
 
-    // LEADERBOARD
+    // --- LEADERBOARD ---
     function openLeaderboardFlow() {
         if (userData.lbProfileSaved) {
             showLeaderboardView();
@@ -1428,7 +1585,7 @@
         }
     }
 
-    // NAVIGATION
+    // --- NAVIGATION ---
     function switchSection(id) {
         var sections = document.querySelectorAll('.page-section');
         for (var i = 0; i < sections.length; i++) { sections[i].classList.remove('active'); }
@@ -1439,6 +1596,10 @@
             var fixedCard = document.getElementById('fixed-user-rank');
             if (fixedCard) fixedCard.style.display = 'none';
         }
+        // Update wallet UI when wallet tab is opened
+        if (id === 'wallet') {
+            updateWalletUI();
+        }
     }
 
     function switchTab(tabId, element) {
@@ -1448,28 +1609,52 @@
         switchSection(tabId);
     }
 
-    // WALLET
+    // --- WALLET FUNCTIONS ---
+    function cancelWithdraw() {
+        alert('উইথড্র প্রক্রিয়া বাতিল করা হয়েছে।');
+        // optionally clear fields
+        document.getElementById('withdraw-account').value = '';
+        document.getElementById('withdraw-amount').value = '';
+    }
+
     function requestWithdraw() {
         var amount = document.getElementById('withdraw-amount').value;
-        var number = document.getElementById('account-number').value;
-        if(!amount || !number) {
-            alert('দয়া করে পরিমাণ এবং নম্বর লিখুন');
+        var account = document.getElementById('withdraw-account').value.trim();
+        var method = document.getElementById('payment-method').value;
+        var methodName = method === 'bkash' ? 'বিকাশ' : 'নগদ';
+        
+        if (!amount || !account) {
+            alert('দয়া করে পরিমাণ এবং একাউন্ট নম্বর লিখুন');
             return;
         }
-        if (amount < 500) {
-            alert('নূন্যতম উইথড্র TK 500.00');
+        if (parseFloat(amount) < 1300) {
+            alert('নূন্যতম উইথড্র TK 1300');
             return;
         }
-        if (amount > userData.balance) {
+        if (parseFloat(amount) > userData.balance) {
             alert('আপনার পর্যাপ্ত ব্যালেন্স নেই');
             return;
         }
-        alert('উইথড্র রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।');
+        
+        // Check if user has watched 20 ads for withdraw
+        if ((userData.withdrawAdsWatched || 0) < 20) {
+            alert('উইথড্র করার জন্য আপনাকে ২০টি অ্যাড দেখতে হবে। বর্তমানে আপনি দেখেছেন ' + (userData.withdrawAdsWatched || 0) + ' টি।');
+            return;
+        }
+        
+        // Proceed with withdraw
+        alert('উইথড্র রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে! ' + methodName + ' এ ' + amount + ' টাকা পাঠানো হবে ২৪ ঘণ্টার মধ্যে।');
         userData.balance -= parseFloat(amount);
+        // Reset withdraw ad counter after successful withdraw
+        userData.withdrawAdsWatched = 0;
         saveData();
+        // Clear fields
+        document.getElementById('withdraw-account').value = '';
+        document.getElementById('withdraw-amount').value = '';
+        updateWalletUI();
     }
 
-    // REFER
+    // --- REFER ---
     function copyReferLink() {
         var copyText = document.getElementById("refer-link");
         if (copyText) {
@@ -1493,7 +1678,7 @@
         }
     }
 
-    // INITIAL LOAD
+    // --- INITIAL LOAD ---
     loadUserData();
 </script>
 </body>
