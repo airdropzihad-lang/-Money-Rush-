@@ -746,6 +746,1308 @@
             color: #000;
         }
 
+        .prize-pool-card {
+            background: linear-gradient(135deg, #2a0845, #6441a5);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid var(--accent-purple);
+        }
+
+        .prize-pool-card h4 { color: var(--accent-gold); font-size: 0.9rem; }
+        .prize-pool-card p { font-size: 0.75rem; color: #e0aaff; margin-top: 3px; }
+
+        .lb-list-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        /* Highlight for User's Own Rank in List */
+        .lb-list-item.my-rank-highlight {
+            border-color: var(--accent-neon);
+            background: rgba(0, 245, 212, 0.05);
+        }
+
+        /* Fixed User Rank Card at Bottom */
+        #fixed-user-rank {
+            position: fixed;
+            bottom: 65px; /* Just above nav bar */
+            width: calc(100% - 30px);
+            max-width: 420px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-neon);
+            color: #000;
+            padding: 12px 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .user-rank-left { display: flex; align-items: center; gap: 10px; }
+        .user-rank-badge { background: #000; color: #fff; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+    <div class="loader"></div>
+    <h3 style="margin-top: 15px; color: var(--accent-gold);">Fly Cash লোড হচ্ছে...</h3>
+</div>
+
+<div class="app-container">
+    <div class="top-bar">
+        <div class="logo-title">
+            Fly Cash 🚀 টাকা উড়াও 💸 <i class="fa-solid fa-circle-check" style="font-size:0.9rem;"></i>
+        </div>
+    </div>
+
+    <div class="user-card">
+        <div class="avatar-box">
+            <img id="user-photo" src="https://ui-avatars.com/api/?name=User&background=ffb703&color=000" alt="Profile">
+        </div>
+        <div>
+            <h4 id="user-name" style="font-size: 0.95rem;">ব্যবহারকারী</h4>
+            <p id="user-handle" style="font-size: 0.75rem; color: var(--text-sub);">@user</p>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page-section active">
+        <div class="balance-card">
+            <span>মোট ব্যালেন্স</span>
+            <h1 id="user-balance">TK 0.00</h1>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee-content">
+                ⚡ <strong>Bip***</strong> মাত্র <strong>TK 9183</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Tan***</strong> মাত্র <strong>TK 4500</strong> উইথড্র করেছেন &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                ⚡ <strong>Rif***</strong> মাত্র <strong>TK 2200</strong> উইথড্র করেছেন
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="action-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>মোট টাস্ক</h4>
+                <p id="total-tasks">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-users"></i>
+                <h4>মোট রেফার</h4>
+                <p id="total-refers">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-video"></i>
+                <h4>অ্যাড দেখা হয়েছে</h4>
+                <p id="total-ads">0</p>
+            </div>
+            <div class="action-card">
+                <i class="fa-solid fa-wallet"></i>
+                <h4>বোনাস ব্যালেন্স</h4>
+                <p id="bonus-balance">TK 0.00</p>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3 style="margin-bottom: 5px;">মিষ্টি বক্স 🎁</h3>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">৩টি অ্যাড দেখে বক্স খুলুন ও ২০০-৫০০ টাকা জিতুন</p>
+            
+            <div id="box-icon" class="gift-box-icon" onclick="openBoxModal()">🎁</div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-sub);">
+                <span>অ্যাড প্রগ্রেস</span>
+                <span id="ad-count-text">0/3</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-fill" id="ad-progress" style="width: 0%;"></div>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 5px;">৩টির মধ্যে <span id="ads-done">০</span>টি অ্যাড দেখা সম্পন্ন হয়েছে</p>
+
+            <button class="btn-gold" id="btn-watch-ad" onclick="watchAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <div class="feature-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3><i class="fa-solid fa-calendar-days" style="color:var(--accent-gold);"></i> দৈনিক প্রগ্রেস</h3>
+                <span style="background: rgba(0,245,212,0.1); color: var(--accent-neon); border: 1px solid var(--accent-neon); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;" id="bonus-day-count">১/৭ দিন</span>
+            </div>
+
+            <div class="bonus-grid-7">
+                <div class="bonus-box-7 active-day">১ম দিন<span>TK 20.00</span></div>
+                <div class="bonus-box-7">২য় দিন<span>TK 35.00</span></div>
+                <div class="bonus-box-7">৩য় দিন<span>TK 45.00</span></div>
+                <div class="bonus-box-7">৪র্থ দিন<span>TK 60.00</span></div>
+                <div class="bonus-box-7">৫ম দিন<span>TK 75.00</span></div>
+                <div class="bonus-box-7">৬ষ্ঠ দিন<span>TK 85.00</span></div>
+                <div class="bonus-box-7">৭ম দিন<span>TK 100.00</span></div>
+            </div>
+
+            <div id="status-container" style="display: none;">
+                <div class="status-box">
+                    <div class="status-title"><i class="fa-solid fa-square-check" style="color: #00f5d4;"></i> অবস্থা (Status)</div>
+                    <div class="status-desc">আজকের বোনাস সংগ্রহ করা হয়েছে</div>
+                </div>
+
+                <div class="status-box">
+                    <div class="status-title"><i class="fa-solid fa-hourglass-half" style="color: var(--accent-gold);"></i> পরবর্তী রিওয়ার্ড</div>
+                    <div class="status-desc" style="color: var(--accent-gold);">পরবর্তী বোনাস আগামীকাল পাওয়া যাবে</div>
+                </div>
+            </div>
+
+            <button class="btn-gold" id="btn-daily-bonus" onclick="claimDailyBonus()">এখনই ক্লেইম করুন</button>
+        </div>
+
+        <!-- LEADERBOARD CLICK EVENT TRIGGER -->
+        <div class="action-card" style="flex-direction: row; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 15px;" onclick="openLeaderboardFlow()">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="background: #0b0712; padding: 10px; border-radius: 10px; color: var(--accent-gold);">
+                    <i class="fa-solid fa-trophy" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1rem;">লিডারবোর্ড 🏆</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-sub);">সেরা ইনকামারদের তালিকা দেখুন</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color: var(--text-sub);"></i>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD PROFILE INPUT PAGE -->
+    <div id="lb-profile" class="page-section">
+        <div style="text-align: center; margin-bottom: 25px; margin-top: 10px;">
+            <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--accent-neon); margin-bottom: 10px;"></i>
+            <h2 style="font-size: 1.4rem; color: #fff;">লিডারবোর্ড প্রোফাইল</h2>
+            <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 5px;">লিডারবোর্ডে অংশগ্রহণের জন্য আপনার তথ্য প্রদান করুন</p>
+        </div>
+
+        <div class="feature-card" style="text-align: left;">
+            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">আপনার নাম</label>
+            <input type="text" class="input-box" id="lb-input-name" placeholder="আপনার পুরো নাম লিখুন">
+
+            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">আপনার বয়স</label>
+            <input type="number" class="input-box" id="lb-input-age" placeholder="আপনার বয়স লিখুন">
+
+            <label style="font-size: 0.85rem; color: var(--text-sub); display: block; margin-bottom: 6px;">বিকাশ / নগদ নম্বর (গোপন থাকবে)</label>
+            <input type="text" class="input-box" id="lb-input-phone" placeholder="01XXXXXXXXX">
+
+            <button class="btn-gold" onclick="submitLbProfile()">সাবমিট করুন ও লিডারবোর্ড দেখুন</button>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD DISPLAY PAGE -->
+    <div id="leaderboard" class="page-section" style="padding-bottom: 60px;">
+        <div style="text-align: center; margin-top: 5px;">
+            <h2 style="font-size: 1.4rem; color: #fff;">সাপ্তাহিক লিডারবোর্ড</h2>
+            <p style="font-size: 0.8rem; color: var(--text-sub);">সাপ্তাহিক সেরা পারফর্মারদের তালিকা</p>
+        </div>
+
+        <div style="background: rgba(0, 245, 212, 0.05); border: 1px solid var(--accent-neon); padding: 8px; border-radius: 10px; text-align: center; margin-top: 10px; font-size: 0.8rem; color: var(--accent-neon);">
+            <i class="fa-regular fa-clock"></i> রিসেট হবে: <strong>6d 7h 51m পর</strong>
+        </div>
+
+        <div class="prize-pool-card" style="margin-top: 12px;">
+            <h4>🏆 ১০,০০০ টাকার সর্বমোট প্রাইজ पूल 🏆</h4>
+            <p>টপ পারফর্মারদের মাঝে প্রাইজ পুলের টাকা ভাগ করে দেওয়া হবে!</p>
+        </div>
+
+        <div class="lb-tab-container">
+            <div class="lb-tab active" id="tab-ads-btn" onclick="switchLbTab('ads')">অ্যাড দেখা</div>
+            <div class="lb-tab" id="tab-ref-btn" onclick="switchLbTab('ref')">রেফারেল</div>
+        </div>
+
+        <!-- RANK LIST CONTAINER (Top 50) -->
+        <div id="lb-list-container" style="margin-top: 10px;">
+            <!-- Dynamic List Items -->
+        </div>
+
+        <!-- FIXED USER RANK CARD AT BOTTOM (If outside top 50) -->
+        <div id="fixed-user-rank" style="display: none;">
+            <div class="user-rank-left">
+                <span class="user-rank-badge" id="fixed-my-rank-num">#N/A</span>
+                <div>
+                    <div style="font-size: 0.75rem; opacity: 0.8;" id="fixed-my-rank-label">আপনার র‍্যাংক (অ্যাড)</div>
+                    <div style="font-size: 0.95rem; font-weight: 900;" id="fixed-my-name">USER</div>
+                </div>
+            </div>
+            <div style="font-size: 0.9rem;" id="fixed-my-score">0 টি অ্যাড</div>
+        </div>
+    </div>
+
+    <!-- TASK PAGE -->
+    <div id="task" class="page-section">
+        <div class="task-main-card">
+            <div class="icon-circle-purple"><i class="fa-solid fa-bullhorn"></i></div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #fff;">অ্যাড দেখুন</div>
+            <div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">প্রতিটি অ্যাড দেখলে TK 20.00 ইনকাম করুন</div>
+            <div class="reward-pill-gold">💵 রিওয়ার্ড: TK 20.00</div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #fff; font-weight: 600; margin-bottom: 6px;">
+                <span>আজকের কাজ সম্পন্ন</span>
+                <span id="task-ad-count">0 / 15</span>
+            </div>
+            <div class="progress-bar-bg" style="margin-bottom: 18px;">
+                <div class="progress-fill" id="task-progress-bar" style="width: 0%;"></div>
+            </div>
+            <button class="btn-gold" onclick="watchTaskAd()">অ্যাড দেখুন</button>
+        </div>
+
+        <div class="telegram-row-card">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fa-brands fa-telegram" style="font-size: 2rem; color: var(--accent-gold);"></i>
+                <div>
+                    <h4 style="color:#fff;">অফিসিয়াল চ্যানেল</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-sub);">রিওয়ার্ড: <span style="color:var(--accent-gold);">TK 70.00</span></p>
+                </div>
+            </div>
+            <button class="btn-tg-join" onclick="joinTelegram('https://t.me/EARNINGIINEWS', 70)">জয়েন করুন</button>
+        </div>
+    </div>
+
+    <!-- SUPPORT PAGE -->
+    <div id="support" class="page-section">
+        <div class="section-header-title">কাজের ভিডিও / টিউটোরিয়াল</div>
+        <div class="tutorial-card">
+            <h2>কিভাবে কাজ করবেন?</h2>
+            <p>কাজ শুরু করার আগে এই ভিডিওটি দেখে নিন। ভিডিওতে সম্পূর্ণভাবে দেখানো হয়েছে কিভাবে সঠিক নিয়মে কাজ করতে হয়।</p>
+            <button class="btn-watch-video" onclick="window.open('https://youtube.com', '_blank')">
+                <i class="fa-solid fa-tv"></i> ভিডিও দেখুন
+            </button>
+        </div>
+
+        <div class="section-header-title">সহায়তা প্রয়োজন?</div>
+        <div class="support-card">
+            <div class="tg-circle-icon">
+                <i class="fa-paper-plane"></i>
+            </div>
+            <h3>কাস্টমার সাপোর্ট</h3>
+            <p>যেকোনো সমস্যার সমাধানের জন্য আমাদের সাথে যোগাযোগ করুন</p>
+            <a href="https://t.me/FlyCashSupportBD" target="_blank" class="support-pill-btn">
+                @FlyCashSupportBD
+            </a>
+        </div>
+    </div>
+
+    <!-- REFER PAGE -->
+    <div id="refer" class="page-section">
+        <div class="refer-main-card">
+            <div class="refer-title-box">
+                <i class="fa-solid fa-gift"></i>
+                <h3>বন্ধুদের রেফার করুন এবং ইনকাম করুন</h3>
+            </div>
+            <p class="refer-desc-text">
+                আপনার রেফারেল লিংক শেয়ার করুন এবং বন্ধুদের আমন্ত্রণ জানান। যখন আপনার বন্ধু সাইন আপ করবে, আপনি পাবেন <strong>100.00 টাকা</strong> বোনাস।
+            </p>
+
+            <div class="refer-badge-pill">
+                <i class="fa-regular fa-face-smile"></i> প্রতি রেফারে বোনাস 100.00 টাকা
+            </div>
+
+            <div class="refer-input-wrapper">
+                <input type="text" class="refer-input-field" id="refer-link" value="https://t.me/FlyCashBD1bot?start=f" readonly>
+                <button class="refer-copy-icon-btn" onclick="copyReferLink()">
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+            </div>
+
+            <div class="refer-action-btns">
+                <button class="btn-refer-copy" onclick="copyReferLink()">
+                    <i class="fa-regular fa-copy"></i> লিংক কপি
+                </button>
+                <button class="btn-refer-share" onclick="shareReferLink()">
+                    <i class="fa-solid fa-share-nodes"></i> শেয়ার করুন
+                </button>
+            </div>
+        </div>
+
+        <div class="refer-list-header">
+            <h3>রেফার করা বন্ধুদের তালিকা</h3>
+            <span class="refer-count-badge" id="refer-count-badge">মোট: 0</span>
+        </div>
+
+        <div class="empty-refer-card">
+            <div class="empty-refer-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <h4>এখনো কোনো বন্ধু নেই</h4>
+            <p>লিংকটি শেয়ার করুন এবং ইনকাম শুরু করুন!</p>
+        </div>
+    </div>
+
+    <!-- WALLET PAGE -->
+    <div id="wallet" class="page-section">
+        <h3 style="margin-bottom: 15px;">টাকা তুলুন (Withdraw)</h3>
+        <div class="feature-card" style="text-align: left;">
+            <select class="input-box" id="payment-method">
+                <option value="bkash">বিকাশ (bKash)</option>
+                <option value="nagad">নগদ (Nagad)</option>
+            </select>
+            <input type="number" class="input-box" id="withdraw-amount" placeholder="টাকার পরিমাণ">
+            <input type="text" class="input-box" id="account-number" placeholder="একাউন্ট নম্বর">
+            <button class="btn-gold" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+        </div>
+    </div>
+
+    <!-- NAV BAR -->
+    <div class="nav-bar">
+        <div class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i><span>হোম</span></div>
+        <div class="nav-item" onclick="switchTab('task', this)"><i class="fa-solid fa-list-check"></i><span>টাস্ক</span></div>
+        <div class="nav-item" onclick="switchTab('support', this)"><i class="fa-solid fa-headset"></i><span>সাপোর্ট</span></div>
+        <div class="nav-item" onclick="switchTab('refer', this)"><i class="fa-solid fa-user-plus"></i><span>রেফার</span></div>
+        <div class="nav-item" onclick="switchTab('wallet', this)"><i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span></div>
+    </div>
+</div>
+
+<!-- POPUP MODAL FOR MYSTERY BOX -->
+<div class="modal-overlay" id="box-popup">
+    <div id="popup-step-1">
+        <div class="popup-gift-img" style="font-size: 5rem;">🎁</div>
+        <div class="popup-title">মিষ্টি বক্স খোলা হচ্ছে...</div>
+    </div>
+    <div id="popup-step-2" style="display: none;">
+        <div class="popup-gift-img" style="font-size: 5rem;">💰</div>
+        <div class="popup-title" style="color: var(--accent-neon);">অভিনন্দন!</div>
+        <div style="color: #fff; margin-top: 5px;">আপনি পেয়েছেন</div>
+        <div class="popup-reward-text" id="random-reward-val">TK 0.00</div>
+        <button class="btn-popup-close" onclick="closeBoxModal()">দারুণ!</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var loader = document.getElementById('loading-screen');
+        if (loader) loader.style.display = 'none';
+    });
+
+    var userData = {
+        balance: 0.00,
+        bonusBalance: 0.00,
+        totalTasks: 0,
+        totalAds: 10, // Dummy data for testing rank outside top 50
+        totalRefers: 2, // Dummy data
+        adProgress: 0,
+        taskAdsDone: 0,
+        lastBonusTime: 0,
+        lbProfileSaved: false,
+        lbName: '',
+        lbAge: '',
+        lbPhone: '',
+        // Fake ranks for testing (in real app, this comes from server)
+        myFakeAdRank: 110,
+        myFakeRefRank: 85
+    };
+
+    var currentLbTab = 'ads';
+
+    function loadUserData() {
+        try {
+            var saved = localStorage.getItem('flycash_v7_data');
+            if (saved) {
+                var parsed = JSON.parse(saved);
+                for (var key in parsed) { userData[key] = parsed[key]; }
+            }
+        } catch (e) {}
+
+        try {
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+                var tgUser = window.Telegram.WebApp.initDataUnsafe.user;
+                if (tgUser) {
+                    if (tgUser.first_name) document.getElementById('user-name').innerText = tgUser.first_name;
+                    if (tgUser.username) {
+                        document.getElementById('user-handle').innerText = '@' + tgUser.username;
+                        document.getElementById('refer-link').value = 'https://t.me/FlyCashBD1bot?start=' + (tgUser.id || 'f');
+                    }
+                    if (tgUser.photo_url) document.getElementById('user-photo').src = tgUser.photo_url;
+                }
+            }
+        } catch (e) {}
+
+        updateUI();
+    }
+
+    function saveData() {
+        try {
+            localStorage.setItem('flycash_v7_data', JSON.stringify(userData));
+        } catch (e) {}
+        updateUI();
+    }
+
+    function updateUI() {
+        var elBal = document.getElementById('user-balance');
+        if (elBal) elBal.innerText = 'TK ' + userData.balance.toFixed(2);
+        
+        var elBBal = document.getElementById('bonus-balance');
+        if (elBBal) elBBal.innerText = 'TK ' + userData.bonusBalance.toFixed(2);
+        
+        var elTasks = document.getElementById('total-tasks');
+        if (elTasks) elTasks.innerText = userData.totalTasks;
+
+        var elRefers = document.getElementById('total-refers');
+        if (elRefers) elRefers.innerText = userData.totalRefers;
+
+        var elAds = document.getElementById('total-ads');
+        if (elAds) elAds.innerText = userData.totalAds;
+
+        var elAdCnt = document.getElementById('ad-count-text');
+        if (elAdCnt) elAdCnt.innerText = userData.adProgress + '/3';
+
+        var elAdProg = document.getElementById('ad-progress');
+        if (elAdProg) elAdProg.style.width = ((userData.adProgress / 3) * 100) + '%';
+    }
+
+    // LEADERBOARD FLOW
+    function openLeaderboardFlow() {
+        if (userData.lbProfileSaved) {
+            showLeaderboardView();
+        } else {
+            switchSection('lb-profile');
+        }
+    }
+
+    function submitLbProfile() {
+        var name = document.getElementById('lb-input-name').value.trim();
+        var age = document.getElementById('lb-input-age').value.trim();
+        var phone = document.getElementById('lb-input-phone').value.trim();
+
+        if (!name || !age || !phone) {
+            alert('অনুগহ করে নাম, বয়স ও বিকাশ/নগদ নম্বর সঠিকভাবে প্রদান করুন!');
+            return;
+        }
+
+        userData.lbName = name;
+        userData.lbAge = age;
+        userData.lbPhone = phone;
+        userData.lbProfileSaved = true;
+        saveData();
+
+        showLeaderboardView();
+    }
+
+    function showLeaderboardView() {
+        switchSection('leaderboard');
+        renderLeaderboard();
+    }
+
+    function switchLbTab(tab) {
+        currentLbTab = tab;
+        document.getElementById('tab-ads-btn').classList.toggle('active', tab === 'ads');
+        document.getElementById('tab-ref-btn').classList.toggle('active', tab === 'ref');
+        renderLeaderboard();
+    }
+
+    // RENDER TOP 50 LIST
+    function renderLeaderboard() {
+        var isAds = (currentLbTab === 'ads');
+        var listContainer = document.getElementById('lb-list-container');
+        listContainer.innerHTML = ''; // Clear list
+
+        var myRank = isAds ? userData.myFakeAdRank : userData.myFakeRefRank;
+        var myScoreHtml = isAds ? userData.totalAds + ' টি অ্যাড' : userData.totalRefers + ' টি রেফার';
+        var myName = userData.lbName || 'USER';
+
+        // GENERATE TOP 50 DUMMY DATA (In real app, fetch from server)
+        var top50Users = [];
+        var startScore = isAds ? 500 : 200;
+        
+        for (var i = 1; i <= 50; i++) {
+            top50Users.push({
+                rank: i,
+                name: 'User ' + i + (i===1 ? ' 👑' : ''),
+                score: isAds ? (startScore - (i*5)) + ' Ads' : (startScore - (i*3)) + ' Refers',
+                isMe: false
+            });
+        }
+
+        // Render List
+        top50Users.forEach(function(u) {
+            var item = document.createElement('div');
+            item.className = 'lb-list-item';
+            
+            // Highlight Top 3 styles
+            var rankStyle = 'font-weight:bold; color:var(--text-sub); width:30px;';
+            if(u.rank === 1) rankStyle += 'color:var(--accent-gold); font-size:1.1rem;';
+            else if(u.rank === 2) rankStyle += 'color:#c0c0c0;';
+            else if(u.rank === 3) rankStyle += 'color:#cd7f32;';
+
+            item.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="${rankStyle}">#${u.rank}</span>
+                    <span style="font-weight:bold; color:#fff;">${u.name}</span>
+                </div>
+                <span style="color:var(--accent-neon); font-size:0.85rem;">${u.score}</span>
+            `;
+            listContainer.appendChild(item);
+        });
+
+        // HANDLE USER'S RANK (Fixed at bottom if not in Top 50)
+        var fixedCard = document.getElementById('fixed-user-rank');
+        if (myRank > 50) {
+            // Show Fixed Card
+            fixedCard.style.display = 'flex';
+            document.getElementById('fixed-my-rank-num').innerText = '#' + myRank;
+            document.getElementById('fixed-my-rank-label').innerText = isAds ? 'আপনার র‍্যাংক (অ্যাড)' : 'আপনার র‍্যাংক (রেফার)';
+            document.getElementById('fixed-my-name').innerText = myName;
+            document.getElementById('fixed-my-score').innerText = myScoreHtml;
+        } else {
+            // User is in Top 50, hide fixed card (in real app, highlight their row in list)
+            fixedCard.style.display = 'none';
+        }
+    }
+
+    // BASIC APP FUNCTIONS
+    function switchSection(id) {
+        var sections = document.querySelectorAll('.page-section');
+        for (var i = 0; i < sections.length; i++) { sections[i].classList.remove('active'); }
+        document.getElementById(id).classList.add('active');
+        
+        // Hide fixed rank if moving away from leaderboard
+        if(id !== 'leaderboard') {
+            document.getElementById('fixed-user-rank').style.display = 'none';
+        }
+    }
+
+    function switchTab(tabId, element) {
+        var navs = document.querySelectorAll('.nav-item');
+        for (var j = 0; j < navs.length; j++) { navs[j].classList.remove('active'); }
+        element.classList.add('active');
+        switchSection(tabId);
+    }
+
+    function watchAd() {
+        if (userData.adProgress < 3) {
+            userData.adProgress++;
+            userData.totalAds++;
+            saveData();
+        }
+    }
+
+    loadUserData();
+</script>
+</body>
+</html>        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--bg-color);
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--card-border);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: var(--gold-glow);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .top-bar {
+            padding: 15px;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .logo-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .avatar-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            overflow: hidden;
+            box-shadow: var(--gold-glow);
+        }
+
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .page-section { display: none; padding: 15px; }
+        .page-section.active { display: block; }
+
+        .balance-card {
+            padding: 25px 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #7b2cbf, #3c096c);
+            border: 1px solid var(--accent-purple);
+            box-shadow: var(--purple-glow);
+            color: #fff;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); }
+        .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); }
+
+        .marquee-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 12px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 35s linear infinite;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .marquee-content strong { color: var(--accent-gold); }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 15px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .action-card i { font-size: 1.4rem; color: var(--accent-gold); }
+        .action-card h4 { font-size: 0.8rem; color: var(--text-sub); }
+        .action-card p { font-size: 1.2rem; font-weight: bold; }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .progress-bar-bg {
+            background: #0b0712;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .gift-box-icon {
+            font-size: 4rem;
+            margin: 10px 0;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box-icon.shake-ready {
+            animation: boxShake 0.6s infinite alternate ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes boxShake {
+            0% { transform: rotate(-8deg) scale(1.05); }
+            50% { transform: rotate(8deg) scale(1.1); }
+            100% { transform: rotate(-8deg) scale(1.05); }
+        }
+
+        .bonus-grid-7 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .bonus-box-7 {
+            background: rgba(22, 14, 38, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 10px 4px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .bonus-box-7.active-day {
+            background: #00f5d4;
+            color: #000;
+            border-color: #00f5d4;
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.5);
+            font-weight: bold;
+        }
+
+        .bonus-box-7 span {
+            display: block;
+            color: var(--text-sub);
+            font-size: 0.7rem;
+            margin-top: 4px;
+        }
+
+        .status-box {
+            background: rgba(11, 7, 18, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .status-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .status-desc {
+            font-size: 0.8rem;
+            color: var(--accent-neon);
+            margin-left: 22px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 10, 19, 0.92);
+            backdrop-filter: blur(8px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .popup-gift-img {
+            width: 130px;
+            animation: floatAnim 1.8s infinite ease-in-out;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 15px;
+        }
+
+        .popup-reward-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent-neon);
+            margin: 10px 0 20px 0;
+            text-shadow: 0 0 12px rgba(0, 245, 212, 0.6);
+        }
+
+        .btn-popup-close {
+            background: #ffffff;
+            color: #000;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-gold {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: var(--gold-glow);
+            margin-top: 12px;
+        }
+
+        .btn-gold:disabled {
+            background: #4a3e20;
+            color: #aaa;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .task-main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .icon-circle-purple {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+            box-shadow: var(--purple-glow);
+            background: rgba(157, 78, 221, 0.1);
+        }
+
+        .icon-circle-purple i { font-size: 2rem; color: #e0aaff; }
+
+        .reward-pill-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 183, 3, 0.1);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .telegram-row-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-tg-join {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 450px;
+            height: 65px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .nav-item.active { color: var(--accent-gold); }
+        .nav-item i { font-size: 1.2rem; }
+
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: #0b0712;
+            color: #fff;
+            outline: none;
+        }
+
+        .section-header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 15px 0 12px 0;
+        }
+
+        .tutorial-card {
+            background: linear-gradient(135deg, #7b2cbf, #5a189a);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: var(--purple-glow);
+            margin-bottom: 25px;
+        }
+
+        .tutorial-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .tutorial-card p {
+            font-size: 0.85rem;
+            color: #e0aaff;
+            line-height: 1.4;
+            margin-bottom: 18px;
+        }
+
+        .btn-watch-video {
+            background: #0b0712;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--gold-glow);
+        }
+
+        .support-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .tg-circle-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(157, 78, 221, 0.15);
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            color: var(--accent-neon);
+            font-size: 1.8rem;
+            box-shadow: var(--purple-glow);
+        }
+
+        .support-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .support-card p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .support-pill-btn {
+            display: inline-block;
+            background: rgba(11, 7, 18, 0.8);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-gold);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .refer-main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 20px;
+        }
+
+        .refer-title-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .refer-title-box i {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin-top: 3px;
+        }
+
+        .refer-title-box h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .refer-desc-text {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .refer-desc-text strong {
+            color: var(--accent-gold);
+        }
+
+        .refer-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-gold);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .refer-input-wrapper {
+            background: #0b0712;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .refer-input-field {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 0.85rem;
+            width: 100%;
+            padding-right: 8px;
+        }
+
+        .refer-copy-icon-btn {
+            background: var(--accent-gold);
+            color: #000;
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--gold-glow);
+            flex-shrink: 0;
+        }
+
+        .refer-action-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-refer-copy {
+            background: linear-gradient(90deg, #ffb703, #fb8500);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--gold-glow);
+        }
+
+        .btn-refer-share {
+            background: #1f1435;
+            color: #ffffff;
+            border: 1px solid var(--card-border);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .refer-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .refer-list-header h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .refer-count-badge {
+            background: rgba(255, 183, 3, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .empty-refer-card {
+            background: var(--card-bg);
+            border: 1px dashed var(--card-border);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .empty-refer-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            color: var(--text-sub);
+            font-size: 1.5rem;
+        }
+
+        .empty-refer-card h4 {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+        }
+
+        .empty-refer-card p {
+            font-size: 0.8rem;
+            color: rgba(160, 142, 187, 0.6);
+        }
+
+        /* NEW LEADERBOARD UI STYLES */
+        .lb-tab-container {
+            display: flex;
+            background: #0b0712;
+            border-radius: 12px;
+            padding: 4px;
+            margin: 15px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .lb-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-sub);
+        }
+
+        .lb-tab.active {
+            background: var(--accent-neon);
+            color: #000;
+        }
+
         .podium-container {
             display: flex;
             justify-content: center;
