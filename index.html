@@ -756,6 +756,29 @@
             cursor: pointer;
             box-shadow: var(--gold-glow);
         }
+
+        /* --- NEW: USER BALANCE DISPLAY IN WALLET (CLEAN CARD) --- */
+        .wallet-balance-card {
+            background: linear-gradient(135deg, #2d1c4a, #160e26);
+            border: 1px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 20px 18px;
+            margin-bottom: 20px;
+            box-shadow: var(--gold-glow);
+        }
+        .wallet-balance-card .label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .wallet-balance-card .balance-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(255, 183, 3, 0.2);
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>
@@ -1049,6 +1072,12 @@
 
     <!-- WALLET PAGE -->
     <div id="wallet" class="page-section">
+        <!-- NEW: USER BALANCE CARD (clean, elegant) -->
+        <div class="wallet-balance-card">
+            <div class="label">আপনার ব্যালেন্স</div>
+            <div class="balance-amount" id="wallet-user-balance">TK 0.00</div>
+        </div>
+
         <div style="margin-bottom: 20px;">
             <button class="btn-withdraw-highlight" onclick="showWithdrawForm()" style="font-size:1.1rem; padding:14px;">
                 <i class="fa-solid fa-hand-holding-dollar"></i> এখনই উত্তোলন করুন
@@ -1271,6 +1300,12 @@
     }
 
     function updateWalletUI() {
+        // Update the new wallet balance card
+        var walletBalanceEl = document.getElementById('wallet-user-balance');
+        if (walletBalanceEl) {
+            walletBalanceEl.innerText = 'TK ' + userData.balance.toFixed(2);
+        }
+
         var seen = userData.withdrawAdsWatched || 0;
         var total = 20;
         var remaining = Math.max(0, total - seen);
@@ -1571,7 +1606,7 @@
         if (navigator.share) {
             navigator.share({
                 title: 'Fly Cash - টাকা উড়াও',
-                text: 'আমার রেফারেল লিংক দিয়ে জয়েন করুন এবং ইনকাম করুন!',
+                text: 'আমার রেফারেল লিংক দিয়ে জয়েন করুন এবং ইনকাম করুন!',
                 url: link
             }).catch(function() {});
         } else {
