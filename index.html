@@ -46,7 +46,9 @@
             position: relative;
         }
 
-        /*--- LOADING SCREEN ---*/
+        /* ============================================================
+           🚀 PROFESSIONAL LOADING SCREEN (পেশাদার লোডিং স্ক্রিন)
+           ============================================================ */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -59,23 +61,146 @@
             justify-content: center;
             align-items: center;
             z-index: 99999;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.6s ease, visibility 0.6s;
+            padding: 30px;
         }
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--card-border);
-            border-top: 4px solid var(--accent-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            box-shadow: var(--gold-glow);
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        #loading-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
 
-        /*--- UI ELEMENTS ---*/
+        /* লোগো কন্টেইনার */
+        .loading-logo-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .loading-logo-wrapper .glow-ring {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 183, 3, 0.15), transparent 70%);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        .loading-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-gold);
+            box-shadow: 0 0 40px rgba(255, 183, 3, 0.3), inset 0 0 40px rgba(255, 183, 3, 0.05);
+            object-fit: cover;
+            display: block;
+            position: relative;
+            z-index: 1;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .loading-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ffb703, #fb8500, #ffb703);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerText 3s linear infinite;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        @keyframes shimmerText {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .loading-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 4px;
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        /* প্রগ্রেস বার */
+        .loading-progress-container {
+            width: 220px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .loading-progress-track {
+            width: 100%;
+            height: 4px;
+            background: var(--card-border);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loading-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-neon));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+        }
+
+        .loading-progress-text {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-top: 8px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .loading-progress-text span {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* পার্টিকেল/ডট অ্যানিমেশন */
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+            justify-content: center;
+        }
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            animation: dotBounce 1.2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
+        }
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+        .loading-dots span:nth-child(4) { animation-delay: 0.6s; }
+        @keyframes dotBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* লোডিং এর ভেতরে ছোট ট্যাগলাইন */
+        .loading-tagline {
+            font-size: 0.7rem;
+            color: rgba(160, 142, 187, 0.4);
+            margin-top: 20px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        /* ============================================================
+           বাকি UI স্টাইল (আগের মতোই)
+           ============================================================ */
         .top-bar {
             padding: 15px;
             background: var(--bg-color);
@@ -109,9 +234,9 @@
 
         .page-section { display: none; padding: 15px; animation: fadeIn 0.4s ease; }
         .page-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /*--- BALANCE CARD (HIGHLIGHTED) ---*/
+        /*--- BALANCE CARD ---*/
         .balance-card {
             padding: 25px 20px;
             border-radius: 20px;
@@ -141,7 +266,6 @@
         .balance-card span { font-weight: 600; font-size: 0.9rem; color: var(--accent-neon); position: relative; z-index: 1; }
         .balance-card h1 { font-size: 2.5rem; font-weight: 900; margin-top: 5px; color: var(--accent-gold); position: relative; z-index: 1; text-shadow: 0 0 30px rgba(255,183,3,0.3); }
 
-        /*--- HIGHLIGHTED WITHDRAW BUTTON ---*/
         .btn-withdraw-highlight {
             background: linear-gradient(90deg, #ffb703, #fb8500);
             color: #000;
@@ -330,7 +454,6 @@
         .popup-reward-text { font-size: 1.8rem; font-weight: 900; color: var(--accent-neon); margin: 10px 0 20px 0; text-shadow: 0 0 12px rgba(0, 245, 212, 0.6); }
         .btn-popup-close { background: #ffffff; color: #000; border: none; padding: 10px 30px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; }
 
-        /*--- TASK PAGE ---*/
         .task-main-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -386,7 +509,6 @@
             cursor: pointer;
         }
 
-        /*--- NAV BAR ---*/
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -603,7 +725,6 @@
         .empty-refer-card h4 { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 5px; }
         .empty-refer-card p { font-size: 0.8rem; color: rgba(160, 142, 187, 0.6); }
 
-        /*--- LEADERBOARD ---*/
         .lb-tab-container {
             display: flex;
             background: #0b0712;
@@ -665,7 +786,6 @@
         .user-rank-left { display: flex; align-items: center; gap: 10px; }
         .user-rank-badge { background: #000; color: #fff; padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; }
 
-        /*--- WALLET STYLES ---*/
         .wallet-menu-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -689,6 +809,28 @@
         .wallet-menu-item .menu-right i { color: var(--text-sub); font-size: 0.8rem; }
         .logout-btn { color: #ff6b6b !important; }
         .logout-btn .menu-left i { color: #ff6b6b !important; }
+
+        .wallet-balance-card {
+            background: linear-gradient(135deg, #2d1c4a, #160e26);
+            border: 1px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 20px 18px;
+            margin-bottom: 20px;
+            box-shadow: var(--gold-glow);
+        }
+        .wallet-balance-card .label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .wallet-balance-card .balance-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(255, 183, 3, 0.2);
+            margin-top: 2px;
+        }
 
         .withdraw-condition-box {
             background: var(--card-bg);
@@ -756,39 +898,45 @@
             cursor: pointer;
             box-shadow: var(--gold-glow);
         }
-
-        /* --- NEW: USER BALANCE DISPLAY IN WALLET (CLEAN CARD) --- */
-        .wallet-balance-card {
-            background: linear-gradient(135deg, #2d1c4a, #160e26);
-            border: 1px solid var(--accent-gold);
-            border-radius: 16px;
-            padding: 20px 18px;
-            margin-bottom: 20px;
-            box-shadow: var(--gold-glow);
-        }
-        .wallet-balance-card .label {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        .wallet-balance-card .balance-amount {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--accent-gold);
-            text-shadow: 0 0 20px rgba(255, 183, 3, 0.2);
-            margin-top: 2px;
-        }
     </style>
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
+<!-- ============================================================
+     🚀 PROFESSIONAL LOADING SCREEN
+     ============================================================ -->
 <div id="loading-screen">
-    <div class="loader"></div>
-    <h3 style="margin-top: 15px; color: var(--accent-gold);">Fly Cash লোড হচ্ছে...</h3>
+    <div class="loading-logo-wrapper">
+        <div class="glow-ring"></div>
+        <img 
+            src="https://i.ibb.co.com/nsFjH5rX" 
+            alt="Fly Cash Logo" 
+            class="loading-logo"
+            onerror="this.src='https://ui-avatars.com/api/?name=FLY&background=ffb703&color=000&size=100'"
+        >
+    </div>
+    <div class="loading-title">Fly Cash</div>
+    <div class="loading-subtitle">🚀 টাকা উড়াও 💸</div>
+    
+    <div class="loading-progress-container">
+        <div class="loading-progress-track">
+            <div class="loading-progress-fill" id="loadingProgressFill"></div>
+        </div>
+        <div class="loading-progress-text">
+            লোড হচ্ছে... <span id="loadingPercent">0</span>%
+        </div>
+    </div>
+
+    <div class="loading-dots">
+        <span></span><span></span><span></span><span></span>
+    </div>
+    
+    <div class="loading-tagline">✦ আপনার আর্থিক সঙ্গী ✦</div>
 </div>
 
+<!-- ============================================================
+     MAIN APP
+     ============================================================ -->
 <div class="app-container">
     <div class="top-bar">
         <div class="logo-title">
@@ -808,13 +956,11 @@
 
     <!-- HOME PAGE -->
     <div id="home" class="page-section active">
-        <!-- BALANCE CARD WITH HIGHLIGHT -->
         <div class="balance-card">
             <span>মোট ব্যালেন্স</span>
             <h1 id="user-balance">TK 0.00</h1>
         </div>
 
-        <!-- HIGHLIGHTED WITHDRAW BUTTON -->
         <button class="btn-withdraw-highlight" onclick="switchTab('wallet', document.querySelector('.nav-item:last-child'))">
             <i class="fa-solid fa-hand-holding-dollar"></i> এখনই উত্তোলন করুন
         </button>
@@ -1072,7 +1218,6 @@
 
     <!-- WALLET PAGE -->
     <div id="wallet" class="page-section">
-        <!-- NEW: USER BALANCE CARD (clean, elegant) -->
         <div class="wallet-balance-card">
             <div class="label">আপনার ব্যালেন্স</div>
             <div class="balance-amount" id="wallet-user-balance">TK 0.00</div>
@@ -1194,25 +1339,55 @@
 </div>
 
 <script>
-    // --- LOADING SCREEN DISMISSAL (1.5 SECONDS) ---
-    function hideLoader() {
-        var loader = document.getElementById('loading-screen');
-        if (loader) {
-            loader.style.opacity = '0';
-            setTimeout(function() {
-                loader.style.visibility = 'hidden';
-                loader.style.display = 'none';
-                document.body.style.overflowY = 'auto';
-            }, 300);
-        }
-    }
-    document.body.style.overflowY = 'hidden';
-    window.addEventListener('load', function() {
-        setTimeout(hideLoader, 1500);
-    });
-    setTimeout(hideLoader, 2000);
+    // ============================================================
+    //  PROFESSIONAL LOADING SCREEN WITH PROGRESS BAR
+    // ============================================================
+    (function professionalLoading() {
+        var progressFill = document.getElementById('loadingProgressFill');
+        var percentText = document.getElementById('loadingPercent');
+        var loadingScreen = document.getElementById('loading-screen');
+        var progress = 0;
+        var interval = setInterval(function() {
+            // সিমুলেটেড প্রগ্রেস (0 থেকে 100 পর্যন্ত)
+            var increment = Math.random() * 6 + 2; // 2-8% করে বাড়বে
+            progress = Math.min(progress + increment, 100);
+            
+            if (progressFill) {
+                progressFill.style.width = progress + '%';
+            }
+            if (percentText) {
+                percentText.textContent = Math.floor(progress);
+            }
 
-    // --- APP LOGIC ---
+            // 100% হলে লোডিং শেষ
+            if (progress >= 100) {
+                clearInterval(interval);
+                // লোডিং স্ক্রিন লুকান
+                if (loadingScreen) {
+                    loadingScreen.classList.add('hide');
+                    document.body.style.overflowY = 'auto';
+                }
+                // main app চালু করুন
+                loadUserData();
+            }
+        }, 200); // প্রতি 200ms আপডেট
+
+        // সুরক্ষা: 5 সেকেন্ড পরেও যদি 100% না হয়, তাহলে ফোর্সফুলি হাইড করুন
+        setTimeout(function() {
+            if (progress < 100) {
+                clearInterval(interval);
+                if (loadingScreen) {
+                    loadingScreen.classList.add('hide');
+                    document.body.style.overflowY = 'auto';
+                }
+                loadUserData();
+            }
+        }, 6000);
+    })();
+
+    // ============================================================
+    //  APP LOGIC (আগের মতোই)
+    // ============================================================
     var userData = {
         balance: 0.00,
         bonusBalance: 0.00,
@@ -1300,7 +1475,6 @@
     }
 
     function updateWalletUI() {
-        // Update the new wallet balance card
         var walletBalanceEl = document.getElementById('wallet-user-balance');
         if (walletBalanceEl) {
             walletBalanceEl.innerText = 'TK ' + userData.balance.toFixed(2);
@@ -1324,7 +1498,6 @@
         if (el) el.innerText = value;
     }
 
-    // --- WITHDRAW FORM TOGGLE ---
     function showWithdrawForm() {
         document.getElementById('wallet').classList.remove('active');
         document.getElementById('withdraw-form-container').classList.add('active');
@@ -1336,7 +1509,6 @@
         document.getElementById('wallet').classList.add('active');
     }
 
-    // --- MYSTERY BOX ---
     function watchAd() {
         if (userData.adProgress < 3) {
             userData.adProgress++;
@@ -1377,7 +1549,6 @@
         document.getElementById('box-popup').classList.remove('show');
     }
 
-    // --- DAILY BONUS ---
     function checkDailyBonusTimer() {
         var bonusBtn = document.getElementById('btn-daily-bonus');
         var statusBox = document.getElementById('status-container');
@@ -1412,7 +1583,6 @@
         }
     }
 
-    // --- TASKS ---
     function watchTaskAd() {
         if (userData.taskAdsDone < 15) {
             userData.taskAdsDone++;
@@ -1433,7 +1603,6 @@
         saveData();
     }
 
-    // --- LEADERBOARD ---
     function openLeaderboardFlow() {
         if (userData.lbProfileSaved) {
             showLeaderboardView();
@@ -1518,7 +1687,6 @@
         }
     }
 
-    // --- NAVIGATION ---
     function switchSection(id) {
         document.getElementById('withdraw-form-container').classList.remove('active');
         var sections = document.querySelectorAll('.page-section');
@@ -1543,7 +1711,6 @@
         switchSection(tabId);
     }
 
-    // --- WALLET FUNCTIONS ---
     function cancelWithdraw() {
         alert('উইথড্র প্রক্রিয়া বাতিল করা হয়েছে।');
         document.getElementById('withdraw-account').value = '';
@@ -1583,14 +1750,12 @@
         updateWalletUI();
     }
 
-    // --- LOGOUT: reload the page ---
     function logoutAndReload() {
         if (confirm('আপনি কি লগআউট করতে চান?')) {
             location.reload();
         }
     }
 
-    // --- REFER ---
     function copyReferLink() {
         var copyText = document.getElementById("refer-link");
         if (copyText) {
@@ -1614,8 +1779,9 @@
         }
     }
 
-    // --- INITIAL LOAD ---
-    loadUserData();
+    // ডকুমেন্ট রেডি হলে body স্ক্রল আবার enable করি (লোডিং স্ক্রিন দেখানোর জন্য)
+    document.body.style.overflowY = 'hidden';
 </script>
+
 </body>
 </html>
