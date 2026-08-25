@@ -47,7 +47,7 @@
         }
 
         /* ============================================================
-           PROFESSIONAL LOADING SCREEN
+           🚀 PROFESSIONAL LOADING SCREEN (পেশাদার লোডিং স্ক্রিন)
            ============================================================ */
         #loading-screen {
             position: fixed;
@@ -70,9 +70,10 @@
             pointer-events: none;
         }
 
+        /* লোগো কন্টেইনার */
         .loading-logo-wrapper {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .loading-logo-wrapper .glow-ring {
             position: absolute;
@@ -114,7 +115,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shimmerText 3s linear infinite;
-            margin-top: 8px;
+            margin-top: 10px;
             letter-spacing: 1px;
         }
         @keyframes shimmerText {
@@ -125,14 +126,15 @@
         .loading-subtitle {
             font-size: 0.85rem;
             color: var(--text-sub);
-            margin-top: 2px;
+            margin-top: 4px;
             letter-spacing: 3px;
             font-weight: 300;
         }
 
+        /* প্রগ্রেস বার */
         .loading-progress-container {
             width: 220px;
-            margin-top: 25px;
+            margin-top: 30px;
             text-align: center;
         }
         .loading-progress-track {
@@ -151,6 +153,7 @@
             transition: width 0.3s ease;
             box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
         }
+
         .loading-progress-text {
             font-size: 0.75rem;
             color: var(--text-sub);
@@ -163,10 +166,11 @@
             font-weight: 700;
         }
 
+        /* পার্টিকেল/ডট অ্যানিমেশন */
         .loading-dots {
             display: flex;
             gap: 8px;
-            margin-top: 15px;
+            margin-top: 18px;
             justify-content: center;
         }
         .loading-dots span {
@@ -185,16 +189,17 @@
             40% { transform: scale(1.2); opacity: 1; }
         }
 
+        /* লোডিং এর ভেতরে ছোট ট্যাগলাইন */
         .loading-tagline {
             font-size: 0.7rem;
             color: rgba(160, 142, 187, 0.4);
-            margin-top: 18px;
+            margin-top: 20px;
             letter-spacing: 2px;
             font-weight: 300;
         }
 
         /* ============================================================
-           MAIN APP STYLES
+           বাকি UI স্টাইল (আগের মতোই)
            ============================================================ */
         .top-bar {
             padding: 15px;
@@ -231,6 +236,7 @@
         .page-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /*--- BALANCE CARD ---*/
         .balance-card {
             padding: 25px 20px;
             border-radius: 20px;
@@ -447,117 +453,6 @@
         .popup-title { font-size: 1.5rem; font-weight: 800; color: #ffffff; margin-top: 15px; }
         .popup-reward-text { font-size: 1.8rem; font-weight: 900; color: var(--accent-neon); margin: 10px 0 20px 0; text-shadow: 0 0 12px rgba(0, 245, 212, 0.6); }
         .btn-popup-close { background: #ffffff; color: #000; border: none; padding: 10px 30px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; }
-
-        /* --- PAYMENT PROOF SECTION (টাকা সেকশন) --- */
-        .payment-proof-section {
-            background: var(--card-bg);
-            border: 1px solid var(--accent-gold);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-        }
-        .payment-proof-section .section-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--accent-gold);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .payment-proof-section .section-title i {
-            font-size: 1.2rem;
-        }
-        .proof-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #0b0712;
-            padding: 10px 14px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            border: 1px solid var(--card-border);
-            transition: border 0.2s;
-        }
-        .proof-item:hover {
-            border-color: var(--accent-gold);
-        }
-        .proof-item .icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 183, 3, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-gold);
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-        .proof-item .info {
-            flex: 1;
-        }
-        .proof-item .info .name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
-        }
-        .proof-item .info .detail {
-            font-size: 0.7rem;
-            color: var(--text-sub);
-        }
-        .proof-item .amount {
-            font-weight: 700;
-            color: var(--accent-neon);
-            font-size: 0.95rem;
-        }
-        .proof-item .time {
-            font-size: 0.6rem;
-            color: var(--text-sub);
-            margin-left: 5px;
-        }
-
-        /* --- YOUTUBE SECTION --- */
-        .youtube-section {
-            background: var(--card-bg);
-            border: 1px solid #ff0033;
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .youtube-section .yt-icon {
-            font-size: 2.5rem;
-            color: #ff0033;
-            margin-bottom: 8px;
-        }
-        .youtube-section h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-        }
-        .youtube-section p {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            margin: 6px 0 12px 0;
-        }
-        .btn-youtube {
-            background: #ff0033;
-            color: #fff;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.15s;
-            text-decoration: none;
-        }
-        .btn-youtube:active { transform: scale(0.97); }
-        .btn-youtube i { font-size: 1.1rem; }
 
         .task-main-card {
             background: var(--card-bg);
@@ -1008,7 +903,7 @@
 <body>
 
 <!-- ============================================================
-     PROFESSIONAL LOADING SCREEN
+     🚀 PROFESSIONAL LOADING SCREEN
      ============================================================ -->
 <div id="loading-screen">
     <div class="loading-logo-wrapper">
@@ -1071,36 +966,6 @@
         </button>
 
         <div style="height:15px;"></div>
-
-        <!-- ============================================================
-             PAYMENT PROOF SECTION (টাকা সেকশন) - ১০টি পেমেন্ট প্রুফ
-             ============================================================ -->
-        <div class="payment-proof-section">
-            <div class="section-title">
-                <i class="fa-solid fa-circle-check" style="color: var(--accent-neon);"></i>
-                সর্বশেষ পেমেন্ট প্রুফ
-            </div>
-            <div id="paymentProofContainer">
-                <!-- JavaScript দিয়ে ১০টি প্রুফ জেনারেট হবে -->
-            </div>
-            <div style="text-align: center; margin-top: 8px;">
-                <span style="font-size: 0.7rem; color: var(--text-sub);">
-                    <i class="fa-regular fa-clock"></i> লাইভ আপডেট
-                </span>
-            </div>
-        </div>
-
-        <!-- ============================================================
-             YOUTUBE CHANNEL SECTION
-             ============================================================ -->
-        <div class="youtube-section">
-            <div class="yt-icon"><i class="fa-brands fa-youtube"></i></div>
-            <h3>আমাদের YouTube চ্যানেল</h3>
-            <p>টিউটোরিয়াল, আপডেট এবং আরও অনেক কিছু পেতে সাবস্ক্রাইব করুন</p>
-            <a href="https://youtube.com" target="_blank" class="btn-youtube">
-                <i class="fa-brands fa-youtube"></i> সাবস্ক্রাইব করুন
-            </a>
-        </div>
 
         <div class="marquee-container">
             <div class="marquee-content">
@@ -1475,7 +1340,7 @@
 
 <script>
     // ============================================================
-    //  PROFESSIONAL LOADING SCREEN
+    //  PROFESSIONAL LOADING SCREEN WITH PROGRESS BAR
     // ============================================================
     (function professionalLoading() {
         var progressFill = document.getElementById('loadingProgressFill');
@@ -1483,7 +1348,8 @@
         var loadingScreen = document.getElementById('loading-screen');
         var progress = 0;
         var interval = setInterval(function() {
-            var increment = Math.random() * 6 + 2;
+            // সিমুলেটেড প্রগ্রেস (0 থেকে 100 পর্যন্ত)
+            var increment = Math.random() * 6 + 2; // 2-8% করে বাড়বে
             progress = Math.min(progress + increment, 100);
             
             if (progressFill) {
@@ -1493,16 +1359,20 @@
                 percentText.textContent = Math.floor(progress);
             }
 
+            // 100% হলে লোডিং শেষ
             if (progress >= 100) {
                 clearInterval(interval);
+                // লোডিং স্ক্রিন লুকান
                 if (loadingScreen) {
                     loadingScreen.classList.add('hide');
                     document.body.style.overflowY = 'auto';
                 }
+                // main app চালু করুন
                 loadUserData();
             }
-        }, 200);
+        }, 200); // প্রতি 200ms আপডেট
 
+        // সুরক্ষা: 5 সেকেন্ড পরেও যদি 100% না হয়, তাহলে ফোর্সফুলি হাইড করুন
         setTimeout(function() {
             if (progress < 100) {
                 clearInterval(interval);
@@ -1516,47 +1386,7 @@
     })();
 
     // ============================================================
-    //  PAYMENT PROOF DATA - ১০টি পেমেন্ট প্রুফ
-    // ============================================================
-    var paymentProofs = [
-        { name: 'Rakib H.', amount: '1,250', method: 'Bkash', time: '২ মিনিট আগে' },
-        { name: 'Sadia A.', amount: '2,300', method: 'Nagad', time: '১৫ মিনিট আগে' },
-        { name: 'Minhaj R.', amount: '850', method: 'Bkash', time: '২৫ মিনিট আগে' },
-        { name: 'Nabila T.', amount: '3,100', method: 'Nagad', time: '১ ঘণ্টা আগে' },
-        { name: 'Shakib M.', amount: '500', method: 'Bkash', time: '১.৫ ঘণ্টা আগে' },
-        { name: 'Tasnim F.', amount: '1,750', method: 'Nagad', time: '২ ঘণ্টা আগে' },
-        { name: 'Rifat K.', amount: '2,800', method: 'Bkash', time: '২.৫ ঘণ্টা আগে' },
-        { name: 'Jannat P.', amount: '950', method: 'Nagad', time: '৩ ঘণ্টা আগে' },
-        { name: 'Shahin A.', amount: '4,200', method: 'Bkash', time: '৪ ঘণ্টা আগে' },
-        { name: 'Nishat R.', amount: '1,650', method: 'Nagad', time: '৫ ঘণ্টা আগے' }
-    ];
-
-    function renderPaymentProofs() {
-        var container = document.getElementById('paymentProofContainer');
-        if (!container) return;
-        
-        var html = '';
-        paymentProofs.forEach(function(p) {
-            var icon = p.method === 'Bkash' ? 'fa-solid fa-b' : 'fa-solid fa-n';
-            var color = p.method === 'Bkash' ? '#e63946' : '#00f5d4';
-            html += `
-                <div class="proof-item">
-                    <div class="icon" style="color:${color}; border-color:${color};">
-                        <i class="${icon}"></i>
-                    </div>
-                    <div class="info">
-                        <div class="name">${p.name}</div>
-                        <div class="detail">${p.method} · ${p.time}</div>
-                    </div>
-                    <div class="amount">TK ${p.amount}</div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    // ============================================================
-    //  APP LOGIC
+    //  APP LOGIC (আগের মতোই)
     // ============================================================
     var userData = {
         balance: 0.00,
@@ -1598,9 +1428,6 @@
                 }
             }
         } catch (e) {}
-
-        // পেমেন্ট প্রুফ রেন্ডার
-        renderPaymentProofs();
 
         updateUI();
         updateWalletUI();
@@ -1952,6 +1779,7 @@
         }
     }
 
+    // ডকুমেন্ট রেডি হলে body স্ক্রল আবার enable করি (লোডিং স্ক্রিন দেখানোর জন্য)
     document.body.style.overflowY = 'hidden';
 </script>
 
